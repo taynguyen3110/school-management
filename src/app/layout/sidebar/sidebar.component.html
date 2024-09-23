@@ -1,0 +1,31 @@
+<div class="flex flex-col gap-5 w-1/3 absolute top-0 left-0 p-4 pt-8 bg-white">
+    <div class="flex justify-between">
+        <img class="w-5 h-5" src="/public/assets/images/Logo.png" alt="Logo">
+        <i class="fa-solid fa-xmark" (click)="closeMenu()"></i>
+    </div>
+
+    <div class='menu-item flex items-center gap-5' (click)="selectMenu('Dashboard')">
+        <div class="w-auto flex justify-center items-center h-auto">
+            <i class='fa-solid fa-table-columns w-4 text-xl'></i>
+        </div>
+        Dashboard
+    </div>
+    <div class='menu-item flex items-center gap-5' (click)="selectMenu('Students')">
+        <div class="w-auto flex justify-center items-center h-auto">
+            <i class="fa-solid fa-user-graduate w-4 text-xl"></i>
+        </div>
+        Students
+    </div>
+    <div class='menu-item flex items-center gap-5' (click)="selectMenu('Parents')">
+        <div class="w-auto flex justify-center items-center h-auto">
+            <i class="fa-solid fa-person-breastfeeding w-4 text-xl"></i>
+        </div>
+        Parents
+    </div>
+    <div class='menu-item flex items-center gap-5' (click)="selectMenu('Teachers')">
+        <div class="w-auto flex justify-center items-center h-auto">
+            <i class="fa-solid fa-chalkboard-user w-4 text-xl"></i>
+        </div>
+        Teachers
+    </div>
+</div>
