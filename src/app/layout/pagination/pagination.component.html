@@ -1,0 +1,11 @@
+<div class="flex justify-center gap-5">
+    <button (click)="handlePrevious()" class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg" [disabled]="currentPage === 1">Previous</button>
+    @for (i of arr; track $index) {
+    @if (i === currentPage) {
+    <p class="font-bold">{{i}}</p>
+    } @else {
+    <p>{{i}}</p>
+    }
+    }
+    <button (click)="handleNext()" class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg" [disabled]="currentPage === lastPage">Next</button>
+</div>
