@@ -15,7 +15,6 @@ export class LoadingSpinnerComponent {
   isLoading$: Observable<boolean> = this.loadingService.loading$;
 
   ngOnInit() {
-    console.log(this.isLoading$);
-
+    // console.log(this.isLoading$);
   }
 }

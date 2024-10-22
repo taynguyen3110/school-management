@@ -11,6 +11,10 @@ export class AuthService {
     }
 
     private _authState?: AuthState;
+    
+    public get isLoggedin() {
+        return !!this._authState;
+    }
 
     public get authState() {
         return this._authState;
@@ -24,7 +28,6 @@ export class AuthService {
     logOut(): void {
         localStorage.removeItem("authState");
         this._authState = undefined;
-        location.reload();
     }
 
     isAccessTokenExpired(): boolean {

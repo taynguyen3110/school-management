@@ -9,26 +9,26 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [SidebarComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  // styleUrl: ''
 })
 export class HeaderComponent {
   private router = inject(Router);
 
-  displayMenu = false;
-  selectedMenu = "Dashboard";
+  // displayMenu = false;
+  // selectedMenu = "Dashboard";
 
-  showMenu() {
-    this.displayMenu = true;
-  }
+  // showMenu() {
+  //   this.displayMenu = true;
+  // }
 
-  hideMenu = () => {
-    this.displayMenu = false;
-  }
+  // hideMenu = () => {
+  //   this.displayMenu = false;
+  // }
 
-  selectMenu(item: string) {
-    this.selectedMenu = item;
-    this.hideMenu();
-  }
+  // selectMenu(item: string) {
+  //   this.selectedMenu = item;
+  //   this.hideMenu();
+  // }
 
   goToUserInfo() {
     this.router.navigate(['/user'])

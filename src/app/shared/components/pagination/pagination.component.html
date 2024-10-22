@@ -1,6 +1,6 @@
 <div class="flex justify-between gap-5 mt-6">
     <button (click)="handlePrevious()" [ngClass]="{'bg-gray-300' : currentPage === 1}"
-        class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg" [disabled]="currentPage === 1">Previous</button>
+        class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg select-none" [disabled]="currentPage === 1">Previous</button>
     <div class="flex gap-3">
         @for (i of arr; track $index) {
         @if (i === currentPage) {
@@ -12,6 +12,6 @@
         }
         }
     </div>
-    <button (click)="handleNext()" [ngClass]="{'bg-gray-300' : currentPage === lastPage}" class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg"
+    <button (click)="handleNext()" [ngClass]="{'bg-gray-300' : currentPage === lastPage}" class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg select-none"
         [disabled]="currentPage === lastPage">Next</button>
 </div>

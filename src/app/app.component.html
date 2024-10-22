@@ -1,6 +1,5 @@
 <sman-loading-spinner></sman-loading-spinner>
-@if(authState && authState !== undefined) {
-<sman-header></sman-header>
+@if(authService.authState) {
 <router-outlet></router-outlet>
 } @else {
 <sman-login></sman-login>

@@ -1,15 +1,157 @@
-<div class="bg-black bg-opacity-20 w-full h-screen absolute top-0 left-0">
-    <div class="container bg-white w-full h-96 top-24 relative rounded-2xl px-4 py-8">
-        <form onsubmit="">
-            <!-- StudentId, FirstName, LastName, DateOfBirth, Gender, Email, PhoneNumber, Address, EnrollmentDate, Classes -->
-<label for="firstName">First Name:</label>
-<input type="text" id="firstName">
-<label for="lastName">Last Name:</label>
-<input type="text" id="lastName">
-            <button type="button" class="py-[10px] px-8 bg-primary-300 text-white rounded-lg text-sm"
-                (click)="cancelAddStudent()">Add Student</button>
-            <button type="button" class="py-[10px] px-8 bg-primary-300 text-white rounded-lg text-sm"
-                (click)="cancelAddStudent()">Cancel</button>
+<div class="bg-black bg-opacity-20 w-full h-screen fixed top-0 left-0">
+    <div class="container bg-white w-full top-10 relative rounded-2xl px-8 py-8">
+        <h1 class="font-medium text-xl mb-5">Add New Students</h1>
+        <form class="flex flex-col gap-2" [formGroup]="addStudentForm" (ngSubmit)="addStudent($event)">
+            <div class="flex justify-between gap-2">
+                <!-- First Name -->
+                <div class="">
+                    <label for="firstName">First Name:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(firstName)}" type="text"
+                        name="firstName" id="firstName" placeholder="First Name" formControlName="firstName">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(firstName)){
+                        @if(firstName.hasError('required')) {
+                        Please enter your first name.
+                        } @else if (firstName.hasError('minlength')) {
+                        Minimum {{firstName.errors?.['minlength'].requiredLength}} character for first name.
+                        }
+                        }
+                    </div>
+                </div>
+                <!-- Last Name -->
+                <div class="">
+                    <label for="lastName">Last Name:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(lastName)}" type="text" name="lastName"
+                        id="lastName" placeholder="Last Name" formControlName="lastName">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(lastName)){
+                        @if(lastName.hasError('required')) {
+                        Please enter your last name.
+                        } @else if (lastName.hasError('minlength')) {
+                        Minimum {{lastName.errors?.['minlength'].requiredLength}} character for last name.
+                        }
+                        }
+                    </div>
+                </div>
+                <!-- Gender -->
+                <div class="flex flex-col items-end">
+                    <div class="flex flex-col">
+                        <label for="gender">Gender:</label>
+                        <select class="px-2 py-3 border rounded-md max-w-20"
+                            [ngClass]="{'border-red-600': formService.isFieldInvalid(gender)}" name="gender" id="gender"
+                            formControlName="gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(gender)){
+                        @if(gender.hasError('required')) {
+                        Please select gender.
+                        } @else if (gender.hasError('minlength')) {
+                        Minimum {{gender.errors?.['minlength'].requiredLength}} character for last name.
+                        }
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex justify-between">
+                <!-- Address -->
+                <div class="w-2/3">
+                    <label for="address">Address:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(address)}" type="text" name="address"
+                        id="address" placeholder="Address" formControlName="address">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(address)){
+                        @if(address.hasError('required')) {
+                        Please enter your address.
+                        } @else if (address.hasError('minlength')) {
+                        Minimum {{address.errors?.['minlength'].requiredLength}} character for address.
+                        }
+                        }
+                    </div>
+                </div>
+                <!-- Date of Birth -->
+                <div class="w-1/6">
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(dateOfBirth)}" type="date"
+                        name="dateOfBirth" id="dateOfBirth" formControlName="dateOfBirth">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(dateOfBirth)){
+                        @if(dateOfBirth.hasError('required')) {
+                        Please enter your date of birth.
+                        } @else if (dateOfBirth.hasError('minlength')) {
+                        Minimum {{dateOfBirth.errors?.['minlength'].requiredLength}} character for address.
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-between gap-3">
+                <!-- Phone -->
+                <div class="">
+                    <label for="phone">Phone:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(phone)}" type="tel" name="phone"
+                        id="phone" placeholder="Phone" formControlName="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(phone)){
+                        @if(phone.hasError('required')) {
+                        Please enter your phone.
+                        } @else if (phone.hasError('minlength')) {
+                        Minimum {{phone.errors?.['minlength'].requiredLength}} character for address.
+                        }
+                        }
+                    </div>
+                </div>
+                <!-- Email -->
+                <div class="">
+                    <label for="email">Email:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(email)}" type="text" name="email"
+                        id="email" placeholder="Email" formControlName="email">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(email)){
+                        @if(email.hasError('required')) {
+                        Please enter your email.
+                        } @else if (email.hasError('minlength')) {
+                        Minimum {{email.errors?.['minlength'].requiredLength}} character for email.
+                        }
+                        }
+                    </div>
+                </div>
+                <!-- Admission Date -->
+                <div class="">
+                    <label for="admissionDate">Admission Date:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(admissionDate)}" type="date"
+                        name="admissionDate" id="admissionDate" formControlName="admissionDate">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(admissionDate)){
+                        @if(admissionDate.hasError('required')) {
+                        Please enter admission date.
+                        } @else if (admissionDate.hasError('minlength')) {
+                        Minimum {{admissionDate.errors?.['minlength'].requiredLength}} character for address.
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit"
+                    class="mr-5 py-[10px] px-8 bg-primary-300 text-white rounded-lg text-sm select-none">Add
+                    Student</button>
+                <button type="button" class="py-[10px] px-8 bg-primary-300 text-white rounded-lg text-sm select-none"
+                    (click)="cancelAddStudent()">Cancel</button>
+            </div>
+
         </form>
     </div>
 </div>

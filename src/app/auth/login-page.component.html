@@ -1,0 +1,54 @@
+<div class="container px-4 h-screen flex items-center justify-center">
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin($event)">
+        <div class="flex justify-center">
+            <img class="h-40 relative -top-12" src="./assets/images/Logo.png" alt="">
+        </div>
+        <h1 class="text-3xl mb-14 w-96 text-center">Welcome, please login to your account</h1>
+        <div class="flex items-center flex-col">
+            <div class="flex flex-col w-80 gap-4 relative">
+                <div class="">
+                    <label for="username">Username:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(username)}" type="text" name="username"
+                        id="username" placeholder="Enter your user name" formControlName="username">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(username)){
+                        @if(username.hasError('required')) {
+                        Please enter your username.
+                        } @else if (username.hasError('minlength')) {
+                        Minimum {{username.errors?.['minlength'].requiredLength}} character for username.
+                        }
+                        }
+                    </div>
+                </div>
+                <div class="">
+                    <label for="password">Password:</label>
+                    <input class="border w-full rounded-md py-3 px-2 text-sm"
+                        [ngClass]="{'border-red-600': formService.isFieldInvalid(password)}" type="text" name="password"
+                        id="password" placeholder="Enter your password" formControlName="password">
+                    <div class="text-red-600 text-sm">
+                        @if(formService.isFieldInvalid(password)){
+                        @if (password.hasError('required')) {
+                        Password is required.
+                        } @else if (password.hasError('minlength')) {
+                        Password should be at least {{password.errors?.['minlength'].requiredLength}} character.
+                        } @else if (password.hasError('passwordInvalid')) {
+                        Password should contain at least a number
+                        }
+                        }
+                    </div>
+                </div>
+                <div class="relative">
+                    @if (isLoading) {
+                    <div class="absolute h-10">
+                        <mat-spinner class="scale-[0.25] -translate-y-[30px] translate-x-16"></mat-spinner>
+                    </div>
+                    }
+                    <button class="w-full py-[10px] px-8 text-white rounded-lg text-sm" type="submit"
+                        [ngClass]="{'bg-gray-300' : loginForm.invalid || isLoading, 'bg-primary-300' : loginForm.valid && !isLoading}"
+                        [disabled]="!loginForm.valid">Login</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

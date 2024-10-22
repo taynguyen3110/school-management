@@ -18,3 +18,36 @@ export interface UserProfile {
     profileUrl: string,
     role: string
 }
+
+export interface Student {
+    id: string,
+    lastName: string,
+    firstName: string,
+    address: string,
+    email: string,
+    profileUrl: string,
+    gender: "male" | "female",
+    dateOfBirth: string,
+    classIds: string[],
+    parentIds: string[],
+    admissionDate: string,
+    phone: string,
+    parents: Parent[],
+    classes: Class[]
+}
+
+export interface Parent {
+    id: string,
+    lastName: string,
+    firstName: string,
+    address: string,
+    email: string,
+    phone: string,
+    profileUrl: string
+}
+
+export interface Class {
+    id: string,
+    name: string,
+    studentIds?: string[]
+}

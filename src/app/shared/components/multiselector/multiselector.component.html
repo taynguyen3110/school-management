@@ -1,0 +1,24 @@
+<div (clickOutside)="hideItem()" class="relative">
+    <div class="w-32 flex justify-center text-sm" (click)="showItem()">
+        @if (selectedItem.length === 0) {
+        <div class="text-gray-400">
+            Search by classes
+        </div>
+        }
+        <div class="flex flex-wrap">
+            @for (item of selectedItem; track $index) {
+            <div class="px-1">{{item}}</div>
+            }
+        </div>
+    </div>
+    @if(isShow) {
+    <div
+        class="bg-white absolute top-7 left-1/2 h-40 overflow-auto -translate-x-1/2 w-36 p-2 rounded-md border border-gray-300">
+        @for (item of items; track $index) {
+        <div class="hover:bg-slate-100 flex justify-center w-full" [ngClass]="{'bg-green-200 hover:bg-green-50' : selectedItem.includes(item.id)}" (click)="selectItem(item.id)">{{item.label}}</div>
+        }
+    </div>
+    }
+
+
+</div>

@@ -13,7 +13,10 @@ module.exports = {
         primary: {
           300: '#509CDB',
           500: '#2671B1'
-        }
+        },
+        bgheader: '#D60A0B',
+        bgbody: '#14238A',
+        bgchildbody: '#263AC3',
       }
     },
   },

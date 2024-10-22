@@ -1,15 +1,9 @@
-<div class="container px-4 sm:px-0 pb-4 bg-white relative shadow-sm z-10">
-    <div class="flex justify-between items-center py-6">
-        <i class="fa-solid fa-bars text-xl cursor-pointer" (click)="showMenu()"></i>
-        <h3 class="text-xl font-medium">{{selectedMenu}}</h3>
+<div class="container px-4 h-20 bg-white relative shadow-md flex justify-between">
+    <div class="relative flex w-3/5">
+        <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 ml-4 opacity-40"></i>
+        <input class="placeholder:text-sm pl-11 w-full rounded-full focus:outline-none" type="text" placeholder="Search">
+    </div>
+    <div class="flex justify-between items-center py-6 pr-2">
         <i class="fa-regular fa-user cursor-pointer" (click)="goToUserInfo()"></i>
     </div>
-    <div class="relative">
-        <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 ml-4"></i>
-        <input class="placeholder:text-sm placeholder:pl-11 w-full bg-background rounded-full py-2" type="text"
-            placeholder="Search for something">
-    </div>
-    @if (displayMenu) {
-    <sman-sidebar [closeMenu]="hideMenu" (selectMenuEvent)="selectMenu($event)" ></sman-sidebar>
-    }
 </div>

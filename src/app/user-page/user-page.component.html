@@ -7,75 +7,39 @@
             </div>
         </div>
         @if(user) {
+        @if (!isEdit && !isChangePassword) {
         <div class="flex flex-col justify-center items-center">
-            @if(!isChangePassword){
-            <form class="w-full md:w-[700px] flex flex-col items-center gap-2" (ngSubmit)="updateUser()"
-                [formGroup]="userProfileForm">
+            <form class="w-full md:w-[700px] flex flex-col items-center gap-2">
                 <div class="w-2/3 flex justify-between items-center">
                     <label for="firstName">First Name:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="firstName" id="firstName" formControlName="firstName" [readonly]="!isEdit">
+                    <input class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+                        type="text" name="firstName" id="firstName" [value]="user.firstName" readonly>
                 </div>
                 <div class="w-2/3 flex justify-between items-center">
                     <label for="lastName">Last Name:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="lastName" id="lastName" formControlName="lastName" [readonly]="!isEdit">
+                    <input class="focus:outline-none border-white border cursor-default rounded-md py-3 px-2 text-sm "
+                        type="text" name="lastName" id="lastName" [value]="user.lastName" readonly>
                 </div>
                 <div class="w-2/3 flex justify-between items-center">
                     <label for="email">Email:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="email" id="email" formControlName="email" [readonly]="!isEdit">
+                    <input class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+                        type="text" name="email" id="email" [value]="user.email" readonly>
                 </div>
             </form>
-            } @else {
-                <form class="w-full md:w-[700px] flex flex-col items-center gap-2" (ngSubmit)="changePassword()"
-                [formGroup]="changePwdForm">
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="firstName">New Password:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="firstName" id="firstName" formControlName="firstName" [readonly]="!isEdit">
-                </div>
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="lastName">Last Name:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="lastName" id="lastName" formControlName="lastName" [readonly]="!isEdit">
-                </div>
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="email">Email:</label>
-                    <input class="rounded-md py-3 px-2 text-sm "
-                        [ngClass]="{'focus:outline-none border-white border cursor-default' : !isEdit, 'border' : isEdit}"
-                        type="text" name="email" id="email" formControlName="email" [readonly]="!isEdit">
-                </div>
-            </form>
-            }
             <div class="flex justify-center items-center gap-5 w-96 mt-10 mb-12">
-                @if (!isEdit && !isChangePassword) {
                 <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm" (click)="editMode()"
                     type="button">Edit</button>
                 <button class="bg-primary-300  py-[10px] px-8 text-white rounded-lg text-sm"
                     (click)="changePasswordMode()" type="button">Change password</button>
-                } @else if (isEdit) {
-                <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm" (click)="cancelEdit()"
-                    type="button">Cancel</button>
-                <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm" type="button"
-                    (click)="updateUser()"
-                    [ngClass]="{'bg-gray-300' : userProfileForm.invalid || isLoading || !formIsChanged, 'bg-primary-300' : userProfileForm.valid && !isLoading && formIsChanged}"
-                    [disabled]="!userProfileForm.valid">Save</button>
-                } @else if (isChangePassword) {
-                <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm"
-                    (click)="cancelChangePassword()" type="button">Cancel</button>
-                <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm" type="button"
-                    (click)="updateUser()"
-                    [ngClass]="{'bg-gray-300' : userProfileForm.invalid || isLoading || !formIsChanged, 'bg-primary-300' : userProfileForm.valid && !isLoading && formIsChanged}"
-                    [disabled]="!userProfileForm.valid">Confirm</button>
-                }
             </div>
         </div>
+        }
+        @if(!isChangePassword && isEdit){
+        <sman-edit-profile [user]="user" [setUser]="setUser" [cancelEdit]="cancelEdit"></sman-edit-profile>
+        }
+        @if (isChangePassword && !isEdit) {
+        <sman-change-password [cancelChangePassword]="cancelChangePassword"></sman-change-password>
+        }
         } @else {
         Error getting account information!
         {{user | json}}
