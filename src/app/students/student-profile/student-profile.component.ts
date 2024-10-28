@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Student } from '../../shared/types';
 import { StudentService } from '../service/student.service';
+import { Location } from '@angular/common';
 
 @Component({
     standalone: true,
@@ -11,12 +12,12 @@ import { StudentService } from '../service/student.service';
 })
 
 export class StudentProfileComponent implements OnInit {
-    // studentId!: string | null;
     student!: Student;
 
     constructor(
         private route: ActivatedRoute,
-        private studentService: StudentService
+        private studentService: StudentService,
+        private location: Location
     ) { }
 
     ngOnInit() {
@@ -28,5 +29,9 @@ export class StudentProfileComponent implements OnInit {
                 })
             }
         })
+    }
+
+    goBack() {
+        this.location.back();
     }
 }

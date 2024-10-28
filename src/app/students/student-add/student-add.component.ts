@@ -1,22 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NavigationService } from '../../services/navigation.service';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormService } from '../../services/form.service';
+import { FormService } from '../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
-import { StudentService } from '../../../students/service/student.service';
+import { StudentService } from '../service/student.service';
+import { PhotoUploaderComponent } from "../../shared/components/photouploader/photo-uploader.component";
+import { Student } from '../../shared/types';
 
 @Component({
   selector: 'sman-add-student',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './add-student.component.html',
+  imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent],
+  templateUrl: './student-add.component.html',
 })
 export class AddStudentComponent {
   @Output() cancel = new EventEmitter()
 
-  /**
-   *
-   */
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
@@ -29,7 +27,6 @@ export class AddStudentComponent {
     ]],
     lastName: ['', [
       Validators.required,
-
     ]],
     gender: ['', [
       Validators.required,
@@ -98,16 +95,37 @@ export class AddStudentComponent {
   get admissionDate() {
     return this.addStudentForm.get('admissionDate') as FormControl;
   }
+  get profileUrl() {
+    return this.addStudentForm.get('profileUrl') as FormControl;
+  }
+
+  choosePhoto(photoUrl: string) {
+    this.profileUrl.setValue(photoUrl);
+  }
 
   cancelAddStudent() {
     this.cancel.emit()
   }
 
+  toStudent(data: any): Student {
+    return {
+      firstName: data.firstName ?? '',
+      lastName: data.lastName ?? '',
+      address: data.address ?? '',
+      phone: data.phone ?? '',
+      email: data.email ?? '',
+      profileUrl: data.profileUrl ?? '',
+      gender: data.gender ?? "male",
+      dateOfBirth: data.dateOfBirth ?? '',
+      classIds: data.classIds ?? [],
+      parentIds: data.parentIds ?? [],
+      admissionDate: data.dateOfBirth ?? '',
+    };
+  }
+
   addStudent(e: Event) {
     e.preventDefault();
-    console.log(this.addStudentForm.value);
-    this.studentService.addStudent(this.addStudentForm.value).subscribe(() => {
-      console.log("added student");
+    this.studentService.addStudent(this.toStudent(this.addStudentForm.value)).subscribe(() => {
       this.cancelAddStudent();
     })
   }

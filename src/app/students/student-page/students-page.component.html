@@ -1,0 +1,16 @@
+<div class="bg-background p-4 pt-7 h-screen">
+    @if (displayAddStudent) {
+    <sman-add-student (cancel)="hideAddStudentForm()" />
+    }
+    <div class="container bg-white p-4 mt-4 rounded-lg h-[calc(88vh)] flex flex-col justify-between">
+        <div class="overflow-x-auto">
+            <h1 class="text-center text-xl font-semibold">All Students</h1>
+            <sman-students-filter [queryParams]="filterParams"></sman-students-filter>
+            <sman-item-table listOf="student" [items]="students"></sman-item-table>
+        </div>
+        @if(studentsCount) {
+        <sman-pagination [pageSize]="itemPerPage" [totalCount]="studentsCount" [currentPage]="currentPage"
+            (pageChange)="handlePageChange($event)" />
+        }
+    </div>
+</div>

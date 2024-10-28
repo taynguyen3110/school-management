@@ -1,8 +1,8 @@
-<div class="bg-black bg-opacity-20 w-full h-screen fixed top-0 left-0">
-    <div class="container bg-white w-full top-10 relative rounded-2xl px-8 py-8">
+<div class="bg-black bg-opacity-20 px-4 w-full h-screen fixed top-0 left-0 z-20">
+    <div class="container bg-white w-full top-10 relative rounded-2xl px-8 py-8 z-20">
         <h1 class="font-medium text-xl mb-5">Add New Students</h1>
         <form class="flex flex-col gap-2" [formGroup]="addStudentForm" (ngSubmit)="addStudent($event)">
-            <div class="flex justify-between gap-2">
+            <div class="flex gap-4">
                 <!-- First Name -->
                 <div class="">
                     <label for="firstName">First Name:</label>
@@ -39,7 +39,7 @@
                 <div class="flex flex-col items-end">
                     <div class="flex flex-col">
                         <label for="gender">Gender:</label>
-                        <select class="px-2 py-3 border rounded-md max-w-20"
+                        <select class="px-2 py-3 border rounded-md max-w-32"
                             [ngClass]="{'border-red-600': formService.isFieldInvalid(gender)}" name="gender" id="gender"
                             formControlName="gender">
                             <option value="male">Male</option>
@@ -50,8 +50,6 @@
                         @if(formService.isFieldInvalid(gender)){
                         @if(gender.hasError('required')) {
                         Please select gender.
-                        } @else if (gender.hasError('minlength')) {
-                        Minimum {{gender.errors?.['minlength'].requiredLength}} character for last name.
                         }
                         }
 
@@ -59,7 +57,7 @@
                 </div>
 
             </div>
-            <div class="flex justify-between">
+            <div class="flex gap-4">
                 <!-- Address -->
                 <div class="w-2/3">
                     <label for="address">Address:</label>
@@ -70,8 +68,6 @@
                         @if(formService.isFieldInvalid(address)){
                         @if(address.hasError('required')) {
                         Please enter your address.
-                        } @else if (address.hasError('minlength')) {
-                        Minimum {{address.errors?.['minlength'].requiredLength}} character for address.
                         }
                         }
                     </div>
@@ -86,14 +82,12 @@
                         @if(formService.isFieldInvalid(dateOfBirth)){
                         @if(dateOfBirth.hasError('required')) {
                         Please enter your date of birth.
-                        } @else if (dateOfBirth.hasError('minlength')) {
-                        Minimum {{dateOfBirth.errors?.['minlength'].requiredLength}} character for address.
                         }
                         }
                     </div>
                 </div>
             </div>
-            <div class="flex justify-between gap-3">
+            <div class="flex gap-4">
                 <!-- Phone -->
                 <div class="">
                     <label for="phone">Phone:</label>
@@ -104,8 +98,6 @@
                         @if(formService.isFieldInvalid(phone)){
                         @if(phone.hasError('required')) {
                         Please enter your phone.
-                        } @else if (phone.hasError('minlength')) {
-                        Minimum {{phone.errors?.['minlength'].requiredLength}} character for address.
                         }
                         }
                     </div>
@@ -120,8 +112,6 @@
                         @if(formService.isFieldInvalid(email)){
                         @if(email.hasError('required')) {
                         Please enter your email.
-                        } @else if (email.hasError('minlength')) {
-                        Minimum {{email.errors?.['minlength'].requiredLength}} character for email.
                         }
                         }
                     </div>
@@ -136,12 +126,13 @@
                         @if(formService.isFieldInvalid(admissionDate)){
                         @if(admissionDate.hasError('required')) {
                         Please enter admission date.
-                        } @else if (admissionDate.hasError('minlength')) {
-                        Minimum {{admissionDate.errors?.['minlength'].requiredLength}} character for address.
                         }
                         }
                     </div>
                 </div>
+            </div>
+            <div>
+                <sman-photo-uploader (fileSelected)="choosePhoto($event)"></sman-photo-uploader>
             </div>
 
             <div class="mt-3">

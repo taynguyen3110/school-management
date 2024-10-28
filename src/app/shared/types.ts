@@ -20,7 +20,7 @@ export interface UserProfile {
 }
 
 export interface Student {
-    id: string,
+    id?: string,
     lastName: string,
     firstName: string,
     address: string,
@@ -28,16 +28,16 @@ export interface Student {
     profileUrl: string,
     gender: "male" | "female",
     dateOfBirth: string,
-    classIds: string[],
-    parentIds: string[],
+    classIds: Array<string>,
+    parentIds: Array<string>,
     admissionDate: string,
     phone: string,
-    parents: Parent[],
-    classes: Class[]
+    parents?: Parent[],
+    classes?: Class[]
 }
 
 export interface Parent {
-    id: string,
+    id?: string,
     lastName: string,
     firstName: string,
     address: string,
@@ -46,8 +46,24 @@ export interface Parent {
     profileUrl: string
 }
 
+export interface Teacher {
+    id?: string,
+    lastName: string,
+    firstName: string,
+    address: string,
+    gender: "male" | "female",
+    email: string,
+    phone: string,
+    profileUrl: string,
+    admissionDate: string,
+}
+
 export interface Class {
     id: string,
     name: string,
     studentIds?: string[]
+}
+
+export interface PhotoUrl {
+    url: string
 }

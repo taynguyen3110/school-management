@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { StudentsComponent } from "./students/students-page/students-page.component";
+import { StudentsComponent } from "./students/student-page/students-page.component";
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { LoginComponent } from './auth/login-page.component';
 import { AuthService } from './shared/services/auth.service';

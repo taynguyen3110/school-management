@@ -15,11 +15,13 @@ export class StudentService {
         return this.apiService.get<Student>(`/students/${id}`);
     }
 
-    addStudent(student: any) {
+    lookUpStudentsByParent(parentId: string) {
+        return this.apiService.get<Student[]>(`/students/by-parent/${parentId}`)
+    }
+
+    addStudent(student: Student) {
         return this.apiService.post<Student>("/students/add", student);
     }
 
-    getClasses() {
-        return this.apiService.get<Class[]>("/classes/lookup")
-    }
+    
 }

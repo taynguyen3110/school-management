@@ -1,27 +1,49 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ClickOutsideDirective } from '../../directives/clickOutside.directive';
 import { CommonModule } from '@angular/common';
+import { IdToLabelPipe } from '../../pipes/idToLabel';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, fromEvent } from 'rxjs';
 
 @Component({
     standalone: true,
-    imports: [ClickOutsideDirective, CommonModule],
+    imports: [ClickOutsideDirective, CommonModule, IdToLabelPipe, FormsModule],
     selector: 'sman-multiselector',
     templateUrl: 'multiselector.component.html',
     styleUrl: 'multiselector.component.scss'
 })
 
-export class MultiSelectorComponent {
+export class MultiSelectorComponent implements OnChanges, AfterViewInit {
     @Input() items: { id: string, label: string }[] = []
     @Input() selected: string[] = []
-    @Output() select = new EventEmitter<string[]>()
+    @Input() placeholder: string = '';
+    @Input() lookUp: boolean = false;
+    @Input() supportMulti: boolean = false;
 
-    constructor(private el: ElementRef<HTMLElement>) { }
+    @Output() inputTyped = new EventEmitter<string>()
+    @Output() select = new EventEmitter<string[] | string>()
 
+    @ViewChild('searchInput') searchInputRef!: ElementRef;
+
+    searchValue: string = ''
     isShow: boolean = false;
-    selectedItem: string[] = []
+    selectedItem: string[] = [];
+    constructor() { }
 
-    ngOnInit() {
+    ngOnChanges() {
         this.selectedItem = this.selected;
+    }
+
+    ngAfterViewInit() {
+        if (this.lookUp) {
+            const inputTyped = fromEvent(this.searchInputRef.nativeElement, 'input')
+                .pipe(
+                    debounceTime(1000)
+                )
+            inputTyped.subscribe(() => {
+                this.inputTyped.emit(this.searchValue)
+            })
+        }
     }
 
     hideItem = () => {
@@ -29,15 +51,19 @@ export class MultiSelectorComponent {
     }
 
     showItem() {
-        this.isShow = true;
+        this.isShow = !this.isShow;
     }
 
     selectItem(id: string) {
-        if (!this.selectedItem.includes(id)) {
-            this.selectedItem.push(id);
+        if (this.supportMulti) {
+            if (!this.selectedItem.includes(id)) {
+                this.selectedItem.push(id);
+            } else {
+                this.selectedItem = this.selectedItem.filter(i => i !== id);
+            }
+            this.select.emit(this.selectedItem as string[]);
         } else {
-            this.selectedItem = this.selectedItem.filter(i => i !== id);
+            this.select.emit(id);
         }
-        this.select.emit(this.selectedItem);
     }
 }

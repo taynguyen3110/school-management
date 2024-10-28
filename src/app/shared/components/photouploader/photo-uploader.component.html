@@ -1,0 +1,21 @@
+<div class="w-full h-24 border-2 rounded-xl border-dashed border-gray-300 cursor-pointer flex items-center justify-center"
+    [ngClass]="{'cursor-grab': isDragOver(), 'cursor-pointer': !isDragOver()}" (click)="onClick()"
+    (dragover)="onDragOver($event)" (drop)="onDrop($event)" (mouseover)="onMouseOver()" (mouseleave)="onMouseLeave()">
+    <input class="hidden" type="file" name="" id="" (change)="onFileChange($event)" (cancel)="log($event)" #fileInput>
+    @if(imagePreview()) {
+    <div class="w-full h-full flex flex-col items-center relative">
+        @if (isMouseOver) {
+            <i class="fa-regular fa-circle-xmark absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl opacity-40" (click)="removeFile()"></i>
+        }
+        <img class="object-contain w-full" style="height: calc(100%);" [src]="imagePreview()" alt="">
+        <!-- <p class="text-sm">{{photoUrl()}}</p> -->
+    </div>
+    <!-- onHover display delete button -->
+    } @else {
+    <div class="flex flex-col items-center justify-center text-gray-400">
+        <i class="fa-solid fa-upload text-xl"></i>
+        <p class="text-sm">Drag or click to upload profile picture</p>
+    </div>
+    }
+    <!-- <button (click)="log($event)">click</button> -->
+</div>

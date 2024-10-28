@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard-page.component';
-import { StudentsComponent } from './students/students-page/students-page.component';
+import { StudentsComponent } from './students/student-page/students-page.component';
 import { TeachersComponent } from './teachers/teachers-page.component';
 import { ParentsComponent } from './parents/parents-page.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { StudentProfileComponent } from './students/student-profile/student-profile.component';
+import { ParentProfileComponent } from './parents/parent-profile/parent-profile.component';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,10 @@ export const routes: Routes = [
                 path: 'parents',
                 title: 'Parents',
                 component: ParentsComponent
+            },
+            {
+                path: 'parents/:id',
+                component: ParentProfileComponent,
             },
             {
                 path: 'user',

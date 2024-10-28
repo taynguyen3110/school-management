@@ -1,0 +1,52 @@
+<table class="text-sm md:text-base text-left w-full cursor-pointer">
+    <thead class="bg-slate-200">
+        <th>Name</th>
+        <th>{{listOf | titlecase}} ID</th>
+        <th>Email</th>
+        @switch (listOf) {
+        @case ('student') {
+        <th>Gender</th>
+        }
+        @case ('parent') {
+        <th>Phone</th>
+        }
+        }
+    </thead>
+    <tbody>
+        @for (item of items; track $index; let e = $even) {
+        @if (!e) {
+        <tr [routerLink]="['./' + item.id]" class="bg-slate-100">
+            <td>{{item.firstName + ' ' + item.lastName}}</td>
+            <td>{{item.id}}</td>
+            <td>{{item.email}}</td>
+            @switch (listOf) {
+            @case ('student') {
+            <td>{{item.gender | titlecase}}</td>
+            }
+            @case ('parent') {
+            <td>{{item.phone}}</td>
+            }
+            }
+        </tr>
+        } @else {
+        <tr [routerLink]="['./' + item.id]">
+            <td>{{item.firstName + ' ' + item.lastName}}</td>
+            <td>{{item.id}}</td>
+            <td>{{item.email}}</td>
+            @switch (listOf) {
+            @case ('student') {
+            <td>{{item.gender | titlecase}}</td>
+            }
+            @case ('parent') {
+            <td>{{item.phone}}</td>
+            }
+            }
+        </tr>
+        }
+        } @empty {
+        <tr>
+            <td colSpan="6" class="text-center">There are no students!</td>
+        </tr>
+        }
+    </tbody>
+</table>

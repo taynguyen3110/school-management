@@ -11,16 +11,11 @@ import { QueryService } from '../../services/filter.service';
   standalone: true,
   imports: [RouterLink, AccordionItemComponent, AccordionButtonComponent],
   templateUrl: './sidebar.component.html',
-  // styleUrl: '',
-  host: {
-    // '(document:click)': 'hideMenu($event)'
-  },
   schemas: []
 })
 export class SidebarComponent {
 
-  // @Input() closeMenu!: () => void;
-  @Output() selectMenuEvent = new EventEmitter<string>();
+  selectedMenu: route = '';
 
   constructor(
     private authService: AuthService,
@@ -30,15 +25,15 @@ export class SidebarComponent {
 
   }
 
-  selectMenu(menuItem: string) {
-    this.selectMenuEvent.emit(menuItem);
+  onSelectMenu(menu: route) {
+    this.selectedMenu = menu;
   }
 
   logOut() {
     this.authService.logOut();
   }
 
-  navToMenu(url: route, params?: Params, backToRoot: boolean = false) {
+  navToMenu = (url: route, params?: Params, backToRoot: boolean = false) => {
     let queryParams = params;
     if (params && !backToRoot) {
       queryParams = this.queryService.addToCurrentParam(params);
