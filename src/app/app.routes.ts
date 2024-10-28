@@ -7,6 +7,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { StudentProfileComponent } from './students/student-profile/student-profile.component';
 import { ParentProfileComponent } from './parents/parent-profile/parent-profile.component';
+import { TeacherProfileComponent } from './teachers/teacher-profile/teacher-profile.component';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,10 @@ export const routes: Routes = [
                 path: 'teachers',
                 title: 'Teachers',
                 component: TeachersComponent
+            },
+            {
+                path: 'teachers/:id',
+                component: TeacherProfileComponent,
             },
             {
                 path: 'parents',

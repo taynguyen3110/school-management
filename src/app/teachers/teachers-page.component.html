@@ -5,7 +5,7 @@
     <div class="container bg-white p-4 mt-4 rounded-lg h-[calc(88vh)] flex flex-col justify-between">
         <div class="overflow-x-auto">
             <h1 class="text-center text-xl font-semibold">All Parents</h1>
-            <!-- <sman-parent-filter [queryParams]="filterParams"></sman-parent-filter> -->
+            <sman-teacher-filter [queryParams]="filterParams"></sman-teacher-filter>
             <sman-item-table listOf="parent" [items]="teachers"></sman-item-table>
         </div>
         <sman-pagination [pageSize]="itemPerPage" [totalCount]="teachersCount" [currentPage]="currentPage"

@@ -8,11 +8,12 @@ import { AddTeacherComponent } from './teacher-add/teacher-add.component';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 import { TeacherService } from './services/teacher.service';
+import { TeacherFilterComponent } from './teacher-filter/teacher-filter.component';
 
 @Component({
   selector: 'sman-teachers',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddTeacherComponent],
+  imports: [ItemTableComponent, PaginationComponent, AddTeacherComponent, TeacherFilterComponent],
   templateUrl: './teachers-page.component.html',
   styleUrl: './teachers-page.component.scss'
 })
@@ -43,6 +44,7 @@ export class TeachersComponent {
       )
       .subscribe((params) => {
         this.displayAddTeacher = params['addTeacher'] === "true";
+        this.filterParams = params;
         if (!params['page']) {
           const newParam = this.queryService.setParam(params, { page: this.currentPage });
           this.applyQueryChanges(newParam);

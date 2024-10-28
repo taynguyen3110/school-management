@@ -1,14 +1,14 @@
-@if(parent) {
+@if(teacher) {
 <div class="flex gap-7">
     <div class="w-1/3">
         <img class="w-full h-full rounded-full border border-black" src="" alt="">
     </div>
     <div class="w-full">
-        <div class="text-lg text-blue-800 font-semibold">{{parent.firstName + " " + parent.lastName}}</div>
-        <div>{{parent.email}}</div>
-        <div>{{parent.phone}}</div>
-        <div>{{parent.address}}</div>
-        <div>{{parent.id}}</div>
+        <div class="text-lg text-blue-800 font-semibold">{{teacher.firstName + " " + teacher.lastName}}</div>
+        <div>{{teacher.email}}</div>
+        <div>{{teacher.phone}}</div>
+        <div>{{teacher.address}}</div>
+        <div>{{teacher.id}}</div>
         <div class="flex gap-2">
             <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
                 Edit
@@ -22,7 +22,6 @@
         </div>
     </div>
 </div>
-<sman-item-table listOf="student" [items]="students"></sman-item-table>
 } @else {
-<div>This parent does not exist!</div>
+<div>This teacher does not exist!</div>
 }

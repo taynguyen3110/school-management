@@ -44,6 +44,7 @@ export class ParentsComponent {
       )
       .subscribe((params) => {
         this.displayAddParent = params['addParent'] === "true";
+        this.filterParams = params
         if (!params['page']) {
           const newParam = this.queryService.setParam(params, { page: this.currentPage });
           this.applyQueryChanges(newParam);

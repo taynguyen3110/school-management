@@ -87,6 +87,6 @@ export class ParentFilterComponent implements OnInit {
 
     filterParents() {
         const newParams = this.queryService.addToCurrentParam({ ...this.filterParentForm.value, page: 1 });
-        this.navigationService.toRoute('students', newParams, true);
+        this.navigationService.toRoute('parents', newParams, true);
     }
 }

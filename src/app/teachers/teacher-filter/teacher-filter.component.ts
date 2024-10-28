@@ -6,18 +6,17 @@ import { QueryService } from '../../shared/services/filter.service';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { CommonModule } from '@angular/common';
 import { Class, Parent } from '../../shared/types';
-import { ParentsService } from '../services/teacher.service';
 import { ClassesService } from '../../classes/services/classes.service';
 import { StudentService } from '../../students/service/student.service';
 
 @Component({
     standalone: true,
     imports: [MultiSelectorComponent, CommonModule, ReactiveFormsModule],
-    selector: 'sman-parent-filter',
-    templateUrl: 'parent-filter.component.html'
+    selector: 'sman-teacher-filter',
+    templateUrl: 'teacher-filter.component.html'
 })
 
-export class StudentsFilterComponent implements OnInit {
+export class TeacherFilterComponent implements OnInit {
     @Input() queryParams: Params = {}
 
     classes: Class[] = [];
@@ -32,7 +31,7 @@ export class StudentsFilterComponent implements OnInit {
         private fb: FormBuilder,
     ) { }
 
-    filterParentForm = this.fb.group({
+    filterTeacherForm = this.fb.group({
         name: ['', [
         ]],
         classIds: ['', [
@@ -50,10 +49,10 @@ export class StudentsFilterComponent implements OnInit {
     }
 
     get name() {
-        return this.filterParentForm.get('name') as FormControl
+        return this.filterTeacherForm.get('name') as FormControl
     }
     get classIds() {
-        return this.filterParentForm.get('classIds') as FormControl
+        return this.filterTeacherForm.get('classIds') as FormControl
     }
 
     getQueryParams() {
@@ -74,7 +73,7 @@ export class StudentsFilterComponent implements OnInit {
     }
 
     updateClassFilter(classes: string[]) {
-        this.filterParentForm.setValue({ name: this.name.value, classIds: classes.join(',') })
+        this.filterTeacherForm.setValue({ name: this.name.value, classIds: classes.join(',') })
         this.selectedClasses = classes;
     }
 
@@ -85,8 +84,8 @@ export class StudentsFilterComponent implements OnInit {
             })
     }
 
-    filterParents() {
-        const newParams = this.queryService.addToCurrentParam({ ...this.filterParentForm.value, page: 1 });
-        this.navigationService.toRoute('students', newParams, true);
+    filterTeachers() {
+        const newParams = this.queryService.addToCurrentParam({ ...this.filterTeacherForm.value, page: 1 });
+        this.navigationService.toRoute('teachers', newParams, true);
     }
 }
