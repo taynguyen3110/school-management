@@ -24,5 +24,7 @@ export type route =
     'students' |
     'teachers' |
     'parents' |
+    'subjects' |
+    'classes' |
     'user'
     ;

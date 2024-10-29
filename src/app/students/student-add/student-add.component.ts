@@ -13,7 +13,7 @@ import { Student } from '../../shared/types';
   templateUrl: './student-add.component.html',
 })
 export class AddStudentComponent {
-  @Output() cancel = new EventEmitter()
+  @Output() cancelForm = new EventEmitter()
 
   constructor(
     private fb: FormBuilder,
@@ -104,7 +104,7 @@ export class AddStudentComponent {
   }
 
   cancelAddStudent() {
-    this.cancel.emit()
+    this.cancelForm.emit()
   }
 
   toStudent(data: any): Student {

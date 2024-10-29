@@ -1,4 +1,4 @@
-<div class="bg-black bg-opacity-20 px-4 w-full h-screen fixed top-0 left-0 z-20">
+<div class="bg-black bg-opacity-20 px-4 w-full h-screen fixed top-0 left-0 z-40">
     <div class="container bg-white w-full top-10 relative rounded-2xl px-8 py-8 z-20">
         <h1 class="font-medium text-xl mb-5">Add New Students</h1>
         <form class="flex flex-col gap-2" [formGroup]="addStudentForm" (ngSubmit)="addStudent($event)">
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div>
-                <sman-photo-uploader (fileSelected)="choosePhoto($event)"></sman-photo-uploader>
+                <sman-photo-uploader (photoUploaded)="choosePhoto($event)"></sman-photo-uploader>
             </div>
 
             <div class="mt-3">

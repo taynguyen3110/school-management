@@ -11,11 +11,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectorComponent } from "../../shared/components/multiselector/multiselector.component";
 import { ItemTableComponent } from "../../shared/components/item-table/item-table.component";
 import { StudentsFilterComponent } from "../student-filter/students-filter.component";
+import { AddFormComponent } from '../../shared/components/add-form/add-form.component';
 
 @Component({
   selector: 'sman-students, students',
   standalone: true,
-  imports: [PaginationComponent, AddStudentComponent, RouterLink, ReactiveFormsModule, MultiSelectorComponent, ItemTableComponent, StudentsFilterComponent],
+  imports: [PaginationComponent, RouterLink, ReactiveFormsModule, MultiSelectorComponent, ItemTableComponent, StudentsFilterComponent, AddStudentComponent],
   templateUrl: './students-page.component.html',
   styleUrl: './students-page.component.scss'
 })

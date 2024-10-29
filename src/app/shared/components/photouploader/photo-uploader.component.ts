@@ -17,14 +17,17 @@ export class PhotoUploaderComponent implements OnInit {
     selectedPhoto: File | null = null;
     @ViewChild('fileInput') fileInput: ElementRef | undefined;
     isMouseOver: boolean = false;
-    @Output() fileSelected = new EventEmitter<string>();
+    @Output() photoUploaded = new EventEmitter<string>();
 
     constructor(private photoUploadService: PhotoUploaderService) { }
 
     ngOnInit() {
     }
 
-    onClick() {
+    onClick(e: MouseEvent) {
+        if ((e.target as HTMLElement).tagName === 'INPUT') {
+            return;
+        }
         if (!this.uploadSuccess) {
             this.fileInput?.nativeElement.click()
         }
@@ -32,10 +35,16 @@ export class PhotoUploaderComponent implements OnInit {
 
     onDragOver(event: DragEvent) {
         event.preventDefault();
+        this.isDragOver.set(true);
+        console.log(this.isDragOver());
     }
+
+    // onDragLeave
 
     onDrop(event: DragEvent) {
         event.preventDefault();
+        this.isDragOver.set(false);
+        console.log(this.isDragOver());
         const photo = event.dataTransfer?.files[0] as File | null;
         this.uploadPhoto(photo);
     }
@@ -57,7 +66,7 @@ export class PhotoUploaderComponent implements OnInit {
                     this.imagePreview.set(photoBase64);
                     this.photoUploadService.uploadPhoto(photoBase64).subscribe((data) => {
                         this.photoUrl.set(data.url);
-                        this.fileSelected.emit(data.url);
+                        this.photoUploaded.emit(data.url);
                         this.uploadSuccess = true;
                     })
                 }
@@ -66,6 +75,7 @@ export class PhotoUploaderComponent implements OnInit {
 
 
         } else {
+            // check file empty or not
             console.log("only image is allowed");
         }
     }
@@ -78,19 +88,18 @@ export class PhotoUploaderComponent implements OnInit {
         this.isMouseOver = false;
     }
 
-    removeFile() {
+    removeFile(e: Event) {
+        e.stopPropagation();
         this.imagePreview.set('');
         this.photoUrl.set('');
         this.selectedPhoto = null;
         this.uploadSuccess = false;
     }
 
-    log(e: any) {
+    logData(e: any) {
         e.preventDefault()
         console.log(this.isDragOver());
         console.log('cancel');
         console.log(this.imagePreview());
-
-
     }
 }

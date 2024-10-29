@@ -47,6 +47,15 @@ export const routes: Routes = [
                 component: ParentProfileComponent,
             },
             {
+                path: 'subjects',
+                title: 'Subjects',
+                component: ParentsComponent
+            },
+            {
+                path: 'subjects/:id',
+                component: ParentProfileComponent,
+            },
+            {
                 path: 'user',
                 title: 'User',
                 component: UserPageComponent

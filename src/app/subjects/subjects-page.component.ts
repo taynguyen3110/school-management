@@ -4,11 +4,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { QueryService } from '../shared/services/filter.service';
 import { NavigationService } from '../shared/services/navigation.service';
-import { AddTeacherComponent } from './teacher-add/teacher-add.component';
+import { AddTeacherComponent } from './subject-add/subject-add.component';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
-import { TeacherService } from './services/teacher.service';
-import { TeacherFilterComponent } from './teacher-filter/teacher-filter.component';
+import { TeacherService } from './services/subject.service';
+import { TeacherFilterComponent } from './subject-filter/subject-filter.component';
 
 @Component({
   selector: 'sman-teachers',

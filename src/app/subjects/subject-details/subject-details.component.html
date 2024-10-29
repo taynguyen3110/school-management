@@ -1,15 +1,14 @@
-@if(student) {
+@if(teacher) {
 <div class="flex gap-7">
     <div class="w-1/3">
-        <img class="w-full h-full rounded-full border border-black" [src]="student.profileUrl" alt="">
+        <img class="w-full h-full rounded-full border border-black" src="" alt="">
     </div>
     <div class="w-full">
-        <div class="text-lg text-blue-800 font-semibold">{{student.firstName + " " + student.lastName}}</div>
-        <div>{{student.email}}</div>
-        <div>{{student.phone}}</div>
-        <div>{{student.gender}}</div>
-        <div>{{student.id}}</div>
-        <div>{{student.classIds}}</div>
+        <div class="text-lg text-blue-800 font-semibold">{{teacher.firstName + " " + teacher.lastName}}</div>
+        <div>{{teacher.email}}</div>
+        <div>{{teacher.phone}}</div>
+        <div>{{teacher.address}}</div>
+        <div>{{teacher.id}}</div>
         <div class="flex gap-2">
             <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
                 Edit
@@ -23,7 +22,6 @@
         </div>
     </div>
 </div>
-
 } @else {
-<div>This student does not exist!</div>
+<div>This teacher does not exist!</div>
 }

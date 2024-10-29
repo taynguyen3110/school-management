@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 
 export class StudentProfileComponent implements OnInit {
     student!: Student;
+    // loaded: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,6 +27,7 @@ export class StudentProfileComponent implements OnInit {
             if (studentId) {
                 this.studentService.getStudent(studentId).subscribe((student) => {
                     this.student = student
+                    // this.loaded = true;
                 })
             }
         })
