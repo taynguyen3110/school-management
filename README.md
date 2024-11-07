@@ -16,26 +16,30 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 ## Features
 
-- Admin Dashboard with various statistics
-- Charts for visualizing data
+- Token-based authentication.
+- Admin Dashboard with various statistics.
+- Charts for visualizing data.
 - Navigation between different sections (students, teachers, parents, classes, etc.)
-- Notice board for announcements
-- Responsive design
+- CRUD operations on entities.
+- Notice board for announcements.
 
 ## Installation
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/school-management-dashboard.git
+   git clone https://github.com/taynguyen3110/school-management.git
 2. Navigate to the project directory:
-cd school-management-dashboard
+    ```sh
+    cd school-management-dashboard
 3. Install the dependencies:
-npm install
+    ```sh
+    npm install
 
 ## Usage
 
 Start the development server:
-ng serve -o
+    ```sh
+    ng serve -o
 
 ## Project Structure
 
@@ -81,6 +85,7 @@ mock/
 
 ## Components
 
+![alt text](image-2.png)
 Dashboard Components
     DashboardComponent: Main component for the dashboard overview.
     GenderRatioComponent: Displays the gender ratio chart.
@@ -88,8 +93,8 @@ Dashboard Components
     StatsWrapperComponent: Container for multiple statistics components.
     StatsCellComponent: Individual statistic display component.
     NoticeNewsComponent: Shows announcements and news updates.
-    ![alt text](image.png)
 
+![alt text](image-3.png)
 Other Components
     StudentsComponent: Manages student-related data and actions.
     TeachersComponent: Manages teacher-related data and actions.
@@ -135,23 +140,38 @@ All routes for the application are defined in src/app/app.routes.ts. Below are s
 
 Key Contributions
 
+![alt text](image.png)
+
 **Dashboard Development**
+
     Implemented the main dashboard layout and components, including DashboardComponent, StatsWrapperComponent, and StatsCellComponent.
     Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
 
+![alt text](image-6.png)
+
 **Form Handling**
+
     Built reusable form components like InputComponent and AddNewFormLayoutComponent.
     Added form validation and submission logic in components such as AddStudentComponent and AddTeacherComponent.
 
 **Profile Management**
+
     Developed profile components for students, teachers, and parents, including StudentProfileComponent, TeacherProfileComponent, and ParentProfileComponent.
     Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
+![alt text](image-4.png)
+
 **Authentication**
+
     Implemented authentication using AuthService and AuthApiService.
     Created a secure login page with validation and error handling.
 
+![alt text](image-5.png)
+
+**Notification**
+
 **Technical Skills Demonstrated**
+
     Angular: Built a complex Angular application with reusable components, services, and modules.
     TypeScript: Used TypeScript for type safety and maintainability.
     Reactive Forms: Implemented reactive forms with dynamic controls and validation.
