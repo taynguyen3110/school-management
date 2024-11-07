@@ -62,8 +62,11 @@ NoticeNewsComponent: Shows announcements and news updates.
 **Other Components**
 
 StudentsComponent: Manages student-related data and actions.
+
 TeachersComponent: Manages teacher-related data and actions.
+
 ParentsComponent: Manages parent-related data and actions.
+
 ClassesComponent: Manages class-related data and actions.
 
 ![alt text](screenshots/image-1.png)
@@ -71,8 +74,11 @@ ClassesComponent: Manages class-related data and actions.
 **Services**
 
 NavigationService: Handles navigation between different routes.
+
 DashboardService: Fetches statistical data for the dashboard.
+
 AuthService: Manages authentication and user sessions.
+
 NotificationService: Handles user notifications and alerts.
 
 ## Routes
@@ -112,6 +118,7 @@ Key Contributions
 **Dashboard Development**
 
 Implemented the main dashboard layout and components, including DashboardComponent, StatsWrapperComponent, and StatsCellComponent.
+
 Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
 
 ![alt text](screenshots/image-6.png)
@@ -119,11 +126,13 @@ Created dynamic charts for the gender ratio and enrollment statistics using Gend
 **Form Handling**
 
 Built reusable form components like InputComponent and AddNewFormLayoutComponent.
+
 Added form validation and submission logic in components such as AddStudentComponent and AddTeacherComponent.
 
 **Profile Management**
 
 Developed profile components for students, teachers, and parents, including StudentProfileComponent, TeacherProfileComponent, and ParentProfileComponent.
+
 Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
 ![alt text](screenshots/image-4.png)
@@ -131,6 +140,7 @@ Enabled profile photo and info display with ProfilePhotoComponent and ProfileInf
 **Authentication**
 
 Implemented authentication using AuthService and AuthApiService.
+
 Created a secure login page with validation and error handling.
 
 ![alt text](screenshots/image-5.png)
@@ -140,9 +150,13 @@ Created a secure login page with validation and error handling.
 **Technical Skills Demonstrated**
 
 Angular: Built a complex Angular application with reusable components, services, and modules.
+
 TypeScript: Used TypeScript for type safety and maintainability.
+
 Reactive Forms: Implemented reactive forms with dynamic controls and validation.
+
 State Management: Utilized Angular services and RxJS for efficient state management.
+
 API Integration: Integrated RESTful APIs for data operations and updates.
 
 ## License
