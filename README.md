@@ -20,7 +20,6 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 - Charts for visualizing data.
 - Navigation between different sections (students, teachers, parents, classes, etc.)
 - CRUD operations on entities.
-- Notice board for announcements.
 
 ## Installation
 
@@ -46,30 +45,35 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 **Dashboard Components**
 
-    DashboardComponent: Main component for the dashboard overview.
-    GenderRatioComponent: Displays the gender ratio chart.
-    EnrollmentStatsComponent: Displays enrollment statistics.
-    StatsWrapperComponent: Container for multiple statistics components.
-    StatsCellComponent: Individual statistic display component.
-    NoticeNewsComponent: Shows announcements and news updates.
+DashboardComponent: Main component for the dashboard overview.
+
+GenderRatioComponent: Displays the gender ratio chart.
+
+EnrollmentStatsComponent: Displays enrollment statistics.
+
+StatsWrapperComponent: Container for multiple statistics components.
+
+StatsCellComponent: Individual statistic display component.
+
+NoticeNewsComponent: Shows announcements and news updates.
 
 ![alt text](screenshots/image-3.png)
 
 **Other Components**
 
-    StudentsComponent: Manages student-related data and actions.
-    TeachersComponent: Manages teacher-related data and actions.
-    ParentsComponent: Manages parent-related data and actions.
-    ClassesComponent: Manages class-related data and actions.
+StudentsComponent: Manages student-related data and actions.
+TeachersComponent: Manages teacher-related data and actions.
+ParentsComponent: Manages parent-related data and actions.
+ClassesComponent: Manages class-related data and actions.
 
 ![alt text](screenshots/image-1.png)
 
 **Services**
 
-    NavigationService: Handles navigation between different routes.
-    DashboardService: Fetches statistical data for the dashboard.
-    AuthService: Manages authentication and user sessions.
-    NotificationService: Handles user notifications and alerts.
+NavigationService: Handles navigation between different routes.
+DashboardService: Fetches statistical data for the dashboard.
+AuthService: Manages authentication and user sessions.
+NotificationService: Handles user notifications and alerts.
 
 ## Routes
 
