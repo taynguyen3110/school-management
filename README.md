@@ -39,7 +39,45 @@ ng serve -o
 
 ## Project Structure
 
-.angular/ cache/ 18.2.4/ .editorconfig .gitignore .vscode/ extensions.json launch.json tasks.json angular.json package.json public/ assets/ images/ test.js README.md src/ app/ app.component.html app.component.scss app.component.spec.ts app.component.ts app.config.ts app.routes.ts auth/ dashboard/ dashboard-page.component.html dashboard-page.component.ts gender-ratio/ gender-ratio.component.html gender-ratio.component.ts enrollment-stats/ enrollment-stats.component.html enrollment-stats.component.ts notice-news/ notice-news.component.html notice-news.component.ts parents/ parent-add/ parent-add.component.html parent-add.component.ts parent-profile/ parent-profile.component.html parent-profile.component.ts parents-page.component.html parents-page.component.ts school-classes/ classes-add/ classes-add.component.html classes-add.component.ts classes-detail/ classes-detail.component.html classes-detail.component.ts classes-page.component.html classes-page.component.ts shared/ components/ addnew-form-layout/ addnew-form-layout.component.html addnew-form-layout.component.ts filter/ filter.component.ts header/ header.component.html header.component.ts input/ input.component.ts item-table/ item-table.component.html item-table.component.ts loading-spinner/ loading-spinner.component.ts main-layout/ main-layout.component.html main-layout.component.ts multiselector/ multiselector.component.ts page-layout/ page-layout.component.html page-layout.component.ts pagination/ pagination.component.ts photouploader/ photo-uploader.component.ts profile-info/ profile-info.component.html profile-info.component.ts profile-layout/ profile-layout.component.html profile-layout.component.ts profile-photo/ profile-photo.component.ts sidebar/ sidebar.component.html sidebar.component.ts accordion-button/ accordion-button.component.ts accordion-item/ accordion-item.component.ts services/ auth.service.ts authApi.service.ts classes.service.ts dashboard.service.ts form.service.ts navigation.service.ts notification.service.ts parents.service.ts student.service.ts subject.service.ts teacher.service.ts types.ts students/ student-add/ student-add.component.html student-add.component.ts student-profile/ student-profile.component.html student-profile.component.ts student-page/ students-page.component.html students-page.component.ts subjects/ subject-add/ subject-add.component.html subject-add.component.ts subject-detail/ subject-detail.component.html subject-detail.component.ts subject-page.component.html subject-page.component.ts teachers/ teacher-add/ teacher-add.component.html teacher-add.component.ts teacher-profile/ teacher-profile.component.ts teachers-page.component.html teachers-page.component.ts index.html main.ts styles.scss tailwind.config.js tsconfig.app.json tsconfig.json tsconfig.spec.json
+.angular/
+.cache/
+.editorconfig
+.gitignore
+.vscode/
+[extensions.json](http://_vscodecontentref_/0)
+launch.json
+[tasks.json](http://_vscodecontentref_/1)
+[angular.json](http://_vscodecontentref_/2)
+[package.json](http://_vscodecontentref_/3)
+public/
+assets/
+images/
+[test.js](http://_vscodecontentref_/4)
+[README.md](http://_vscodecontentref_/5)
+src/
+app/
+[app.component.html](http://_vscodecontentref_/6)
+app.component.scss
+app.component.spec.ts
+[app.component.ts](http://_vscodecontentref_/7)
+app.config.ts
+app.routes.ts
+auth/
+dashboard/
+parents/
+school-classes/
+shared/
+students/
+...
+[index.html](http://_vscodecontentref_/8)
+main.ts
+mock/
+...
+[styles.scss](http://_vscodecontentref_/9)
+[tailwind.config.js](http://_vscodecontentref_/10)
+[tsconfig.app.json](http://_vscodecontentref_/11)
+[tsconfig.json](http://_vscodecontentref_/12)
+[tsconfig.spec.json](http://_vscodecontentref_/13)
 
 ## Components
 
@@ -107,3 +145,7 @@ Technical Skills Demonstrated
     Reactive Forms: Implemented reactive forms with dynamic controls and validation.
     State Management: Utilized Angular services and RxJS for efficient state management.
     API Integration: Integrated RESTful APIs for data operations and updates.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
