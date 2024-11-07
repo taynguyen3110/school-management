@@ -1,0 +1,19 @@
+<div class="text-sm flex flex-col px-2 mt-5">
+    <div class="flex">
+        <div class="flex items-center w-5/6 gap-2">
+            <img class="w-10 h-8 rounded-md object-cover" [src]="notice.image" alt="">
+            <div>{{notice.title}}</div>
+        </div>
+        <div class="flex items-center justify-center gap-1 w-1/5">
+            <div class="w-6 h-6 bg-primary-300 rounded-full text-white flex items-center justify-center">
+                <i class="fa-solid fa-eye text-[10px]"></i>
+            </div>
+            <div class="text-[12px]">
+                {{notice.views}}
+            </div>
+        </div>
+    </div>
+    <div class="text-[12px] text-gray-500 mt-1">
+        {{notice.date | date}}
+    </div>
+</div>

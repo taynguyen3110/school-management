@@ -40,27 +40,17 @@
                             [femaleCount]="femaleCount"></sman-gender-ratio-chart>
                     </sman-stats-wrapper>
                     <sman-stats-wrapper label="Enrollments Each Year" [width]="600" [height]="400">
-                        <sman-enrollment-stats-chart chart [width]="750" [height]="350"
+                        <sman-enrollment-stats-chart chart [width]="750" [height]="345"
                             [enrollmentStats]="enrollmentsPerYear"></sman-enrollment-stats-chart>
                     </sman-stats-wrapper>
                 </div>
             </div>
             <div>
                 <sman-stats-wrapper label="Notice Board" [width]="300" [height]="500">
-                    <div chart class="text-sm flex">
-                        <div class="flex flex-col">
-                            <div class="flex items-center">
-                                <img class="w-10 h-7 object-cover" src="http://localhost:3001/photos/student(2).jpg"
-                                    alt="">
-                                <div>School annual sports day celebration 2024</div>
-                            </div>
-                            <div>
-                                20 June, 2024
-                            </div>
-                        </div>
-                        <div>
-                            20k
-                        </div>
+                    <div chart>
+                        @for (notice of notices; track $index) {
+                        <sman-notice-news chart [notice]="notice"></sman-notice-news>
+                        }
                     </div>
                 </sman-stats-wrapper>
             </div>
