@@ -144,6 +144,8 @@ Enabled profile photo and info display with ProfilePhotoComponent and ProfileInf
 
 Implemented authentication using AuthService and AuthApiService.
 
+Interceptor
+
 Created a secure login page with validation and error handling.
 
 ![alt text](screenshots/image-5.png)
