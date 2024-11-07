@@ -158,6 +158,10 @@ TypeScript: Used TypeScript for type safety and maintainability.
 
 Reactive Forms: Implemented reactive forms with dynamic controls and validation.
 
+![alt text](screenshots/image-7.png)
+
+Reusability:
+
 State Management: Utilized Angular services and RxJS for efficient state management.
 
 API Integration: Integrated RESTful APIs for data operations and updates.
