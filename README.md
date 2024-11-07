@@ -31,32 +31,18 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 cd school-management-dashboard
 3. Install the dependencies:
 npm install
-4. Usage
+
+## Usage
+
 Start the development server:
 ng serve -o
-5. Project Structure
-school-management-dashboard/
-├── .angular/               # Angular workspace settings
-├── .vscode/                # VSCode workspace settings
-├── public/                 # Public assets
-│   ├── assets/
-│   └── images/
-├── src/
-│   ├── app/
-│   │   ├── dashboard/       # Dashboard components and modules
-│   │   ├── students/        # Student-related components
-│   │   ├── teachers/        # Teacher-related components
-│   │   ├── shared/          # Shared components and utilities
-│   │   ├── auth/            # Authentication components and services
-│   │   └── app.component.ts # Root component
-│   ├── assets/              # Static assets
-│   └── styles/              # Global and theme styles
-├── angular.json             # Angular configuration
-├── package.json             # Project dependencies
-└── README.md                # Project documentation
 
+## Project Structure
 
-Components
+.angular/ cache/ 18.2.4/ .editorconfig .gitignore .vscode/ extensions.json launch.json tasks.json angular.json package.json public/ assets/ images/ test.js README.md src/ app/ app.component.html app.component.scss app.component.spec.ts app.component.ts app.config.ts app.routes.ts auth/ dashboard/ dashboard-page.component.html dashboard-page.component.ts gender-ratio/ gender-ratio.component.html gender-ratio.component.ts enrollment-stats/ enrollment-stats.component.html enrollment-stats.component.ts notice-news/ notice-news.component.html notice-news.component.ts parents/ parent-add/ parent-add.component.html parent-add.component.ts parent-profile/ parent-profile.component.html parent-profile.component.ts parents-page.component.html parents-page.component.ts school-classes/ classes-add/ classes-add.component.html classes-add.component.ts classes-detail/ classes-detail.component.html classes-detail.component.ts classes-page.component.html classes-page.component.ts shared/ components/ addnew-form-layout/ addnew-form-layout.component.html addnew-form-layout.component.ts filter/ filter.component.ts header/ header.component.html header.component.ts input/ input.component.ts item-table/ item-table.component.html item-table.component.ts loading-spinner/ loading-spinner.component.ts main-layout/ main-layout.component.html main-layout.component.ts multiselector/ multiselector.component.ts page-layout/ page-layout.component.html page-layout.component.ts pagination/ pagination.component.ts photouploader/ photo-uploader.component.ts profile-info/ profile-info.component.html profile-info.component.ts profile-layout/ profile-layout.component.html profile-layout.component.ts profile-photo/ profile-photo.component.ts sidebar/ sidebar.component.html sidebar.component.ts accordion-button/ accordion-button.component.ts accordion-item/ accordion-item.component.ts services/ auth.service.ts authApi.service.ts classes.service.ts dashboard.service.ts form.service.ts navigation.service.ts notification.service.ts parents.service.ts student.service.ts subject.service.ts teacher.service.ts types.ts students/ student-add/ student-add.component.html student-add.component.ts student-profile/ student-profile.component.html student-profile.component.ts student-page/ students-page.component.html students-page.component.ts subjects/ subject-add/ subject-add.component.html subject-add.component.ts subject-detail/ subject-detail.component.html subject-detail.component.ts subject-page.component.html subject-page.component.ts teachers/ teacher-add/ teacher-add.component.html teacher-add.component.ts teacher-profile/ teacher-profile.component.ts teachers-page.component.html teachers-page.component.ts index.html main.ts styles.scss tailwind.config.js tsconfig.app.json tsconfig.json tsconfig.spec.json
+
+## Components
+
 Dashboard Components
     DashboardComponent: Main component for the dashboard overview.
     GenderRatioComponent: Displays the gender ratio chart.
@@ -79,7 +65,8 @@ Services
     AuthService: Manages authentication and user sessions.
     NotificationService: Handles user notifications and alerts.
 
-Routes
+## Routes
+
 All routes for the application are defined in src/app/app.routes.ts. Below are some of the main routes:
     / - Dashboard
     /students - Students
@@ -94,7 +81,8 @@ All routes for the application are defined in src/app/app.routes.ts. Below are s
     /classes/:id - Class Detail
     /user - User Profile
 
-Contributions
+## Contributions
+
 Key Contributions
 
 Dashboard Development
