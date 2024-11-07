@@ -106,40 +106,52 @@ Services
 ## Routes
 
 All routes for the application are defined in src/app/app.routes.ts. Below are some of the main routes:
+
     / - Dashboard
+
     /students - Students
+
     /students/:id - Student Profile
+
     /teachers - Teachers
+
     /teachers/:id - Teacher Profile
+
     /parents - Parents
+
     /parents/:id - Parent Profile
+
     /subjects - Subjects
+
     /subjects/:id - Subject Detail
+
     /classes - Classes
+
     /classes/:id - Class Detail
+
     /user - User Profile
 
 ## Contributions
 
 Key Contributions
 
-Dashboard Development
+**Dashboard Development**
     Implemented the main dashboard layout and components, including DashboardComponent, StatsWrapperComponent, and StatsCellComponent.
     Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
 
-Form Handling
+**Form Handling**
     Built reusable form components like InputComponent and AddNewFormLayoutComponent.
     Added form validation and submission logic in components such as AddStudentComponent and AddTeacherComponent.
 
-Profile Management
+**Profile Management**
     Developed profile components for students, teachers, and parents, including StudentProfileComponent, TeacherProfileComponent, and ParentProfileComponent.
     Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
-Authentication
+**Authentication**
     Implemented authentication using AuthService and AuthApiService.
     Created a secure login page with validation and error handling.
 
-Technical Skills Demonstrated
+**Technical Skills Demonstrated**
     Angular: Built a complex Angular application with reusable components, services, and modules.
     TypeScript: Used TypeScript for type safety and maintainability.
     Reactive Forms: Implemented reactive forms with dynamic controls and validation.
