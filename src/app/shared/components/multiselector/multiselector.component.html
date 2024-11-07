@@ -1,26 +1,32 @@
 <div (clickOutside)="hideItem()" class="relative z-10">
-    <div class="absolute flex gap-1 text-sm top-10 -left-5 w-44 flex-wrap">
+    @if(supportMulti) {
+    <div class="absolute flex gap-1 text-sm top-12 left-0 w-full flex-wrap">
         @for (item of selectedItem; track $index) {
         <div class="px-1 cursor-pointer border rounded-sm select-none" (click)="selectItem(item)">{{item}}</div>
         }
     </div>
-    <div class="w-auto flex items-center justify-center text-sm/6 border border-gray-200 px-3 py-2 rounded-lg">
-        <div class="text-gray-400 cursor-default">
-            <input class="w-full focus:outline-none" type="text" [(ngModel)]="searchValue" [placeholder]="placeholder"
-                #searchInput [disabled]="!lookUp">
+    }
+    <div class="w-auto flex items-center justify-center text-sm/6 border border-gray-200 px-3 py-[10px] rounded-lg">
+        <div class=" cursor-default w-full">
+            <input class="w-full bg-white focus:outline-none relative z-10" type="text" [(ngModel)]="searchValue"
+                [placeholder]="placeholder" #searchInput [disabled]="!lookUp">
         </div>
         <i class="fa-solid fa-chevron-down cursor-pointer ml-auto" (click)="showItem()"></i>
     </div>
     @if(isShow) {
     <div
-        class="bg-white absolute top-7 left-1/2 h-40 overflow-auto -translate-x-1/2 w-36 p-2 rounded-md border border-gray-300">
+        class="bg-white w-full absolute top-11 left-1/2 max-h-40 overflow-auto -translate-x-1/2 p-2 rounded-md border border-gray-300 shadow-2xl z-50">
         @if (items.length == 0) {
-            <div class="hover:bg-slate-100 flex w-full text-sm text-center text-gray-400">
-                No matched records.
-            </div>
+        <div class="hover:bg-slate-100 flex w-full text-sm text-center text-gray-400 select-none">
+            @if(searchValue === '') {
+            Start typing to search..
+            } @else {
+            No matched records.
+            }
+        </div>
         } @else {
         @for (item of items; track $index) {
-        <div class="hover:bg-slate-100 flex w-full cursor-pointer"
+        <div class="hover:bg-slate-100 flex w-full cursor-pointer z-50"
             [ngClass]="{'bg-green-200 hover:bg-green-50' : selectedItem && selectedItem.includes(item.id)}"
             (click)="selectItem(item.id)">{{item.label}}</div>
         }

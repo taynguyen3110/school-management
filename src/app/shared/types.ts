@@ -15,6 +15,7 @@ export interface UserProfile {
     id?: string,
     isBlocked: boolean,
     lastName: string,
+    password?: string,
     profileUrl: string,
     role: string
 }
@@ -33,7 +34,7 @@ export interface Student {
     admissionDate: string,
     phone: string,
     parents?: Parent[],
-    classes?: Class[]
+    classes?: Classes[]
 }
 
 export interface Parent {
@@ -58,12 +59,28 @@ export interface Teacher {
     admissionDate: string,
 }
 
-export interface Class {
+export interface Classes {
     id: string,
     name: string,
-    studentIds?: string[]
+    studentIds?: string[],
+    students?: Student[],
+}
+
+export interface SchoolSubject {
+    id?: string,
+    name: string,
+    classId: string,
+    daysOfWeek: string[],
+    teacherId: string,
+    teacher?: Teacher,
+    class?: Classes
 }
 
 export interface PhotoUrl {
     url: string
+}
+
+export interface LabelObj {
+    id: string,
+    label: string
 }

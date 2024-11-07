@@ -17,14 +17,14 @@ export class EditProfileComponent {
   @Input() setUser!: (user: UserProfile) => void
   @Input() cancelEdit!: () => void
 
-  private authApi = inject(AuthApiService);
-  private fb = inject(FormBuilder);
-
   isLoading: boolean = false;
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor() { }
+  constructor(
+    private authApi: AuthApiService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.setFormData(this.user.firstName, this.user.lastName, this.user.email);

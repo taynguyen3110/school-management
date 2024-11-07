@@ -1,6 +1,6 @@
 <div class="w-full h-24 border-2 rounded-xl border-dashed border-gray-300 flex items-center justify-center"
     [ngClass]="{'cursor-grabbing': isDragOver(), 'cursor-pointer': !isDragOver()}" (click)="onClick($event)"
-    (dragover)="onDragOver($event)" (drop)="onDrop($event)" (mouseover)="onMouseOver()" (mouseleave)="onMouseLeave()">
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (mouseover)="onMouseOver()" (mouseleave)="onMouseLeave()">
     <input class="hidden" type="file" name="" id="" (change)="onFileChange($event)" (cancel)="logData($event)" #fileInput>
     @if(imagePreview()) {
     <div class="w-full h-full flex flex-col items-center relative">

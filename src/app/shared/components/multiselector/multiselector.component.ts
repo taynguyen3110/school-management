@@ -32,6 +32,9 @@ export class MultiSelectorComponent implements OnChanges, AfterViewInit {
 
     ngOnChanges() {
         this.selectedItem = this.selected;
+        if (!this.supportMulti) {
+            this.searchValue = this.selected[0];
+        }
     }
 
     ngAfterViewInit() {
@@ -41,7 +44,10 @@ export class MultiSelectorComponent implements OnChanges, AfterViewInit {
                     debounceTime(1000)
                 )
             inputTyped.subscribe(() => {
-                this.inputTyped.emit(this.searchValue)
+                this.inputTyped.emit(this.searchValue);
+                if (this.searchValue !== '') {
+                    this.isShow = true;
+                }
             })
         }
     }
@@ -63,6 +69,8 @@ export class MultiSelectorComponent implements OnChanges, AfterViewInit {
             }
             this.select.emit(this.selectedItem as string[]);
         } else {
+            this.searchValue = this.items.filter(i => i.id === id)[0].label;
+            this.selectedItem = [id];
             this.select.emit(id);
         }
     }

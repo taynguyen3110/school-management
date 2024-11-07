@@ -5,15 +5,15 @@ import { ParentsService } from './services/parents.service';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NavigationService } from '../shared/services/navigation.service';
-import { QueryService } from '../shared/services/filter.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AddParentComponent } from './parent-add/parent-add.component';
-import { ParentFilterComponent } from "./parent-filter/parent-filter.component";
+import { PageLayoutComponent } from "../shared/components/page-layout/page-layout.component";
+import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
   selector: 'sman-parents',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddParentComponent, ParentFilterComponent],
+  imports: [ItemTableComponent, PaginationComponent, AddParentComponent, PageLayoutComponent, FilterComponent],
   templateUrl: './parents-page.component.html',
   styleUrl: './parents-page.component.scss'
 })
@@ -31,7 +31,6 @@ export class ParentsComponent {
   constructor(
     private parentsService: ParentsService,
     private navigationService: NavigationService,
-    private queryService: QueryService,
     private route: ActivatedRoute,
   ) {
   }
@@ -46,8 +45,7 @@ export class ParentsComponent {
         this.displayAddParent = params['addParent'] === "true";
         this.filterParams = params
         if (!params['page']) {
-          const newParam = this.queryService.setParam(params, { page: this.currentPage });
-          this.applyQueryChanges(newParam);
+          this.navigationService.toRoute('parents', 'add', { page: this.currentPage }, true);
         } else {
           this.currentPage = +params['page'];
           this.fetchParents(params).subscribe((data: any) => {
@@ -61,13 +59,8 @@ export class ParentsComponent {
     return this.parentsService.getParents(filter);
   }
 
-  applyQueryChanges(param: Params) {
-    this.navigationService.toRoute('parents', param, true);
-  }
-
   handlePageChange(page: number) {
-    const newParams = this.queryService.addToCurrentParam({ page });
-    this.applyQueryChanges(newParams);
+    this.navigationService.toRoute('parents', 'add', { page }, true);
   }
 
   setPagination(data: any) {
@@ -82,8 +75,17 @@ export class ParentsComponent {
   }
 
   hideAddParentForm = () => {
-    const newParams = this.queryService.deleteFromCurrentParam('addParent');
-    this.navigationService.toRoute("parents", newParams, true);
+    this.navigationService.toRoute('parents', 'delete', ['addParent'], true);
+  }
+
+  filterParents(filterParams: any) {
+    let newParams: Params = {};
+    if (filterParams.isNotSort) {
+      this.navigationService.toRoute('parents', 'delete', ['sortBy', 'order']);
+    } else {
+      newParams = { ...filterParams, page: 1 };
+      this.navigationService.toRoute('parents', 'add', newParams, true);
+    }
   }
 
   ngOnDestroy() {

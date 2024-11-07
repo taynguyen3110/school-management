@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { Teacher } from '../shared/types';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { QueryService } from '../shared/services/filter.service';
 import { NavigationService } from '../shared/services/navigation.service';
 import { AddTeacherComponent } from './teacher-add/teacher-add.component';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 import { TeacherService } from './services/teacher.service';
-import { TeacherFilterComponent } from './teacher-filter/teacher-filter.component';
+import { PageLayoutComponent } from "../shared/components/page-layout/page-layout.component";
+import { FilterComponent } from "../shared/components/filter/filter.component";
 
 @Component({
   selector: 'sman-teachers',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddTeacherComponent, TeacherFilterComponent],
+  imports: [ItemTableComponent, PaginationComponent, AddTeacherComponent, PageLayoutComponent, FilterComponent],
   templateUrl: './teachers-page.component.html',
 })
 export class TeachersComponent {
@@ -30,7 +30,6 @@ export class TeachersComponent {
   constructor(
     private teacherService: TeacherService,
     private navigationService: NavigationService,
-    private queryService: QueryService,
     private route: ActivatedRoute,
   ) {
   }
@@ -45,8 +44,7 @@ export class TeachersComponent {
         this.displayAddTeacher = params['addTeacher'] === "true";
         this.filterParams = params;
         if (!params['page']) {
-          const newParam = this.queryService.setParam(params, { page: this.currentPage });
-          this.applyQueryChanges(newParam);
+          this.navigationService.toRoute('teachers', 'add', { page: this.currentPage }, true);
         } else {
           this.currentPage = +params['page'];
           this.fetchTeachers(params).subscribe((data: any) => {
@@ -60,13 +58,8 @@ export class TeachersComponent {
     return this.teacherService.getTeachers(filter);
   }
 
-  applyQueryChanges(param: Params) {
-    this.navigationService.toRoute('teachers', param, true);
-  }
-
   handlePageChange(page: number) {
-    const newParams = this.queryService.addToCurrentParam({ page });
-    this.applyQueryChanges(newParams);
+    this.navigationService.toRoute('teachers', 'add', { page }, true);
   }
 
   setPagination(data: any) {
@@ -81,8 +74,17 @@ export class TeachersComponent {
   }
 
   hideAddTeacherForm = () => {
-    const newParams = this.queryService.deleteFromCurrentParam('addTeacher');
-    this.navigationService.toRoute("teachers", newParams, true);
+    this.navigationService.toRoute("teachers", 'delete', ['addTeacher'], true);
+  }
+
+  filterTeachers(filterParams: any) {
+    let newParams: Params = {};
+    if (filterParams.isNotSort) {
+      this.navigationService.toRoute('teachers', 'delete', ['sortBy', 'order']);
+    } else {
+      newParams = { ...filterParams, page: 1 };
+      this.navigationService.toRoute('teachers', 'add', newParams, true);
+    }
   }
 
   ngOnDestroy() {

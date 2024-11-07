@@ -48,8 +48,6 @@ export class PaginationComponent implements OnChanges {
   updatePagination() {
     this.arr = this.generatePagination(this.currentPage, this.lastPage);
     this.pageChange.emit(this.currentPage);
-    console.log("emit");
-    
   }
 
   generatePagination(current: number, last: number): any[] {

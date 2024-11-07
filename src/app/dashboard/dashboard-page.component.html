@@ -1,1 +1,69 @@
-<div>DASHBOARD!</div>
+<div class="bg-background pl-8 h-screen relative z-0">
+    <div class="container flex flex-col">
+        <div class="py-8 text-xl font-medium w-full text-center">Admin Dashboard</div>
+        <div class="flex gap-5">
+            <div class="flex flex-col gap-5">
+                <div class="flex gap-5">
+                    <sman-stats-wrapper [width]="158" [height]="80" class="cursor-pointer"
+                        (click)="handleClick('students')">
+                        <sman-stats-cell chart color="blue" label="Students" [stats]="studentCount">
+                            <i icon class="fa-solid fa-user-graduate "></i>
+                        </sman-stats-cell>
+                    </sman-stats-wrapper>
+                    <sman-stats-wrapper [width]="158" [height]="80" class="cursor-pointer"
+                        (click)="handleClick('parents')">
+                        <sman-stats-cell chart color="purple" label="Parents" [stats]="parentCount">
+                            <i icon class="fa-solid fa-person-breastfeeding"></i>
+                        </sman-stats-cell>
+                    </sman-stats-wrapper>
+                    <sman-stats-wrapper [width]="158" [height]="80" class="cursor-pointer"
+                        (click)="handleClick('teachers')">
+                        <sman-stats-cell chart color="green" label="Teachers" [stats]="teacherCount">
+                            <i icon class="fa-solid fa-chalkboard-user"></i>
+                        </sman-stats-cell>
+                    </sman-stats-wrapper>
+                    <sman-stats-wrapper [width]="158" [height]="80" class="cursor-pointer"
+                        (click)="handleClick('classes')">
+                        <sman-stats-cell chart color="red" label="Classes" [stats]="classCount">
+                            <i icon class="fa-solid fa-people-roof"></i>
+                        </sman-stats-cell>
+                    </sman-stats-wrapper>
+                    <sman-stats-wrapper [width]="158" [height]="80">
+                        <sman-stats-cell chart [icon]="false" color="red" label="Students/Teachers"
+                            [stats]="getSimplifiedRatio()">
+                        </sman-stats-cell>
+                    </sman-stats-wrapper>
+                </div>
+                <div class="flex gap-5">
+                    <sman-stats-wrapper label="Current Students" [width]="250" [height]="400">
+                        <sman-gender-ratio-chart chart [width]="250" [height]="300" [maleCount]="maleCount"
+                            [femaleCount]="femaleCount"></sman-gender-ratio-chart>
+                    </sman-stats-wrapper>
+                    <sman-stats-wrapper label="Enrollments Each Year" [width]="600" [height]="400">
+                        <sman-enrollment-stats-chart chart [width]="750" [height]="350"
+                            [enrollmentStats]="enrollmentsPerYear"></sman-enrollment-stats-chart>
+                    </sman-stats-wrapper>
+                </div>
+            </div>
+            <div>
+                <sman-stats-wrapper label="Notice Board" [width]="300" [height]="500">
+                    <div chart class="text-sm flex">
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <img class="w-10 h-7 object-cover" src="http://localhost:3001/photos/student(2).jpg"
+                                    alt="">
+                                <div>School annual sports day celebration 2024</div>
+                            </div>
+                            <div>
+                                20 July, 2024
+                            </div>
+                        </div>
+                        <div>
+                            20k
+                        </div>
+                    </div>
+                </sman-stats-wrapper>
+            </div>
+        </div>
+    </div>
+</div>

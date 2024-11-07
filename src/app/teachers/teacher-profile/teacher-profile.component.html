@@ -1,27 +1,31 @@
 @if(teacher) {
-<div class="flex gap-7">
-    <div class="w-1/3">
-        <img class="w-full h-full rounded-full border border-black" src="" alt="">
-    </div>
-    <div class="w-full">
+@if(isShow) {
+<sman-add-teacher [isEdit]="true" [teacher]="teacher" (cancelForm)="hideEditForm()"></sman-add-teacher>
+}
+<sman-profile-layout (edit)="showEditForm()" (delete)="deleteTeacher()" (back)="goBack()">
+    <sman-profile-photo profilePhoto [photoSrc]="teacher.profileUrl" />
+    <ng-container profileInfo>
         <div class="text-lg text-blue-800 font-semibold">{{teacher.firstName + " " + teacher.lastName}}</div>
-        <div>{{teacher.email}}</div>
-        <div>{{teacher.phone}}</div>
-        <div>{{teacher.address}}</div>
-        <div>{{teacher.id}}</div>
-        <div class="flex gap-2">
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
-                Edit
-            </button>
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
-                Delete
-            </button>
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm" (click)="goBack()">
-                Go Back
-            </button>
-        </div>
-    </div>
-</div>
+        <sman-profile-info label="Teacher ID:">
+            <div info>{{teacher.id}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Phone:">
+            <div info>{{teacher.phone}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Gender:">
+            <div info>{{teacher.gender | titlecase}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Email:">
+            <div info>{{teacher.email}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Address:">
+            <div info>{{teacher.address}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Admission Date:">
+            <div info>{{teacher.admissionDate | date:'longDate'}}</div>
+        </sman-profile-info>
+    </ng-container>
+</sman-profile-layout>
 } @else {
-<div>This teacher does not exist!</div>
+<div class="text-center mt-6 text-gray-400">This teacher does not exist!</div>
 }

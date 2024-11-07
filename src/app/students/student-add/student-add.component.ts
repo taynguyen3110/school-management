@@ -1,24 +1,40 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../service/student.service';
 import { PhotoUploaderComponent } from "../../shared/components/photouploader/photo-uploader.component";
-import { Student } from '../../shared/types';
+import { LabelObj, Student } from '../../shared/types';
+import { AddNewFormLayoutComponent } from "../../shared/components/addnew-form-layout/addnew-form-layout";
+import { InputComponent } from '../../shared/components/input/input.component';
+import { MultiSelectorComponent } from "../../shared/components/multiselector/multiselector.component";
+import { toLabelObject } from '../../shared/components/multiselector/utils/toLabelObject';
+import { ParentsService } from '../../parents/services/parents.service';
+import { NotificationService } from '../../shared/services/notification.service';
+import { ClassesService } from '../../school-classes/services/classes.service';
 
 @Component({
   selector: 'sman-add-student',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent],
+  imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent, AddNewFormLayoutComponent, InputComponent, MultiSelectorComponent],
   templateUrl: './student-add.component.html',
 })
-export class AddStudentComponent {
-  @Output() cancelForm = new EventEmitter()
+export class AddStudentComponent implements OnInit {
+  @Input() isEdit: boolean = false;
+  @Input() student!: Student;
+
+  @Output() cancelForm = new EventEmitter();
+
+  classesList: LabelObj[] = [];
+  parentsList: LabelObj[] = [];
 
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private classesService: ClassesService,
+    private parentsService: ParentsService,
+    private notificationService: NotificationService
   ) { }
 
   addStudentForm = this.fb.group({
@@ -32,10 +48,10 @@ export class AddStudentComponent {
       Validators.required,
 
     ]],
-    classIds: [[], [
+    classIds: [[] as string[], [
 
     ]],
-    parentIds: [[], [
+    parentIds: [[] as string[], [
       Validators.required,
 
     ]],
@@ -59,7 +75,7 @@ export class AddStudentComponent {
       Validators.required,
 
     ]],
-    profileUrl: ['', [
+    profileUrl: ['http://localhost:3001/photos/profile-picture.jpg', [
       Validators.required,
 
     ]],
@@ -99,54 +115,74 @@ export class AddStudentComponent {
     return this.addStudentForm.get('profileUrl') as FormControl;
   }
 
+  ngOnInit() {
+    this.getClassList();
+    if (this.isEdit) {
+      this.patchStudentInfo()
+    }
+  }
+
+  patchStudentInfo() {
+    const { id, parents, classes, ...values } = this.student;
+    this.addStudentForm.setValue(values as any);
+  }
+
   choosePhoto(photoUrl: string) {
     this.profileUrl.setValue(photoUrl);
   }
 
-  cancelAddStudent() {
+  cancelAddForm = () => {
     this.cancelForm.emit()
   }
 
-  toStudent(data: any): Student {
-    return {
-      firstName: data.firstName ?? '',
-      lastName: data.lastName ?? '',
-      address: data.address ?? '',
-      phone: data.phone ?? '',
-      email: data.email ?? '',
-      profileUrl: data.profileUrl ?? '',
-      gender: data.gender ?? "male",
-      dateOfBirth: data.dateOfBirth ?? '',
-      classIds: data.classIds ?? [],
-      parentIds: data.parentIds ?? [],
-      admissionDate: data.dateOfBirth ?? '',
-    };
+  getClassList() {
+    this.classesService.getClasses()
+      .subscribe((data) => {
+        this.classesList = toLabelObject(data.classes, 'id', ['name']);
+      })
+  }
+
+  lookUpClassesByName(name: string) {
+    this.classesService.lookUpByName(name)
+      .subscribe((data) => {
+        this.classesList = toLabelObject(data.classes, 'id', ['name']);
+      })
+  }
+
+  handleSelectClass(selectedClasses: string[] | string) {
+    if (Array.isArray(selectedClasses)) {
+      this.classIds.setValue(selectedClasses);
+    }
+  }
+
+  lookUpParentsByName(name: string) {
+    this.parentsService.lookUpByName(name)
+      .subscribe((data) => {
+        this.parentsList = toLabelObject(data.parents, 'id', ['firstName', 'lastName']);
+      })
+  }
+
+  handleSelectParents(selectedParents: string[] | string) {
+    if (Array.isArray(selectedParents)) {
+      this.parentIds.setValue(selectedParents);
+    }
   }
 
   addStudent(e: Event) {
     e.preventDefault();
-    this.studentService.addStudent(this.toStudent(this.addStudentForm.value)).subscribe(() => {
-      this.cancelAddStudent();
-    })
+    this.studentService.addStudent(this.addStudentForm.value as Student)
+      .subscribe(() => {
+        this.cancelAddForm();
+        this.notificationService.notify('Student added successfully!')
+      })
   }
 
-
-  //   {
-  // "profileUrl": "https://example.com/s1",
-  // "lastName": "Doe",
-  // "firstName": "Jane 2",
-  // "gender": "male",
-  // "classIds": [
-  //     "c1"
-  // ],
-  // "parentIds": [
-  //     "p1",
-  //     "p2"
-  // ],
-  // "address": "123 Main St, Springfield, IL 62701",
-  // "dateOfBirth": "2005-01-01",
-  // "phone": "217-555-1234",
-  // "email": "s1@example.com",
-  // "admissionDate": "2010-01-01"
-  // }
+  editStudent = (e: Event) => {
+    e.preventDefault();
+    this.studentService.updateStudent(this.student.id!, this.addStudentForm.value as Student)
+      .subscribe(() => {
+        this.cancelAddForm();
+        this.notificationService.notify('Student updated successfully!')
+      })
+  }
 }

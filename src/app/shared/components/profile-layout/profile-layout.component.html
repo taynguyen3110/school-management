@@ -1,0 +1,19 @@
+<div class="flex container gap-5 justify-between mt-16 h-[500px]">
+    <div class="w-1/3 flex justify-center">
+        <ng-content select="[profilePhoto]"></ng-content>
+    </div>
+    <div class="w-3/5 flex flex-col gap-4">
+        <ng-content select="[profileInfo]"></ng-content>
+        <div class="flex gap-2 mt-auto">
+            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm" (click)="onEdit()">
+                Edit
+            </button>
+            <button (click)="onDelete()" class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
+                Delete
+            </button>
+            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm" (click)="onBack()">
+                Go Back
+            </button>
+        </div>
+    </div>
+</div>

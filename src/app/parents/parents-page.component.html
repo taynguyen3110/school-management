@@ -1,14 +1,11 @@
-<div class="bg-background p-4 pt-7 h-screen">
+<sman-page-layout title="parents">
     @if (displayAddParent) {
-    <sman-add-parent (cancel)="hideAddParentForm()" />
+    <sman-add-parent addNewForm (cancel)="hideAddParentForm()" />
     }
-    <div class="container bg-white p-4 mt-4 rounded-lg h-[calc(88vh)] flex flex-col justify-between">
-        <div class="overflow-x-auto">
-            <h1 class="text-center text-xl font-semibold">All Parents</h1>
-            <sman-parent-filter [queryParams]="filterParams"></sman-parent-filter>
-            <sman-item-table listOf="parent" [items]="parents"></sman-item-table>
-        </div>
-        <sman-pagination [pageSize]="itemPerPage" [totalCount]="parentsCount" [currentPage]="currentPage"
-            (pageChange)="handlePageChange($event)" />
-    </div>
-</div>
+    <sman-filter filter (filter)="filterParents($event)" [queryParams]="filterParams"></sman-filter>
+    <sman-item-table table listOf="parents" [items]="parents" (sort)="filterParents($event)"></sman-item-table>
+    @if(parentsCount) {
+    <sman-pagination pagination [pageSize]="itemPerPage" [totalCount]="parentsCount" [currentPage]="currentPage"
+        (pageChange)="handlePageChange($event)" />
+    }
+</sman-page-layout>

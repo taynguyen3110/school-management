@@ -15,4 +15,8 @@ export class ApiService {
     get<T>(endpoint: string, params?: Params) {
         return this.http.get<T>(this.baseUrl + endpoint, { params });
     }
+
+    delete<T>(endpoint: string) {
+        return this.http.delete<void>(this.baseUrl + endpoint);
+    }
 }

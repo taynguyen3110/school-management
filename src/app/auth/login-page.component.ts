@@ -7,18 +7,17 @@ import { AuthService } from '../shared/services/auth.service';
 import { FormService } from '../shared/services/form.service';
 import { ErrorService } from '../shared/services/error.service';
 import { passwordValidator } from '../shared/validators/passwordValidator';
+import { InputComponent } from '../shared/components/input/input.component';
+import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
   selector: 'sman-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, InputComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
 export class LoginComponent {
-
-  // private formBuilder = inject(FormBuilder);
-  // private authService = inject(AuthService);
 
   loginForm = this.formBuilder.group({
     username: ['', [
@@ -42,7 +41,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     public formService: FormService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -74,6 +74,7 @@ export class LoginComponent {
       next: (x) => {
         this.isLoading = false;
         this.authService.setAuthState(x);
+        this.notificationService.notify('Login Successfully.')
       },
       error: (err) => {
         this.isLoading = false;

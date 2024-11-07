@@ -1,0 +1,39 @@
+@if(subject) {
+@if(isShow) {
+<sman-add-subject [isEdit]="true" [subject]="subject" (cancelForm)="hideEditForm()"></sman-add-subject>
+}
+<sman-profile-layout (edit)="showEditForm()" (delete)="deleteSubject()" (back)="goBack()">
+    <ng-container profileInfo>
+        <div class="text-lg text-blue-800 font-semibold">{{subject.name}}</div>
+        <sman-profile-info label="ID:">
+            <div info>{{subject.id}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Teacher:">
+            <div info class="cursor-pointer select-none hover:underline"
+                [routerLink]="['../../teachers', subject.teacherId]">{{subject.teacher!.firstName + ' ' +
+                subject.teacher!.lastName}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Class:">
+            <div info class="cursor-pointer select-none hover:underline"
+                [routerLink]="['../../classes', subject.classId]">{{subject.class!.name}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Days of week:">
+            <div info class="flex gap-2">
+                @for (day of subject.daysOfWeek; track $index) {
+                @if ($last) {
+                <span>{{day | titlecase}}</span>
+                } @else {
+                <div class="inline">
+                    <span>{{day | titlecase}}</span><span>, </span>
+                </div>
+                }
+                } @empty {
+                <div class="text-gray-400 select-none">No schedule infomation.</div>
+                }
+            </div>
+        </sman-profile-info>
+    </ng-container>
+</sman-profile-layout>
+} @else {
+<div class="text-center mt-6 text-gray-400">This subject does not exist!</div>
+}

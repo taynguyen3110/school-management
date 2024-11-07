@@ -8,6 +8,10 @@ import { MainLayoutComponent } from './shared/components/main-layout/main-layout
 import { StudentProfileComponent } from './students/student-profile/student-profile.component';
 import { ParentProfileComponent } from './parents/parent-profile/parent-profile.component';
 import { TeacherProfileComponent } from './teachers/teacher-profile/teacher-profile.component';
+import { SubjectsComponent } from './subjects/subject-page.component';
+import { SubjectDetailComponent } from './subjects/subject-detail/subject-detail.component';
+import { ClassesComponent } from './school-classes/classes-page.component';
+import { ClassDetailComponent } from './school-classes/classes-detail/classes-detail.component';
 
 export const routes: Routes = [
     {
@@ -49,11 +53,20 @@ export const routes: Routes = [
             {
                 path: 'subjects',
                 title: 'Subjects',
-                component: ParentsComponent
+                component: SubjectsComponent
             },
             {
                 path: 'subjects/:id',
-                component: ParentProfileComponent,
+                component: SubjectDetailComponent,
+            },
+            {
+                path: 'classes',
+                title: 'Classes',
+                component: ClassesComponent
+            },
+            {
+                path: 'classes/:id',
+                component: ClassDetailComponent,
             },
             {
                 path: 'user',

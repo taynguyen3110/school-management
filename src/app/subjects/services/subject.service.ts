@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../shared/services/api.service';
 import { Params } from '@angular/router';
-import { Teacher } from '../../shared/types';
+import { SchoolSubject } from '../../shared/types';
 
 @Injectable({ providedIn: 'root' })
-export class TeacherService {
+export class SubjectService {
     constructor(
         private apiService: ApiService
     ) { }
 
-    getTeachers(params?: Params) {
-        return this.apiService.get<any>('/teachers', params)
+    getSubjects(params?: Params) {
+        return this.apiService.get<any>('/subjects', params)
     }
 
-    getTeacher(id: string) {
-        return this.apiService.get<Teacher>(`/teachers/${id}`)
+    getSubject(id: string) {
+        return this.apiService.get<SchoolSubject>(`/subjects/${id}`)
     }
 
     lookUpByName(name: string) {
-        return this.apiService.get<any>('/teachers/lookup', { name })
+        return this.apiService.get<any>('/subjects/lookup', { name })
     }
 
-    addTeacher(teacher: Teacher) {
-        return this.apiService.post<Teacher>('/teachers/add', teacher)
+    addSubject(subject: SchoolSubject) {
+        return this.apiService.post<SchoolSubject>('/subjects/add', subject)
+    }
+
+    updateSubject(id: string, subject: SchoolSubject) {
+        return this.apiService.post<SchoolSubject>(`/subjects/${id}`, subject)
+    }
+
+    deleteSubject(id: string) {
+        return this.apiService.delete<void>(`/subjects/${id}`);
     }
 }

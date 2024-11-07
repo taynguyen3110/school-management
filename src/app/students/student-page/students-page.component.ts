@@ -6,17 +6,16 @@ import { NavigationService } from '../../shared/services/navigation.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StudentService } from '../service/student.service';
 import { Student } from '../../shared/types';
-import { QueryService } from '../../shared/services/filter.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MultiSelectorComponent } from "../../shared/components/multiselector/multiselector.component";
 import { ItemTableComponent } from "../../shared/components/item-table/item-table.component";
-import { StudentsFilterComponent } from "../student-filter/students-filter.component";
-import { AddFormComponent } from '../../shared/components/add-form/add-form.component';
+import { PageLayoutComponent } from "../../shared/components/page-layout/page-layout.component";
+import { FilterComponent } from '../../shared/components/filter/filter.component';
 
 @Component({
   selector: 'sman-students, students',
   standalone: true,
-  imports: [PaginationComponent, RouterLink, ReactiveFormsModule, MultiSelectorComponent, ItemTableComponent, StudentsFilterComponent, AddStudentComponent],
+  imports: [PaginationComponent, RouterLink, ReactiveFormsModule, MultiSelectorComponent, ItemTableComponent, AddStudentComponent, PageLayoutComponent, FilterComponent],
   templateUrl: './students-page.component.html',
   styleUrl: './students-page.component.scss'
 })
@@ -35,7 +34,6 @@ export class StudentsComponent {
     private route: ActivatedRoute,
     private navigationService: NavigationService,
     private studentService: StudentService,
-    private queryService: QueryService,
   ) {
   }
 
@@ -49,8 +47,7 @@ export class StudentsComponent {
         this.displayAddStudent = params['addStudent'] === "true";
         this.filterParams = params;
         if (!params['page']) {
-          const newParam = this.queryService.setParam(params, { page: this.currentPage });
-          this.applyQueryChanges(newParam)
+          this.navigationService.toRoute('students', 'add', { page: this.currentPage }, true);
         } else {
           this.currentPage = +params['page'];
           this.fetchStudents(params).subscribe((data: any) => {
@@ -64,13 +61,8 @@ export class StudentsComponent {
     return this.studentService.getStudents(filter);
   }
 
-  applyQueryChanges(param: Params) {
-    this.navigationService.toRoute('students', param, true);
-  }
-
   handlePageChange(page: number) {
-    const newParams = this.queryService.addToCurrentParam({ page });
-    this.applyQueryChanges(newParams);
+    this.navigationService.toRoute('students', 'add', { page }, true);
   }
 
   showAddStudentForm() {
@@ -78,8 +70,17 @@ export class StudentsComponent {
   }
 
   hideAddStudentForm = () => {
-    const newParams = this.queryService.deleteFromCurrentParam('addStudent');
-    this.navigationService.toRoute("students", newParams, true);
+    this.navigationService.toRoute("students", 'delete', ['addStudent'], true);
+  }
+
+  filterStudents(filterParams: any) {
+    let newParams: Params = {};
+    if (filterParams.isNotSort) {
+      this.navigationService.toRoute('students', 'delete', ['sortBy', 'order']);
+    } else {
+      newParams = { ...filterParams, page: 1 };
+      this.navigationService.toRoute('students', 'add', newParams, true);
+    }
   }
 
   setPagination(data: any) {

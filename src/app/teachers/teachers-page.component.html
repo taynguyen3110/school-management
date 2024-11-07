@@ -1,14 +1,9 @@
-<div class="bg-background p-4 pt-7 h-screen">
+<sman-page-layout title="teachers">
     @if (displayAddTeacher) {
-    <sman-add-teacher (cancel)="hideAddTeacherForm()" />
+    <sman-add-teacher addNewForm (cancelForm)="hideAddTeacherForm()" />
     }
-    <div class="container bg-white p-4 mt-4 rounded-lg h-[calc(88vh)] flex flex-col justify-between">
-        <div class="overflow-x-auto">
-            <h1 class="text-center text-xl font-semibold">All Parents</h1>
-            <sman-teacher-filter [queryParams]="filterParams"></sman-teacher-filter>
-            <sman-item-table listOf="parent" [items]="teachers"></sman-item-table>
-        </div>
-        <sman-pagination [pageSize]="itemPerPage" [totalCount]="teachersCount" [currentPage]="currentPage"
-            (pageChange)="handlePageChange($event)" />
-    </div>
-</div>
+    <sman-filter filter (filter)="filterTeachers($event)" [queryParams]="filterParams"></sman-filter>
+    <sman-item-table table listOf="teachers" [items]="teachers" (sort)="filterTeachers($event)"></sman-item-table>
+    <sman-pagination pagination [pageSize]="itemPerPage" [totalCount]="teachersCount" [currentPage]="currentPage"
+        (pageChange)="handlePageChange($event)" />
+</sman-page-layout>

@@ -1,39 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Student } from '../../shared/types';
 import { StudentService } from '../service/student.service';
-import { Location } from '@angular/common';
+import { DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
+import { ProfilePhotoComponent } from '../../shared/components/profile-photo/profile-photo.component';
+import { ProfileInfoComponent } from "../../shared/components/profile-info/profile-info.component";
+import { NavigationService } from '../../shared/services/navigation.service';
+import { RouterLink } from '@angular/router';
+import { NotificationService } from '../../shared/services/notification.service';
+import { AddStudentComponent } from '../student-add/student-add.component';
+import { Subject, takeUntil } from 'rxjs';
+import { ProfileLayoutComponent } from "../../shared/components/profile-layout/profile-layout.component";
 
 @Component({
     standalone: true,
-    imports: [],
+    imports: [JsonPipe, TitleCasePipe, DatePipe, RouterLink, ProfilePhotoComponent, ProfileInfoComponent, AddStudentComponent, ProfileLayoutComponent],
     selector: 'sman-student-profile',
     templateUrl: 'student-profile.component.html'
 })
 
-export class StudentProfileComponent implements OnInit {
+export class StudentProfileComponent implements OnInit, OnDestroy {
     student!: Student;
-    // loaded: boolean = false;
+
+    isShow: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
         private studentService: StudentService,
-        private location: Location
+        private navigationService: NavigationService,
+        private notiService: NotificationService
     ) { }
 
     ngOnInit() {
-        this.route.paramMap.subscribe((param) => {
-            let studentId = param.get('id')
-            if (studentId) {
-                this.studentService.getStudent(studentId).subscribe((student) => {
-                    this.student = student
-                    // this.loaded = true;
-                })
-            }
+        this.fetchStudent();
+    }
+
+    fetchStudent() {
+        const studentId = this.route.snapshot.params['id'];
+        this.studentService.getStudent(studentId).subscribe((student) => {
+            this.student = student
         })
     }
 
+    showEditForm() {
+        this.isShow = true;
+    }
+
+    hideEditForm() {
+        this.isShow = false;
+    }
+
+    deleteStudent() {
+        this.studentService.deleteStudent(this.student.id!)
+            .subscribe((data) => {
+                console.log(data);
+                this.notiService.notify(`deleted student id: ${this.student.id}`)
+                this.goBack()
+            })
+    }
+
     goBack() {
-        this.location.back();
+        this.navigationService.goBack();
+    }
+
+    ngOnDestroy(): void {
     }
 }

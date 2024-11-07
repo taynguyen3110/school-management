@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, OnInit, Output, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { PhotoUploaderService } from './services/photo-uploader.service';
 
 @Component({
@@ -10,22 +10,24 @@ import { PhotoUploaderService } from './services/photo-uploader.service';
 })
 
 export class PhotoUploaderComponent implements OnInit {
+    @Input() inputUrl: string = '';
+    @Output() photoUploaded = new EventEmitter<string>();
+    @ViewChild('fileInput') fileInput: ElementRef | undefined;
     isDragOver = signal<boolean>(false);
     imagePreview = signal<string>('');
-    photoUrl = signal<string>('www.test.com');
+    photoUrl = signal<string>('');
     uploadSuccess: boolean = false;
     selectedPhoto: File | null = null;
-    @ViewChild('fileInput') fileInput: ElementRef | undefined;
     isMouseOver: boolean = false;
-    @Output() photoUploaded = new EventEmitter<string>();
 
     constructor(private photoUploadService: PhotoUploaderService) { }
 
     ngOnInit() {
+        this.imagePreview.set(this.inputUrl);
     }
 
     onClick(e: MouseEvent) {
-        if ((e.target as HTMLElement).tagName === 'INPUT') {
+        if ((e.target as HTMLElement).tagName === 'INPUT' || this.imagePreview() !== '') {
             return;
         }
         if (!this.uploadSuccess) {
@@ -39,7 +41,10 @@ export class PhotoUploaderComponent implements OnInit {
         console.log(this.isDragOver());
     }
 
-    // onDragLeave
+    onDragLeave(event: DragEvent) {
+        event.preventDefault();
+        this.isDragOver.set(false);
+    }
 
     onDrop(event: DragEvent) {
         event.preventDefault();
@@ -58,7 +63,6 @@ export class PhotoUploaderComponent implements OnInit {
         if (photo && photo.type.startsWith('image/')) {
             // file size check
             this.selectedPhoto = photo;
-
             const reader = new FileReader();
             reader.onload = (e) => {
                 const photoBase64 = e.target?.result as string;

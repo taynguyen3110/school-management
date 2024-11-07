@@ -18,7 +18,6 @@ export class AccordionItemComponent implements AfterContentInit {
 
     @Input() isShow: boolean = false;
     @Input() title: string = '';
-    @Input() navToMenu?: (url: route, params: Params, backToRoot: boolean) => void
     @Output() selectMenu = new EventEmitter<string>();
 
     constructor() { }
@@ -31,9 +30,6 @@ export class AccordionItemComponent implements AfterContentInit {
         }
         if (this.isAccordion) {
             this.isShow = !this.isShow;
-        }
-        if (!this.isAccordion && this.navToMenu) {
-            this.navToMenu('', {}, true)
         }
     }
 

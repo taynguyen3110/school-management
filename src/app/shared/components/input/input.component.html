@@ -1,0 +1,15 @@
+<label [for]="name">{{label}}</label>
+<ng-container [formGroup]="group">
+    <input class="border w-full rounded-md py-3 px-2 text-sm"
+    [ngClass]="{'border-red-600': formService.isFieldInvalid(control)}" [type]="type" [name]="name" [id]="name" [pattern]="pattern"
+    [placeholder]="placeholder" [formControlName]="name">
+</ng-container>
+<div class="text-red-600 text-sm">
+    @if(formService.isFieldInvalid(control)){
+        @for(err of errorKeys; track $index) {
+            @if (control.hasError(err)) {
+                {{errMsgs[err]}}
+            }
+        }
+    }
+</div>

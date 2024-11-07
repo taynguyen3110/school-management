@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Parent, Student } from '../../shared/types';
 import { Location } from '@angular/common';
 import { AddParentComponent } from '../parent-add/parent-add.component';
 import { ParentsService } from '../services/parents.service';
-import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
 import { StudentService } from '../../students/service/student.service';
+import { NotificationService } from '../../shared/services/notification.service';
+import { ProfileLayoutComponent } from "../../shared/components/profile-layout/profile-layout.component";
+import { ProfilePhotoComponent } from "../../shared/components/profile-photo/profile-photo.component";
+import { ProfileInfoComponent } from "../../shared/components/profile-info/profile-info.component";
 
 @Component({
     standalone: true,
-    imports: [ItemTableComponent],
+    imports: [AddParentComponent, ProfileLayoutComponent, ProfilePhotoComponent, ProfileInfoComponent, RouterLink],
     selector: 'sman-parent-profile',
     templateUrl: 'parent-profile.component.html'
 })
@@ -19,22 +22,18 @@ export class ParentProfileComponent implements OnInit {
     parent: Parent | null = null;
     students: Student[] = [];
 
+    isShow: boolean = false;
+
+
     constructor(
         private route: ActivatedRoute,
         private parentService: ParentsService,
         private studentService: StudentService,
-        private location: Location
+        private location: Location,
+        private notiService: NotificationService
     ) { }
 
     ngOnInit() {
-        // this.route.paramMap.subscribe((param) => {
-        //     let parentId = param.get('id')
-        // if (parentId) {
-        //     this.parentService.getParent(parentId).subscribe((parent) => {
-        //         this.parent = parent
-        //     })
-        // }
-        // })
         this.fetchParent();
         this.fetchStudentsByParent();
     }
@@ -52,6 +51,23 @@ export class ParentProfileComponent implements OnInit {
         this.studentService.lookUpStudentsByParent(this.parentId)
             .subscribe((students) => {
                 this.students = students
+            })
+    }
+
+    showEditForm() {
+        this.isShow = true;
+    }
+
+    hideEditForm() {
+        this.isShow = false;
+    }
+
+    deleteParent() {
+        this.parentService.deleteParent(this.parentId)
+            .subscribe((data) => {
+                console.log(data);
+                this.notiService.notify(`deleted student id: ${this.parentId}`)
+                this.goBack()
             })
     }
 

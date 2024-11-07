@@ -15,13 +15,17 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './user-page.component.scss'
 })
 export class UserPageComponent {
-  private authApi = inject(AuthApiService);
   user?: UserProfile;
   isEdit: boolean = false;
   isChangePassword: boolean = false;
   isLoading: boolean = false;
 
   unsubscribe$ = new Subject<void>();
+
+  constructor(
+    private authApi: AuthApiService,
+  ) {
+  }
 
   ngOnInit() {
     this.authApi.getAccount()
@@ -51,6 +55,10 @@ export class UserPageComponent {
 
   cancelChangePassword = () => {
     this.isChangePassword = false;
+  }
+
+  onChangePassword(password: string) {
+    this.authApi.changePassword(password)
   }
 
   ngOnDestroy() {

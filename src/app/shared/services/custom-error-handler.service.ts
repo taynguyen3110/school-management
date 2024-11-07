@@ -3,8 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class CustomErrorHandler implements ErrorHandler {
-    private snackbar = inject(MatSnackBar);
-    constructor() { }
+    constructor(
+        private snackbar: MatSnackBar
+    ) { }
 
     handleError(error: Error): void {
         this.snackbar.open(

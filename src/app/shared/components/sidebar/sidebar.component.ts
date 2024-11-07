@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 import { AccordionItemComponent } from "./accordion-item/accordion-item.component";
 import { AccordionButtonComponent } from "./accordion-button/accordion-button.component";
 import { NavigationService, route } from '../../services/navigation.service';
-import { QueryService } from '../../services/filter.service';
 
 @Component({
   selector: 'sman-sidebar',
@@ -20,24 +19,18 @@ export class SidebarComponent {
   constructor(
     private authService: AuthService,
     private navigateService: NavigationService,
-    private queryService: QueryService,
   ) {
 
   }
 
   onSelectMenu(menu: route) {
     this.selectedMenu = menu;
+    if (menu === '') {
+      this.navigateService.toRoute('')
+    }
   }
 
   logOut() {
     this.authService.logOut();
-  }
-
-  navToMenu = (url: route, params?: Params, backToRoot: boolean = false) => {
-    let queryParams = params;
-    if (params && !backToRoot) {
-      queryParams = this.queryService.addToCurrentParam(params);
-    }
-    this.navigateService.toRoute(url, queryParams);
   }
 }

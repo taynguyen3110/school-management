@@ -1,93 +1,134 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PhotoUploaderComponent } from '../../shared/components/photouploader/photo-uploader.component';
 import { FormService } from '../../shared/services/form.service';
-import { TeacherService } from '../services/subject.service';
-import { Teacher } from '../../shared/types';
+import { SubjectService } from '../services/subject.service';
+import { NotificationService } from '../../shared/services/notification.service';
+import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout';
+import { InputComponent } from "../../shared/components/input/input.component";
+import { MultiSelectorComponent } from "../../shared/components/multiselector/multiselector.component";
+import { toLabelObject } from '../../shared/components/multiselector/utils/toLabelObject';
+import { TeacherService } from '../../teachers/services/teacher.service';
+import { ClassesService } from '../../school-classes/services/classes.service';
+import { SchoolSubject, LabelObj } from '../../shared/types';
 
 @Component({
     standalone: true,
-    imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent],
-    selector: 'sman-add-teacher',
-    templateUrl: 'teacher-add.component.html'
+    imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent, AddNewFormLayoutComponent, InputComponent, MultiSelectorComponent],
+    selector: 'sman-add-subject',
+    templateUrl: 'subject-add.component.html',
 })
 
-export class AddTeacherComponent implements OnInit {
-    @Output() cancel = new EventEmitter()
+export class AddSubjectComponent implements OnInit {
+    @Input() isEdit: boolean = false;
+    @Input() subject!: SchoolSubject;
+
+    @Output() cancelForm = new EventEmitter()
+
+    classList: LabelObj[] = [];
+    weekDays: LabelObj[] = [
+        { id: 'monday', label: 'Monday' },
+        { id: 'tuesday', label: 'Tuesday' },
+        { id: 'wednesday', label: 'Wednesday' },
+        { id: 'thursday', label: 'Thursday' },
+        { id: 'friday', label: 'Friday' }
+    ];
+    teacherList: LabelObj[] = [];
+
 
     constructor(
         private fb: FormBuilder,
         public formService: FormService,
-        private teacherService: TeacherService
+        private subjectService: SubjectService,
+        private teacherService: TeacherService,
+        private classesService: ClassesService,
+        private notificationService: NotificationService,
     ) { }
 
-    addTeacherForm = this.fb.group({
-        firstName: ['', [
+    addSubjectForm = this.fb.group({
+        name: ['', [
             Validators.required,
         ]],
-        lastName: ['', [
+        classId: ['', [
             Validators.required,
         ]],
-        address: ['', [
+        daysOfWeek: [[] as string[], [
             Validators.required,
         ]],
-        gender: ['', [
+        teacherId: ['', [
             Validators.required,
-        ]],
-        phone: ['', [
-            Validators.required,
-        ]],
-        email: ['', [
-            Validators.required,
-        ]],
-        profileUrl: ['', [
-            Validators.required,
-        ]],
-        admissionDate: ['', [
-            Validators.required,
-        ]],
+        ]]
     })
 
-    get firstName() {
-        return this.addTeacherForm.get('firstName') as FormControl;
+    get name() {
+        return this.addSubjectForm.get('name') as FormControl;
     }
-    get lastName() {
-        return this.addTeacherForm.get('lastName') as FormControl;
+    get classId() {
+        return this.addSubjectForm.get('classId') as FormControl;
     }
-    get address() {
-        return this.addTeacherForm.get('address') as FormControl;
+    get daysOfWeek() {
+        return this.addSubjectForm.get('daysOfWeek') as FormControl;
     }
-    get gender() {
-        return this.addTeacherForm.get('gender') as FormControl;
-    }
-    get phone() {
-        return this.addTeacherForm.get('phone') as FormControl;
-    }
-    get email() {
-        return this.addTeacherForm.get('email') as FormControl;
-    }
-    get profileUrl() {
-        return this.addTeacherForm.get('profileUrl') as FormControl;
-    }
-    get admissionDate() {
-        return this.addTeacherForm.get('admissionDate') as FormControl;
+    get teacherId() {
+        return this.addSubjectForm.get('teacherId') as FormControl;
     }
 
-    choosePhoto(photoUrl: string) {
-        this.profileUrl.setValue(photoUrl);
+    ngOnInit() {
+        if (this.isEdit) {
+            this.patchSubjectInfo()
+        }
     }
 
-    cancelAddParent() {
-        this.cancel.emit()
+    patchSubjectInfo() {
+        const { id, ...values } = this.subject;
+        this.addSubjectForm.setValue(values as any);
     }
 
-    addParent(e: Event) {
+    cancelAddForm() {
+        this.cancelForm.emit()
+    }
+
+    lookUpClassesByName(name: string) {
+        this.classesService.lookUpByName(name)
+            .subscribe((data) => {
+                this.classList = toLabelObject(data.classes, 'id', ['name']);
+            })
+    }
+
+    handleSelectClass(selectedClass: string[] | string) {
+        this.classId.setValue(selectedClass as string);
+    }
+
+    lookUpTeachersByName(name: string) {
+        this.teacherService.lookUpByName(name)
+            .subscribe((data) => {
+                this.teacherList = toLabelObject(data.teachers, 'id', ['firstName', 'lastName']);
+            })
+    }
+
+    handleSelectTeacher(selectedTeacher: string[] | string) {
+        this.teacherId.setValue(selectedTeacher as string);
+    }
+
+    handleSelectSchedule(selectedDays: string[] | string) {
+        this.daysOfWeek.setValue(selectedDays);
+    }
+
+    addSubject(e: Event) {
         e.preventDefault();
-        this.teacherService.addTeacher(this.addTeacherForm.value as Teacher).subscribe(() => {
-            this.cancelAddParent();
+        this.subjectService.addSubject(this.addSubjectForm.value as SchoolSubject).subscribe(() => {
+            this.cancelAddForm();
+            this.notificationService.notify('Subject added successfully!')
         })
     }
 
-    ngOnInit() { }
+    editSubject = (e: Event) => {
+        e.preventDefault();
+        this.subjectService.updateSubject(this.subject.id!, this.addSubjectForm.value as SchoolSubject)
+            .subscribe(() => {
+                this.cancelAddForm();
+                this.notificationService.notify('Subject updated successfully!')
+            })
+    }
 }

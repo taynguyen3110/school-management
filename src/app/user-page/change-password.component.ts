@@ -1,8 +1,10 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Validators, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
 // import { AuthApiService } from '../shared/services/authApi.service';
 import { CommonModule } from '@angular/common';
 import { passwordValidator } from '../shared/validators/passwordValidator';
+import { passwordMismatchValidator } from '../shared/validators/passwordMismatchValidator';
+import { AuthApiService } from '../shared/services/authApi.service';
 
 @Component({
     standalone: true,
@@ -14,11 +16,13 @@ import { passwordValidator } from '../shared/validators/passwordValidator';
 export class ChangePasswordComponent {
     @Input() cancelChangePassword!: () => void;
 
-    // private authApi = inject(AuthApiService);
-    private fb = inject(FormBuilder);
+    @Output() changePwd = new EventEmitter<string>()
+
     isLoading: boolean = false;
 
-    constructor() { }
+    constructor(
+        private fb: FormBuilder
+    ) { }
 
     ngOnInit() { }
 
@@ -31,6 +35,8 @@ export class ChangePasswordComponent {
             Validators.minLength(8),
             passwordValidator()
         ]]
+    }, {
+        validators: passwordMismatchValidator('newPwd', 'confirmNewPwd')
     })
 
     // change pwd form
@@ -43,6 +49,6 @@ export class ChangePasswordComponent {
     }
 
     changePassword() {
-
+        this.changePwd.emit(this.newPwd.value)
     }
 }

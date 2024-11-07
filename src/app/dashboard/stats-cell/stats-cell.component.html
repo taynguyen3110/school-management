@@ -1,0 +1,13 @@
+<div chart class="flex items-center gap-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    @if(icon) {
+    <div class="w-14 h-14 text-white rounded-full flex items-center justify-center text-2xl"
+        [style]="{background: color, opacity: 0.7}">
+        <ng-content select="[icon]"></ng-content>
+    </div>
+    <div class="h-10 w-[1px] bg-red-600 rounded-md"></div>
+    }
+    <div class="flex flex-col">
+        <div class="text-sm text-gray-400">{{label}}</div>
+        <div class="font-semibold">{{stats}}</div>
+    </div>
+</div>

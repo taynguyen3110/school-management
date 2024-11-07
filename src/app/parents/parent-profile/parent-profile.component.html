@@ -1,28 +1,45 @@
 @if(parent) {
-<div class="flex gap-7">
-    <div class="w-1/3">
-        <img class="w-full h-full rounded-full border border-black" src="" alt="">
-    </div>
-    <div class="w-full">
-        <div class="text-lg text-blue-800 font-semibold">{{parent.firstName + " " + parent.lastName}}</div>
-        <div>{{parent.email}}</div>
-        <div>{{parent.phone}}</div>
-        <div>{{parent.address}}</div>
-        <div>{{parent.id}}</div>
-        <div class="flex gap-2">
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
-                Edit
-            </button>
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm">
-                Delete
-            </button>
-            <button class="py-[10px] w-24 text-white bg-primary-300 rounded-lg text-sm" (click)="goBack()">
-                Go Back
-            </button>
-        </div>
-    </div>
-</div>
-<sman-item-table listOf="student" [items]="students"></sman-item-table>
+@if(isShow) {
+<sman-add-parent [isEdit]="true" [parent]="parent" (cancel)="hideEditForm()"></sman-add-parent>
+}
+<sman-profile-layout (edit)="showEditForm()" (delete)="deleteParent()" (back)="goBack()">
+    <sman-profile-photo profilePhoto [photoSrc]="parent.profileUrl" />
+    <ng-container profileInfo>
+
+        <div class="text-lg text-blue-800 font-semibold mb-3">{{parent.firstName + " " + parent.lastName}}</div>
+        <sman-profile-info label="Parent ID:">
+            <div info>{{parent.id}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Phone:">
+            <div info>{{parent.phone}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Email:">
+            <div info>{{parent.email}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Address:">
+            <div info>{{parent.address}}</div>
+        </sman-profile-info>
+        <sman-profile-info label="Students:">
+            <div info class="flex gap-2">
+                @for (student of students; track student.id) {
+                @if ($last) {
+                <span class="cursor-pointer select-none hover:underline"><a
+                        [routerLink]="['../../students', student.id]">{{student.firstName + ' ' +
+                        student.lastName}}</a></span>
+                } @else {
+                <div class="inline">
+                    <span class="cursor-pointer select-none hover:underline"><a
+                            [routerLink]="['../../students', student.id]">{{student.firstName + ' ' +
+                            student.lastName}}</a></span><span>, </span>
+                </div>
+                }
+                } @empty {
+                <div class="text-gray-400 select-none">No student infomation.</div>
+                }
+            </div>
+        </sman-profile-info>
+    </ng-container>
+</sman-profile-layout>
 } @else {
-<div>This parent does not exist!</div>
+<div class="text-center mt-6 text-gray-400">This parent does not exist!</div>
 }

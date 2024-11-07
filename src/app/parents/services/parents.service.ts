@@ -24,4 +24,12 @@ export class ParentsService {
     addParent(parent: Parent) {
         return this.apiService.post<Parent>('/parents/add', parent)
     }
+
+    updateParent(id: string, parent: Parent) {
+        return this.apiService.post<Parent>(`/parents/${id}`, parent)
+    }
+
+    deleteParent(id: string) {
+        return this.apiService.delete<void>(`/parents/${id}`);
+    }
 }

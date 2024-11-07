@@ -7,6 +7,8 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomErrorHandler } from './shared/services/custom-error-handler.service';
+import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,10 +19,11 @@ export const appConfig: ApplicationConfig = {
     ),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     provideAnimationsAsync(),
     importProvidersFrom(
-      MatSnackBarModule
+      // MatSnackBarModule,
     ),
-    { provide: ErrorHandler, useClass: CustomErrorHandler }
+    // { provide: ErrorHandler, useClass: CustomErrorHandler }
   ]
 };

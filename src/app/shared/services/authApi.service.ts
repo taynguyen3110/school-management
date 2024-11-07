@@ -22,4 +22,8 @@ export class AuthApiService {
     updateAccount(user: UserProfile) {
         return this.api.post<UserProfile>("/account", user);
     }
+
+    changePassword(password: string) {
+        return this.api.post
+    }
 }

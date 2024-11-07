@@ -24,4 +24,12 @@ export class TeacherService {
     addTeacher(teacher: Teacher) {
         return this.apiService.post<Teacher>('/teachers/add', teacher)
     }
+
+    updateTeacher(id: string, teacher: Teacher) {
+        return this.apiService.post<Teacher>(`/teachers/${id}`, teacher)
+    }
+
+    deleteTeacher(id: string) {
+        return this.apiService.delete<void>(`/teachers/${id}`);
+    }
 }

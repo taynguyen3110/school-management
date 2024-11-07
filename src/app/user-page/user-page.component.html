@@ -1,9 +1,9 @@
-<div class="bg-background h-full pt-7 p-4">
+<div class="bg-background h-screen pt-7 p-4">
     <h1 class="text-2xl font-semibold text-center my-3">Account Setting</h1>
     <div class="container bg-white">
         <div class="w-full flex justify-center">
             <div class="rounded-full h-44 w-44 overflow-hidden my-10">
-                <img class="object-none h-44" src="./assets/images/portrait.jpg" alt="">
+                <img class="object-none h-44" [src]="user?.profileUrl" alt="">
             </div>
         </div>
         @if(user) {
@@ -38,7 +38,8 @@
         <sman-edit-profile [user]="user" [setUser]="setUser" [cancelEdit]="cancelEdit"></sman-edit-profile>
         }
         @if (isChangePassword && !isEdit) {
-        <sman-change-password [cancelChangePassword]="cancelChangePassword"></sman-change-password>
+        <sman-change-password [cancelChangePassword]="cancelChangePassword"
+            (changePwd)="onChangePassword($event)"></sman-change-password>
         }
         } @else {
         Error getting account information!
