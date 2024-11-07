@@ -7,15 +7,21 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NavigationService } from '../shared/services/navigation.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AddParentComponent } from './parent-add/parent-add.component';
-import { PageLayoutComponent } from "../shared/components/page-layout/page-layout.component";
+import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
   selector: 'sman-parents',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddParentComponent, PageLayoutComponent, FilterComponent],
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    AddParentComponent,
+    PageLayoutComponent,
+    FilterComponent,
+  ],
   templateUrl: './parents-page.component.html',
-  styleUrl: './parents-page.component.scss'
+  styleUrl: './parents-page.component.scss',
 })
 export class ParentsComponent {
   parentsCount: number = 0;
@@ -26,33 +32,36 @@ export class ParentsComponent {
   currentPage: number = 1;
   filterParams: Params = {};
 
-  unsubscribe$ = new Subject<void>()
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private parentsService: ParentsService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.displayAddParent = this.route.snapshot.queryParamMap.get('addParent') === "true";
+    this.displayAddParent =
+      this.route.snapshot.queryParamMap.get('addParent') === 'true';
     this.route.queryParams
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddParent = params['addParent'] === "true";
-        this.filterParams = params
+        this.displayAddParent = params['addParent'] === 'true';
+        this.filterParams = params;
         if (!params['page']) {
-          this.navigationService.toRoute('parents', 'add', { page: this.currentPage }, true);
+          this.navigationService.toRoute(
+            'parents',
+            'add',
+            { page: this.currentPage },
+            true,
+          );
         } else {
           this.currentPage = +params['page'];
           this.fetchParents(params).subscribe((data: any) => {
             this.setPagination(data);
-          })
+          });
         }
-      })
+      });
   }
 
   fetchParents(filter?: Params) {
@@ -76,7 +85,7 @@ export class ParentsComponent {
 
   hideAddParentForm = () => {
     this.navigationService.toRoute('parents', 'delete', ['addParent'], true);
-  }
+  };
 
   filterParents(filterParams: any) {
     let newParams: Params = {};

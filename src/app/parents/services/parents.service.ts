@@ -5,31 +5,29 @@ import { Parent } from '../../shared/types';
 
 @Injectable({ providedIn: 'root' })
 export class ParentsService {
-    constructor(
-        private apiService: ApiService
-    ) { }
+  constructor(private apiService: ApiService) {}
 
-    getParents(params?: Params) {
-        return this.apiService.get<any>('/parents', params)
-    }
+  getParents(params?: Params) {
+    return this.apiService.get<any>('/parents', params);
+  }
 
-    getParent(id: string) {
-        return this.apiService.get<Parent>(`/parents/${id}`)
-    }
+  getParent(id: string) {
+    return this.apiService.get<Parent>(`/parents/${id}`);
+  }
 
-    lookUpByName(name: string) {
-        return this.apiService.get<any>('/parents/lookup', { name })
-    }
+  lookUpByName(name: string) {
+    return this.apiService.get<any>('/parents/lookup', { name });
+  }
 
-    addParent(parent: Parent) {
-        return this.apiService.post<Parent>('/parents/add', parent)
-    }
+  addParent(parent: Parent) {
+    return this.apiService.post<Parent>('/parents/add', parent);
+  }
 
-    updateParent(id: string, parent: Parent) {
-        return this.apiService.post<Parent>(`/parents/${id}`, parent)
-    }
+  updateParent(id: string, parent: Parent) {
+    return this.apiService.post<Parent>(`/parents/${id}`, parent);
+  }
 
-    deleteParent(id: string) {
-        return this.apiService.delete<void>(`/parents/${id}`);
-    }
+  deleteParent(id: string) {
+    return this.apiService.delete<void>(`/parents/${id}`);
+  }
 }

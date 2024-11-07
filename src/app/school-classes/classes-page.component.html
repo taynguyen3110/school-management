@@ -1,9 +1,24 @@
 <sman-page-layout title="classes">
-    @if (displayAddClass) {
+  @if (displayAddClass) {
     <sman-add-class addNewForm (cancelForm)="hideAddForm()" />
-    }
-    <sman-filter filter [nameOnly]="true" (filter)="filterClasses($event)" [queryParams]="filterParams"></sman-filter>
-    <sman-item-table table listOf="classes" [items]="classes" (sort)="filterClasses($event)"></sman-item-table>
-    <sman-pagination pagination [pageSize]="itemPerPage" [totalCount]="classesCount" [currentPage]="currentPage"
-        (pageChange)="handlePageChange($event)" />
+  }
+  <sman-filter
+    filter
+    [nameOnly]="true"
+    (filter)="filterClasses($event)"
+    [queryParams]="filterParams"
+  ></sman-filter>
+  <sman-item-table
+    table
+    listOf="classes"
+    [items]="classes"
+    (sort)="filterClasses($event)"
+  ></sman-item-table>
+  <sman-pagination
+    pagination
+    [pageSize]="itemPerPage"
+    [totalCount]="classesCount"
+    [currentPage]="currentPage"
+    (pageChange)="handlePageChange($event)"
+  />
 </sman-page-layout>

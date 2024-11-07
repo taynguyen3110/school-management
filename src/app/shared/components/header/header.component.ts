@@ -31,6 +31,6 @@ export class HeaderComponent {
   // }
 
   goToUserInfo() {
-    this.router.navigate(['/user'])
+    this.router.navigate(['/user']);
   }
 }

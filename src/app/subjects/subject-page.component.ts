@@ -7,13 +7,19 @@ import { AddSubjectComponent } from './subject-add/subject-add.component';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 import { SubjectService } from './services/subject.service';
-import { PageLayoutComponent } from "../shared/components/page-layout/page-layout.component";
-import { FilterComponent } from "../shared/components/filter/filter.component";
+import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
+import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
   selector: 'sman-subjects',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddSubjectComponent, PageLayoutComponent, FilterComponent],
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    AddSubjectComponent,
+    PageLayoutComponent,
+    FilterComponent,
+  ],
   templateUrl: './subject-page.component.html',
 })
 export class SubjectsComponent {
@@ -31,27 +37,30 @@ export class SubjectsComponent {
     private subjectService: SubjectService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.displayAddSubject = this.route.snapshot.queryParamMap.get('addSubject') === "true";
+    this.displayAddSubject =
+      this.route.snapshot.queryParamMap.get('addSubject') === 'true';
     this.route.queryParams
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddSubject = params['addSubject'] === "true";
+        this.displayAddSubject = params['addSubject'] === 'true';
         this.filterParams = params;
         if (!params['page']) {
-          this.navigationService.toRoute('subjects', 'add', { page: this.currentPage }, true);
+          this.navigationService.toRoute(
+            'subjects',
+            'add',
+            { page: this.currentPage },
+            true,
+          );
         } else {
           this.currentPage = +params['page'];
           this.fetchSubjects(params).subscribe((data: any) => {
             this.setPagination(data);
-          })
+          });
         }
-      })
+      });
   }
 
   fetchSubjects(filter?: Params) {
@@ -74,8 +83,8 @@ export class SubjectsComponent {
   }
 
   hideAddSubjectForm = () => {
-    this.navigationService.toRoute("subjects", 'delete', ['addSubject'], true);
-  }
+    this.navigationService.toRoute('subjects', 'delete', ['addSubject'], true);
+  };
 
   filterSubjects(filterParams: any) {
     let newParams: Params = {};

@@ -3,32 +3,32 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class QueryService {
-    constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
 
-    setParam(currentParams: Params, param: { [key: string]: string | number }) {
-        const newParams = { ...currentParams, ...param };
-        return newParams;
-    }
+  setParam(currentParams: Params, param: { [key: string]: string | number }) {
+    const newParams = { ...currentParams, ...param };
+    return newParams;
+  }
 
-    deleteParam(currentParams: Params, key: string[]) {
-        const newParams = { ...currentParams };
-        key.forEach(k => {
-            delete newParams[k];
-        })
-        return newParams;
-    }
+  deleteParam(currentParams: Params, key: string[]) {
+    const newParams = { ...currentParams };
+    key.forEach((k) => {
+      delete newParams[k];
+    });
+    return newParams;
+  }
 
-    isParamExist(currentParams: Params, key: string) {
-        return !!currentParams[key];
-    }
+  isParamExist(currentParams: Params, key: string) {
+    return !!currentParams[key];
+  }
 
-    addToCurrentParam(param: { [key: string]: string | number } | Params) {
-        const currentParams = this.route.snapshot.queryParams;
-        return this.setParam(currentParams, param);
-    }
+  addToCurrentParam(param: { [key: string]: string | number } | Params) {
+    const currentParams = this.route.snapshot.queryParams;
+    return this.setParam(currentParams, param);
+  }
 
-    deleteFromCurrentParam(key: string[]) {
-        const currentParams = this.route.snapshot.queryParams;
-        return this.deleteParam(currentParams, key);
-    }
+  deleteFromCurrentParam(key: string[]) {
+    const currentParams = this.route.snapshot.queryParams;
+    return this.deleteParam(currentParams, key);
+  }
 }

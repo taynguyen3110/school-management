@@ -7,13 +7,19 @@ import { AddClassComponent } from './classes-add/classes-add.component';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 import { ClassesService } from './services/classes.service';
-import { PageLayoutComponent } from "../shared/components/page-layout/page-layout.component";
-import { FilterComponent } from "../shared/components/filter/filter.component";
+import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
+import { FilterComponent } from '../shared/components/filter/filter.component';
 
 @Component({
   selector: 'sman-classes',
   standalone: true,
-  imports: [ItemTableComponent, PaginationComponent, AddClassComponent, PageLayoutComponent, FilterComponent],
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    AddClassComponent,
+    PageLayoutComponent,
+    FilterComponent,
+  ],
   templateUrl: './classes-page.component.html',
 })
 export class ClassesComponent {
@@ -25,33 +31,36 @@ export class ClassesComponent {
   currentPage: number = 1;
   filterParams: Params = {};
 
-  unsubscribe$ = new Subject<void>()
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private classesService: ClassesService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.displayAddClass = this.route.snapshot.queryParamMap.get('addClass') === "true";
+    this.displayAddClass =
+      this.route.snapshot.queryParamMap.get('addClass') === 'true';
     this.route.queryParams
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddClass = params['addClass'] === "true";
+        this.displayAddClass = params['addClass'] === 'true';
         this.filterParams = params;
         if (!params['page']) {
-          this.navigationService.toRoute('classes', 'add', { page: this.currentPage }, true);
+          this.navigationService.toRoute(
+            'classes',
+            'add',
+            { page: this.currentPage },
+            true,
+          );
         } else {
           this.currentPage = +params['page'];
           this.fetchClass(params).subscribe((data: any) => {
             this.setPagination(data);
-          })
+          });
         }
-      })
+      });
   }
 
   fetchClass(filter?: Params) {
@@ -74,8 +83,8 @@ export class ClassesComponent {
   }
 
   hideAddForm = () => {
-    this.navigationService.toRoute("classes", 'delete', ['addClass'], true);
-  }
+    this.navigationService.toRoute('classes', 'delete', ['addClass'], true);
+  };
 
   filterClasses(filterParams: any) {
     let newParams: Params = {};

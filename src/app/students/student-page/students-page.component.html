@@ -1,11 +1,25 @@
 <sman-page-layout title="students">
-    @if (displayAddStudent) {
+  @if (displayAddStudent) {
     <sman-add-student addNewForm (cancelForm)="hideAddStudentForm()" />
-    }
-    <sman-filter filter (filter)="filterStudents($event)" [queryParams]="filterParams"></sman-filter>
-    <sman-item-table table listOf="students" [items]="students" (sort)="filterStudents($event)"></sman-item-table>
-    @if(studentsCount) {
-    <sman-pagination pagination [pageSize]="itemPerPage" [totalCount]="studentsCount" [currentPage]="currentPage"
-        (pageChange)="handlePageChange($event)" />
-    }
+  }
+  <sman-filter
+    filter
+    (filter)="filterStudents($event)"
+    [queryParams]="filterParams"
+  ></sman-filter>
+  <sman-item-table
+    table
+    listOf="students"
+    [items]="students"
+    (sort)="filterStudents($event)"
+  ></sman-item-table>
+  @if (studentsCount) {
+    <sman-pagination
+      pagination
+      [pageSize]="itemPerPage"
+      [totalCount]="studentsCount"
+      [currentPage]="currentPage"
+      (pageChange)="handlePageChange($event)"
+    />
+  }
 </sman-page-layout>

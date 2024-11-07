@@ -1,16 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-    standalone: true,
-    imports: [],
-    selector: 'sman-profile-photo',
-    templateUrl: 'profile-photo.component.html'
+  standalone: true,
+  imports: [],
+  selector: 'sman-profile-photo',
+  templateUrl: 'profile-photo.component.html',
 })
-
 export class ProfilePhotoComponent implements OnInit {
-    @Input() photoSrc: string = '';
+  @Input() photoSrc: string = '';
 
-    constructor() { }
+  constructor() {}
 
-    ngOnInit() { }
+  ngOnInit() {}
 }

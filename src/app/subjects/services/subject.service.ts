@@ -5,31 +5,29 @@ import { SchoolSubject } from '../../shared/types';
 
 @Injectable({ providedIn: 'root' })
 export class SubjectService {
-    constructor(
-        private apiService: ApiService
-    ) { }
+  constructor(private apiService: ApiService) {}
 
-    getSubjects(params?: Params) {
-        return this.apiService.get<any>('/subjects', params)
-    }
+  getSubjects(params?: Params) {
+    return this.apiService.get<any>('/subjects', params);
+  }
 
-    getSubject(id: string) {
-        return this.apiService.get<SchoolSubject>(`/subjects/${id}`)
-    }
+  getSubject(id: string) {
+    return this.apiService.get<SchoolSubject>(`/subjects/${id}`);
+  }
 
-    lookUpByName(name: string) {
-        return this.apiService.get<any>('/subjects/lookup', { name })
-    }
+  lookUpByName(name: string) {
+    return this.apiService.get<any>('/subjects/lookup', { name });
+  }
 
-    addSubject(subject: SchoolSubject) {
-        return this.apiService.post<SchoolSubject>('/subjects/add', subject)
-    }
+  addSubject(subject: SchoolSubject) {
+    return this.apiService.post<SchoolSubject>('/subjects/add', subject);
+  }
 
-    updateSubject(id: string, subject: SchoolSubject) {
-        return this.apiService.post<SchoolSubject>(`/subjects/${id}`, subject)
-    }
+  updateSubject(id: string, subject: SchoolSubject) {
+    return this.apiService.post<SchoolSubject>(`/subjects/${id}`, subject);
+  }
 
-    deleteSubject(id: string) {
-        return this.apiService.delete<void>(`/subjects/${id}`);
-    }
+  deleteSubject(id: string) {
+    return this.apiService.delete<void>(`/subjects/${id}`);
+  }
 }

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,7 +12,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss'
+  styleUrl: './pagination.component.scss',
 })
 export class PaginationComponent implements OnChanges {
   @Input() pageSize!: number;
@@ -15,7 +21,7 @@ export class PaginationComponent implements OnChanges {
   @Output() pageChange = new EventEmitter<number>();
 
   lastPage!: number;
-  DOTS = "...";
+  DOTS = '...';
   arr: any[] = [];
 
   ngOnInit() {
@@ -34,12 +40,13 @@ export class PaginationComponent implements OnChanges {
   }
 
   handleNext() {
-    this.currentPage = this.currentPage < this.lastPage ? this.currentPage + 1 : this.lastPage;
+    this.currentPage =
+      this.currentPage < this.lastPage ? this.currentPage + 1 : this.lastPage;
     this.updatePagination();
   }
 
   handleJumpToPage(page: number) {
-    if (typeof page === "number") {
+    if (typeof page === 'number') {
       this.currentPage = page;
       this.updatePagination();
     }

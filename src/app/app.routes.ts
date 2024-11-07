@@ -14,71 +14,71 @@ import { ClassesComponent } from './school-classes/classes-page.component';
 import { ClassDetailComponent } from './school-classes/classes-detail/classes-detail.component';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
         path: '',
-        component: MainLayoutComponent,
-        children: [
-            {
-                path: '',
-                title: 'Dashboard',
-                component: DashboardComponent
-            },
-            {
-                path: 'students',
-                title: 'Students',
-                component: StudentsComponent,
-            },
-            {
-                path: 'students/:id',
-                component: StudentProfileComponent,
-            },
-            {
-                path: 'teachers',
-                title: 'Teachers',
-                component: TeachersComponent
-            },
-            {
-                path: 'teachers/:id',
-                component: TeacherProfileComponent,
-            },
-            {
-                path: 'parents',
-                title: 'Parents',
-                component: ParentsComponent
-            },
-            {
-                path: 'parents/:id',
-                component: ParentProfileComponent,
-            },
-            {
-                path: 'subjects',
-                title: 'Subjects',
-                component: SubjectsComponent
-            },
-            {
-                path: 'subjects/:id',
-                component: SubjectDetailComponent,
-            },
-            {
-                path: 'classes',
-                title: 'Classes',
-                component: ClassesComponent
-            },
-            {
-                path: 'classes/:id',
-                component: ClassDetailComponent,
-            },
-            {
-                path: 'user',
-                title: 'User',
-                component: UserPageComponent
-            },
-        ]
-    },
+        title: 'Dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'students',
+        title: 'Students',
+        component: StudentsComponent,
+      },
+      {
+        path: 'students/:id',
+        component: StudentProfileComponent,
+      },
+      {
+        path: 'teachers',
+        title: 'Teachers',
+        component: TeachersComponent,
+      },
+      {
+        path: 'teachers/:id',
+        component: TeacherProfileComponent,
+      },
+      {
+        path: 'parents',
+        title: 'Parents',
+        component: ParentsComponent,
+      },
+      {
+        path: 'parents/:id',
+        component: ParentProfileComponent,
+      },
+      {
+        path: 'subjects',
+        title: 'Subjects',
+        component: SubjectsComponent,
+      },
+      {
+        path: 'subjects/:id',
+        component: SubjectDetailComponent,
+      },
+      {
+        path: 'classes',
+        title: 'Classes',
+        component: ClassesComponent,
+      },
+      {
+        path: 'classes/:id',
+        component: ClassDetailComponent,
+      },
+      {
+        path: 'user',
+        title: 'User',
+        component: UserPageComponent,
+      },
+    ],
+  },
 
-    // {
-    //     path: '**',
-    //     title: 'Dashboard',
-    //     component: DashboardComponent
-    // }
+  // {
+  //     path: '**',
+  //     title: 'Dashboard',
+  //     component: DashboardComponent
+  // }
 ];

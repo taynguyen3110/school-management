@@ -1,36 +1,66 @@
 <div class="container px-4 h-screen flex items-center justify-center">
-    <form [formGroup]="loginForm" (ngSubmit)="handleLogin($event)">
-        <div class="flex justify-center">
-            <img class="h-40 relative -top-12" src="./assets/images/Logo.png" alt="">
+  <form [formGroup]="loginForm" (ngSubmit)="handleLogin($event)">
+    <div class="flex justify-center">
+      <img
+        class="h-40 relative -top-12"
+        src="./assets/images/Logo.png"
+        alt=""
+      />
+    </div>
+    <h1 class="text-3xl mb-14 w-96 text-center">
+      Welcome, please login to your account
+    </h1>
+    <div class="flex items-center flex-col">
+      <div class="flex flex-col w-80 gap-4 relative">
+        <div class="">
+          <sman-input
+            [group]="loginForm"
+            [control]="username"
+            label="Username:"
+            name="username"
+            type="text"
+            placeholder="Enter your username"
+            [errMsgs]="{
+              required: 'Please enter your username.',
+              minlength: 'Minimum 4 character for username.',
+            }"
+          />
         </div>
-        <h1 class="text-3xl mb-14 w-96 text-center">Welcome, please login to your account</h1>
-        <div class="flex items-center flex-col">
-            <div class="flex flex-col w-80 gap-4 relative">
-                <div class="">
-                    <sman-input [group]="loginForm" [control]="username" label="Username:" name="username" type="text"
-                        placeholder="Enter your username" [errMsgs]="{
-                    'required': 'Please enter your username.',
-                    'minlength': 'Minimum 4 character for username.',
-                }" />
-                </div>
-                <div class="">
-                    <sman-input [group]="loginForm" [control]="password" label="Password:" name="password"
-                        type="password" placeholder="Enter your password" [errMsgs]="{
-                    'required': 'Please enter your password.',
-                    'minlength': 'Minimum 8 character for password.',
-                }" />
-                </div>
-                <div class="relative">
-                    @if (isLoading) {
-                    <div class="absolute h-10">
-                        <mat-spinner class="scale-[0.25] -translate-y-[30px] translate-x-16"></mat-spinner>
-                    </div>
-                    }
-                    <button class="w-full py-[10px] px-8 text-white rounded-lg text-sm" type="submit"
-                        [ngClass]="{'bg-gray-300' : loginForm.invalid || isLoading, 'bg-primary-300' : loginForm.valid && !isLoading}"
-                        [disabled]="!loginForm.valid">Login</button>
-                </div>
+        <div class="">
+          <sman-input
+            [group]="loginForm"
+            [control]="password"
+            label="Password:"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            [errMsgs]="{
+              required: 'Please enter your password.',
+              minlength: 'Minimum 8 character for password.',
+            }"
+          />
+        </div>
+        <div class="relative">
+          @if (isLoading) {
+            <div class="absolute h-10">
+              <mat-spinner
+                class="scale-[0.25] -translate-y-[30px] translate-x-16"
+              ></mat-spinner>
             </div>
+          }
+          <button
+            class="w-full py-[10px] px-8 text-white rounded-lg text-sm"
+            type="submit"
+            [ngClass]="{
+              'bg-gray-300': loginForm.invalid || isLoading,
+              'bg-primary-300': loginForm.valid && !isLoading,
+            }"
+            [disabled]="!loginForm.valid"
+          >
+            Login
+          </button>
         </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>

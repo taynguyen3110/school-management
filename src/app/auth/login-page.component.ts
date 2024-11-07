@@ -1,6 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthApiService } from '../shared/services/authApi.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../shared/services/auth.service';
@@ -13,23 +18,23 @@ import { NotificationService } from '../shared/services/notification.service';
 @Component({
   selector: 'sman-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, InputComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    InputComponent,
+  ],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss'
+  styleUrl: './login-page.component.scss',
 })
 export class LoginComponent {
-
   loginForm = this.formBuilder.group({
-    username: ['', [
-      Validators.required,
-      Validators.minLength(4)
-    ]],
-    password: ['', [
-      Validators.required,
-      Validators.minLength(8),
-      passwordValidator()
-    ]]
-  })
+    username: ['', [Validators.required, Validators.minLength(4)]],
+    password: [
+      '',
+      [Validators.required, Validators.minLength(8), passwordValidator()],
+    ],
+  });
   errMsg: string = '';
   isLoading: boolean = false;
   /**
@@ -42,9 +47,8 @@ export class LoginComponent {
     private authService: AuthService,
     public formService: FormService,
     private errorService: ErrorService,
-    private notificationService: NotificationService
-  ) {
-  }
+    private notificationService: NotificationService,
+  ) {}
 
   ngOnInit() {
     this.username.valueChanges.subscribe(() => {
@@ -57,7 +61,7 @@ export class LoginComponent {
 
   setErrMsg = (err: string) => {
     this.errMsg = err;
-  }
+  };
 
   get username() {
     return this.loginForm.get('username') as FormControl;
@@ -74,12 +78,12 @@ export class LoginComponent {
       next: (x) => {
         this.isLoading = false;
         this.authService.setAuthState(x);
-        this.notificationService.notify('Login Successfully.')
+        this.notificationService.notify('Login Successfully.');
       },
       error: (err) => {
         this.isLoading = false;
         this.errMsg = this.errorService.getErrorMessage(err);
-      }
-    })
+      },
+    });
   }
 }

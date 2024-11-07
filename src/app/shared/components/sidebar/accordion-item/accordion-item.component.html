@@ -1,17 +1,23 @@
-<div class='menu-item flex items-center gap-5 py-3 px-4 cursor-pointer select-none' (click)="toggleAccordion()">
-    <div class="w-4 flex justify-center items-center h-auto text-xl">
-        <ng-content select="[accordion-symbol]" />
-    </div>
-    <div [ngClass]="{'font-normal': isShow}">
-        {{title | titlecase}}
-    </div>
-    @if (isAccordion) {
+<div
+  class="menu-item flex items-center gap-5 py-3 px-4 cursor-pointer select-none"
+  (click)="toggleAccordion()"
+>
+  <div class="w-4 flex justify-center items-center h-auto text-xl">
+    <ng-content select="[accordion-symbol]" />
+  </div>
+  <div [ngClass]="{ 'font-normal': isShow }">
+    {{ title | titlecase }}
+  </div>
+  @if (isAccordion) {
     <div class="ml-auto">
-        <i class="fa-solid text-xs" [ngClass]="{'fa-chevron-down': isShow, 'fa-chevron-right' : !isShow}"></i>
+      <i
+        class="fa-solid text-xs"
+        [ngClass]="{ 'fa-chevron-down': isShow, 'fa-chevron-right': !isShow }"
+      ></i>
     </div>
-    }
+  }
 </div>
-<hr class="border-slate-800 border-2">
-@if(isShow) {
-<ng-content />
+<hr class="border-slate-800 border-2" />
+@if (isShow) {
+  <ng-content />
 }

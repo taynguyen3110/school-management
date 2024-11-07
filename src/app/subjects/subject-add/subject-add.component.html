@@ -1,35 +1,60 @@
-<sman-add-form-layout [title]="isEdit ? 'Edit Subject' : 'Add New Subject'" [layout]="isEdit ? 'edit' : 'add'"
-    [formGroup]="addSubjectForm" (submit)="isEdit ? editSubject($event) : addSubject($event)"
-    (cancel)="cancelAddForm()">
-    <ng-container formInputs>
-        <div class="flex gap-4 w-full">
-            <!-- Name -->
-            <div class="w-1/2">
-                <sman-input [group]="addSubjectForm" [control]="name" label="Subject Name:" name="name" type="text"
-                    placeholder="Subject Name" [errMsgs]="{
-                    'required': 'Please enter subject name.'
-                }" />
-            </div>
-            <div class="flex flex-col w-1/2 relative z-50">
-                <label for="">Class:</label>
-                <sman-multiselector [items]="classList" placeholder="Class of this subject." [lookUp]="true"
-                    [selected]="isEdit ? [subject.classId] : []" (inputTyped)="lookUpClassesByName($event)"
-                    (select)="handleSelectClass($event)"></sman-multiselector>
-            </div>
-        </div>
-        <div class="flex gap-4">
-            <div class="flex flex-col w-1/2">
-                <label for="">Schedule:</label>
-                <sman-multiselector [items]="weekDays" placeholder="Subject schedule." [supportMulti]="true"
-                    [selected]="isEdit ? subject.daysOfWeek : []"
-                    (select)="handleSelectSchedule($event)"></sman-multiselector>
-            </div>
-            <div class="flex flex-col w-1/2">
-                <label for="">Teacher:</label>
-                <sman-multiselector [items]="teacherList" placeholder="Teacher of this subject." [lookUp]="true"
-                    [selected]="isEdit ? [subject.teacherId] : []" (inputTyped)="lookUpTeachersByName($event)"
-                    (select)="handleSelectTeacher($event)"></sman-multiselector>
-            </div>
-        </div>
-    </ng-container>
+<sman-add-form-layout
+  [title]="isEdit ? 'Edit Subject' : 'Add New Subject'"
+  [layout]="isEdit ? 'edit' : 'add'"
+  [formGroup]="addSubjectForm"
+  (submit)="isEdit ? editSubject($event) : addSubject($event)"
+  (cancel)="cancelAddForm()"
+>
+  <ng-container formInputs>
+    <div class="flex gap-4 w-full">
+      <!-- Name -->
+      <div class="w-1/2">
+        <sman-input
+          [group]="addSubjectForm"
+          [control]="name"
+          label="Subject Name:"
+          name="name"
+          type="text"
+          placeholder="Subject Name"
+          [errMsgs]="{
+            required: 'Please enter subject name.',
+          }"
+        />
+      </div>
+      <div class="flex flex-col w-1/2 relative z-50">
+        <label for="">Class:</label>
+        <sman-multiselector
+          [items]="classList"
+          placeholder="Class of this subject."
+          [lookUp]="true"
+          [selected]="isEdit ? [subject.classId] : []"
+          (inputTyped)="lookUpClassesByName($event)"
+          (select)="handleSelectClass($event)"
+        ></sman-multiselector>
+      </div>
+    </div>
+    <div class="flex gap-4">
+      <div class="flex flex-col w-1/2">
+        <label for="">Schedule:</label>
+        <sman-multiselector
+          [items]="weekDays"
+          placeholder="Subject schedule."
+          [supportMulti]="true"
+          [selected]="isEdit ? subject.daysOfWeek : []"
+          (select)="handleSelectSchedule($event)"
+        ></sman-multiselector>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <label for="">Teacher:</label>
+        <sman-multiselector
+          [items]="teacherList"
+          placeholder="Teacher of this subject."
+          [lookUp]="true"
+          [selected]="isEdit ? [subject.teacherId] : []"
+          (inputTyped)="lookUpTeachersByName($event)"
+          (select)="handleSelectTeacher($event)"
+        ></sman-multiselector>
+      </div>
+    </div>
+  </ng-container>
 </sman-add-form-layout>

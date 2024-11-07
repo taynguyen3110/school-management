@@ -1,78 +1,80 @@
 <table class="text-sm md:text-base text-left w-full cursor-pointer">
-    <thead class="bg-slate-200">
-        @switch (listOf) {
-        @case ('students') {
+  <thead class="bg-slate-200">
+    @switch (listOf) {
+      @case ("students") {
         <th (click)="onSort('name')">Name</th>
-        <th (click)="onSort('id')">{{listOf | titlecase}} ID</th>
+        <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
         <th (click)="onSort('gender')">Gender</th>
         <th (click)="onSort('dateOfBirth')">Date of Birth</th>
         <th (click)="onSort('admissionDate')">Admission Date</th>
-        }
-        @case ('parents') {
+      }
+      @case ("parents") {
         <th (click)="onSort('name')">Name</th>
-        <th (click)="onSort('id')">{{listOf | titlecase}} ID</th>
+        <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
         <th (click)="onSort('email')">Email</th>
         <th (click)="onSort('phone')">Phone</th>
-        }
-        @case ('teachers') {
+      }
+      @case ("teachers") {
         <th (click)="onSort('name')">Name</th>
-        <th (click)="onSort('id')">{{listOf | titlecase}} ID</th>
+        <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
         <th (click)="onSort('email')">Email</th>
         <th (click)="onSort('phone')">Phone</th>
         <th (click)="onSort('admissionDate')">Admission Date</th>
-        }
-        @case ('subjects') {
+      }
+      @case ("subjects") {
         <th (click)="onSort('name')">Name</th>
-        <th (click)="onSort('id')">{{listOf | titlecase}} ID</th>
+        <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
         <th (click)="onSort('class')">Class</th>
         <th (click)="onSort('teacher')">Teacher</th>
-        }
-        @case ('classes') {
+      }
+      @case ("classes") {
         <th (click)="onSort('name')">Name</th>
-        <th (click)="onSort('id')">{{listOf | titlecase}} ID</th>
+        <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
+      }
+    }
+  </thead>
+  <tbody>
+    @for (item of items; track $index; let e = $even) {
+      <tr [routerLink]="['./' + item.id]" [ngClass]="{ 'bg-slate-100': !e }">
+        @switch (listOf) {
+          @case ("students") {
+            <td>{{ item.firstName + " " + item.lastName }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.gender | titlecase }}</td>
+            <td>{{ item.dateOfBirth | date: "dd/MM/yyyy" }}</td>
+            <td>{{ item.admissionDate | date: "dd/MM/yyyy" }}</td>
+          }
+          @case ("parents") {
+            <td>{{ item.firstName + " " + item.lastName }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
+          }
+          @case ("teachers") {
+            <td>{{ item.firstName + " " + item.lastName }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
+            <td>{{ item.admissionDate | date: "dd/MM/yyyy" }}</td>
+          }
+          @case ("subjects") {
+            <td>{{ item.name }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.class.name }}</td>
+            <td>{{ item.teacher.firstName + " " + item.teacher.lastName }}</td>
+          }
+          @case ("classes") {
+            <td>{{ item.name }}</td>
+            <td>{{ item.id }}</td>
+          }
         }
-        }
-    </thead>
-    <tbody>
-        @for (item of items; track $index; let e = $even) {
-        <tr [routerLink]="['./' + item.id]" [ngClass]="{'bg-slate-100': !e}">
-            @switch (listOf) {
-            @case ('students') {
-            <td>{{item.firstName + ' ' + item.lastName}}</td>
-            <td>{{item.id}}</td>
-            <td>{{item.gender | titlecase}}</td>
-            <td>{{item.dateOfBirth | date:'dd/MM/yyyy'}}</td>
-            <td>{{item.admissionDate | date:'dd/MM/yyyy'}}</td>
-            }
-            @case ('parents') {
-            <td>{{item.firstName + ' ' + item.lastName}}</td>
-            <td>{{item.id}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.phone}}</td>
-            }
-            @case ('teachers') {
-            <td>{{item.firstName + ' ' + item.lastName}}</td>
-            <td>{{item.id}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.phone}}</td>
-            <td>{{item.admissionDate | date:'dd/MM/yyyy'}}</td>
-            }
-            @case ('subjects') {
-            <td>{{item.name}}</td>
-            <td>{{item.id}}</td>
-            <td>{{item.class.name}}</td>
-            <td>{{item.teacher.firstName + ' ' + item.teacher.lastName}}</td>
-            }
-            @case ('classes') {
-            <td>{{item.name}}</td>
-            <td>{{item.id}}</td>
-            }
-            }
-        </tr>
-        } @empty {
-        <tr>
-            <td colSpan="6" class="text-center text-gray-400 select-none">There are no {{listOf}}!</td>
-        </tr>
-        }
-    </tbody>
+      </tr>
+    } @empty {
+      <tr>
+        <td colSpan="6" class="text-center text-gray-400 select-none">
+          There are no {{ listOf }}!
+        </td>
+      </tr>
+    }
+  </tbody>
 </table>

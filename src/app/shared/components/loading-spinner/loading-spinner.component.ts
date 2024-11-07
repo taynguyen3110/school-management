@@ -9,14 +9,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './loading-spinner.component.html',
-  styleUrl: './loading-spinner.component.scss'
+  styleUrl: './loading-spinner.component.scss',
 })
 export class LoadingSpinnerComponent {
   isLoading$: Observable<boolean> = this.loadingService.loading$;
 
-  constructor(private loadingService: LoadingService) {
-  }
+  constructor(private loadingService: LoadingService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

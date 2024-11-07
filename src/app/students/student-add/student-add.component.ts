@@ -1,13 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FormService } from '../../shared/services/form.service';
 import { CommonModule } from '@angular/common';
 import { StudentService } from '../service/student.service';
-import { PhotoUploaderComponent } from "../../shared/components/photouploader/photo-uploader.component";
+import { PhotoUploaderComponent } from '../../shared/components/photouploader/photo-uploader.component';
 import { LabelObj, Student } from '../../shared/types';
-import { AddNewFormLayoutComponent } from "../../shared/components/addnew-form-layout/addnew-form-layout";
+import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '../../shared/components/input/input.component';
-import { MultiSelectorComponent } from "../../shared/components/multiselector/multiselector.component";
+import { MultiSelectorComponent } from '../../shared/components/multiselector/multiselector.component';
 import { toLabelObject } from '../../shared/components/multiselector/utils/toLabelObject';
 import { ParentsService } from '../../parents/services/parents.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -16,7 +21,14 @@ import { ClassesService } from '../../school-classes/services/classes.service';
 @Component({
   selector: 'sman-add-student',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, PhotoUploaderComponent, AddNewFormLayoutComponent, InputComponent, MultiSelectorComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PhotoUploaderComponent,
+    AddNewFormLayoutComponent,
+    InputComponent,
+    MultiSelectorComponent,
+  ],
   templateUrl: './student-add.component.html',
 })
 export class AddStudentComponent implements OnInit {
@@ -34,52 +46,25 @@ export class AddStudentComponent implements OnInit {
     private studentService: StudentService,
     private classesService: ClassesService,
     private parentsService: ParentsService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+  ) {}
 
   addStudentForm = this.fb.group({
-    firstName: ['', [
-      Validators.required,
-    ]],
-    lastName: ['', [
-      Validators.required,
-    ]],
-    gender: ['', [
-      Validators.required,
-
-    ]],
-    classIds: [[] as string[], [
-
-    ]],
-    parentIds: [[] as string[], [
-      Validators.required,
-
-    ]],
-    address: ['', [
-      Validators.required,
-
-    ]],
-    dateOfBirth: ['', [
-      Validators.required,
-
-    ]],
-    phone: ['', [
-      Validators.required,
-
-    ]],
-    email: ['', [
-      Validators.required,
-
-    ]],
-    admissionDate: ['', [
-      Validators.required,
-
-    ]],
-    profileUrl: ['http://localhost:3001/photos/profile-picture.jpg', [
-      Validators.required,
-
-    ]],
-  })
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    gender: ['', [Validators.required]],
+    classIds: [[] as string[], []],
+    parentIds: [[] as string[], [Validators.required]],
+    address: ['', [Validators.required]],
+    dateOfBirth: ['', [Validators.required]],
+    phone: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    admissionDate: ['', [Validators.required]],
+    profileUrl: [
+      'http://localhost:3001/photos/profile-picture.jpg',
+      [Validators.required],
+    ],
+  });
 
   get firstName() {
     return this.addStudentForm.get('firstName') as FormControl;
@@ -118,7 +103,7 @@ export class AddStudentComponent implements OnInit {
   ngOnInit() {
     this.getClassList();
     if (this.isEdit) {
-      this.patchStudentInfo()
+      this.patchStudentInfo();
     }
   }
 
@@ -132,21 +117,19 @@ export class AddStudentComponent implements OnInit {
   }
 
   cancelAddForm = () => {
-    this.cancelForm.emit()
-  }
+    this.cancelForm.emit();
+  };
 
   getClassList() {
-    this.classesService.getClasses()
-      .subscribe((data) => {
-        this.classesList = toLabelObject(data.classes, 'id', ['name']);
-      })
+    this.classesService.getClasses().subscribe((data) => {
+      this.classesList = toLabelObject(data.classes, 'id', ['name']);
+    });
   }
 
   lookUpClassesByName(name: string) {
-    this.classesService.lookUpByName(name)
-      .subscribe((data) => {
-        this.classesList = toLabelObject(data.classes, 'id', ['name']);
-      })
+    this.classesService.lookUpByName(name).subscribe((data) => {
+      this.classesList = toLabelObject(data.classes, 'id', ['name']);
+    });
   }
 
   handleSelectClass(selectedClasses: string[] | string) {
@@ -156,10 +139,12 @@ export class AddStudentComponent implements OnInit {
   }
 
   lookUpParentsByName(name: string) {
-    this.parentsService.lookUpByName(name)
-      .subscribe((data) => {
-        this.parentsList = toLabelObject(data.parents, 'id', ['firstName', 'lastName']);
-      })
+    this.parentsService.lookUpByName(name).subscribe((data) => {
+      this.parentsList = toLabelObject(data.parents, 'id', [
+        'firstName',
+        'lastName',
+      ]);
+    });
   }
 
   handleSelectParents(selectedParents: string[] | string) {
@@ -170,19 +155,21 @@ export class AddStudentComponent implements OnInit {
 
   addStudent(e: Event) {
     e.preventDefault();
-    this.studentService.addStudent(this.addStudentForm.value as Student)
+    this.studentService
+      .addStudent(this.addStudentForm.value as Student)
       .subscribe(() => {
         this.cancelAddForm();
-        this.notificationService.notify('Student added successfully!')
-      })
+        this.notificationService.notify('Student added successfully!');
+      });
   }
 
   editStudent = (e: Event) => {
     e.preventDefault();
-    this.studentService.updateStudent(this.student.id!, this.addStudentForm.value as Student)
+    this.studentService
+      .updateStudent(this.student.id!, this.addStudentForm.value as Student)
       .subscribe(() => {
         this.cancelAddForm();
-        this.notificationService.notify('Student updated successfully!')
-      })
-  }
+        this.notificationService.notify('Student updated successfully!');
+      });
+  };
 }

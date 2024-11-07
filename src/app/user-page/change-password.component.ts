@@ -1,54 +1,56 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { Validators, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
-// import { AuthApiService } from '../shared/services/authApi.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  Validators,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { passwordValidator } from '../shared/validators/passwordValidator';
 import { passwordMismatchValidator } from '../shared/validators/passwordMismatchValidator';
-import { AuthApiService } from '../shared/services/authApi.service';
 
 @Component({
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
-    selector: 'sman-change-password',
-    templateUrl: './change-password.component.html'
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  selector: 'sman-change-password',
+  templateUrl: './change-password.component.html',
 })
-
 export class ChangePasswordComponent {
-    @Input() cancelChangePassword!: () => void;
+  @Input() cancelChangePassword!: () => void;
 
-    @Output() changePwd = new EventEmitter<string>()
+  @Output() changePwd = new EventEmitter<string>();
 
-    isLoading: boolean = false;
+  isLoading: boolean = false;
 
-    constructor(
-        private fb: FormBuilder
-    ) { }
+  constructor(private fb: FormBuilder) {}
 
-    ngOnInit() { }
+  ngOnInit() {}
 
-    changePwdForm = this.fb.group({
-        newPwd: ['', [
-            Validators.minLength(8),
-            passwordValidator()
-        ]],
-        confirmNewPwd: ['', [
-            Validators.minLength(8),
-            passwordValidator()
-        ]]
-    }, {
-        validators: passwordMismatchValidator('newPwd', 'confirmNewPwd')
-    })
+  changePwdForm = this.fb.group(
+    {
+      newPwd: ['', [Validators.minLength(8), passwordValidator()]],
+      confirmNewPwd: ['', [Validators.minLength(8), passwordValidator()]],
+    },
+    {
+      validators: passwordMismatchValidator('newPwd', 'confirmNewPwd'),
+    },
+  );
 
-    // change pwd form
-    get newPwd() {
-        return this.changePwdForm.get('newPwd') as FormControl;
-    }
+  // change pwd form
+  get newPwd() {
+    return this.changePwdForm.get('newPwd') as FormControl;
+  }
 
-    get confirmNewPwd() {
-        return this.changePwdForm.get('confirmNewPwd') as FormControl;
-    }
+  get confirmNewPwd() {
+    return this.changePwdForm.get('confirmNewPwd') as FormControl;
+  }
 
-    changePassword() {
-        this.changePwd.emit(this.newPwd.value)
-    }
+  changePassword() {
+    this.changePwd.emit(this.newPwd.value);
+  }
 }

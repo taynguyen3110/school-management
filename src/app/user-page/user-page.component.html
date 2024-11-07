@@ -1,49 +1,83 @@
 <div class="bg-background h-screen pt-7 p-4">
-    <h1 class="text-2xl font-semibold text-center my-3">Account Setting</h1>
-    <div class="container bg-white">
-        <div class="w-full flex justify-center">
-            <div class="rounded-full h-44 w-44 overflow-hidden my-10">
-                <img class="object-none h-44" [src]="user?.profileUrl" alt="">
-            </div>
-        </div>
-        @if(user) {
-        @if (!isEdit && !isChangePassword) {
-        <div class="flex flex-col justify-center items-center">
-            <form class="w-full md:w-[700px] flex flex-col items-center gap-2">
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="firstName">First Name:</label>
-                    <input class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
-                        type="text" name="firstName" id="firstName" [value]="user.firstName" readonly>
-                </div>
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="lastName">Last Name:</label>
-                    <input class="focus:outline-none border-white border cursor-default rounded-md py-3 px-2 text-sm "
-                        type="text" name="lastName" id="lastName" [value]="user.lastName" readonly>
-                </div>
-                <div class="w-2/3 flex justify-between items-center">
-                    <label for="email">Email:</label>
-                    <input class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
-                        type="text" name="email" id="email" [value]="user.email" readonly>
-                </div>
-            </form>
-            <div class="flex justify-center items-center gap-5 w-96 mt-10 mb-12">
-                <button class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm" (click)="editMode()"
-                    type="button">Edit</button>
-                <button class="bg-primary-300  py-[10px] px-8 text-white rounded-lg text-sm"
-                    (click)="changePasswordMode()" type="button">Change password</button>
-            </div>
-        </div>
-        }
-        @if(!isChangePassword && isEdit){
-        <sman-edit-profile [user]="user" [setUser]="setUser" [cancelEdit]="cancelEdit"></sman-edit-profile>
-        }
-        @if (isChangePassword && !isEdit) {
-        <sman-change-password [cancelChangePassword]="cancelChangePassword"
-            (changePwd)="onChangePassword($event)"></sman-change-password>
-        }
-        } @else {
-        Error getting account information!
-        {{user | json}}
-        }
+  <h1 class="text-2xl font-semibold text-center my-3">Account Setting</h1>
+  <div class="container bg-white">
+    <div class="w-full flex justify-center">
+      <div class="rounded-full h-44 w-44 overflow-hidden my-10">
+        <img class="object-none h-44" [src]="user?.profileUrl" alt="" />
+      </div>
     </div>
+    @if (user) {
+      @if (!isEdit && !isChangePassword) {
+        <div class="flex flex-col justify-center items-center">
+          <form class="w-full md:w-[700px] flex flex-col items-center gap-2">
+            <div class="w-2/3 flex justify-between items-center">
+              <label for="firstName">First Name:</label>
+              <input
+                class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+                type="text"
+                name="firstName"
+                id="firstName"
+                [value]="user.firstName"
+                readonly
+              />
+            </div>
+            <div class="w-2/3 flex justify-between items-center">
+              <label for="lastName">Last Name:</label>
+              <input
+                class="focus:outline-none border-white border cursor-default rounded-md py-3 px-2 text-sm"
+                type="text"
+                name="lastName"
+                id="lastName"
+                [value]="user.lastName"
+                readonly
+              />
+            </div>
+            <div class="w-2/3 flex justify-between items-center">
+              <label for="email">Email:</label>
+              <input
+                class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+                type="text"
+                name="email"
+                id="email"
+                [value]="user.email"
+                readonly
+              />
+            </div>
+          </form>
+          <div class="flex justify-center items-center gap-5 w-96 mt-10 mb-12">
+            <button
+              class="bg-primary-300 w-1/3 py-[10px] px-8 text-white rounded-lg text-sm"
+              (click)="editMode()"
+              type="button"
+            >
+              Edit
+            </button>
+            <button
+              class="bg-primary-300 py-[10px] px-8 text-white rounded-lg text-sm"
+              (click)="changePasswordMode()"
+              type="button"
+            >
+              Change password
+            </button>
+          </div>
+        </div>
+      }
+      @if (!isChangePassword && isEdit) {
+        <sman-edit-profile
+          [user]="user"
+          [setUser]="setUser"
+          [cancelEdit]="cancelEdit"
+        ></sman-edit-profile>
+      }
+      @if (isChangePassword && !isEdit) {
+        <sman-change-password
+          [cancelChangePassword]="cancelChangePassword"
+          (changePwd)="onChangePassword($event)"
+        ></sman-change-password>
+      }
+    } @else {
+      Error getting account information!
+      {{ user | json }}
+    }
+  </div>
 </div>

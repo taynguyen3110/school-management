@@ -1,31 +1,41 @@
-@if(teacher) {
-@if(isShow) {
-<sman-add-teacher [isEdit]="true" [teacher]="teacher" (cancelForm)="hideEditForm()"></sman-add-teacher>
-}
-<sman-profile-layout (edit)="showEditForm()" (delete)="deleteTeacher()" (back)="goBack()">
+@if (teacher) {
+  @if (isShow) {
+    <sman-add-teacher
+      [isEdit]="true"
+      [teacher]="teacher"
+      (cancelForm)="hideEditForm()"
+    ></sman-add-teacher>
+  }
+  <sman-profile-layout
+    (edit)="showEditForm()"
+    (delete)="deleteTeacher()"
+    (back)="goBack()"
+  >
     <sman-profile-photo profilePhoto [photoSrc]="teacher.profileUrl" />
     <ng-container profileInfo>
-        <div class="text-lg text-blue-800 font-semibold">{{teacher.firstName + " " + teacher.lastName}}</div>
-        <sman-profile-info label="Teacher ID:">
-            <div info>{{teacher.id}}</div>
-        </sman-profile-info>
-        <sman-profile-info label="Phone:">
-            <div info>{{teacher.phone}}</div>
-        </sman-profile-info>
-        <sman-profile-info label="Gender:">
-            <div info>{{teacher.gender | titlecase}}</div>
-        </sman-profile-info>
-        <sman-profile-info label="Email:">
-            <div info>{{teacher.email}}</div>
-        </sman-profile-info>
-        <sman-profile-info label="Address:">
-            <div info>{{teacher.address}}</div>
-        </sman-profile-info>
-        <sman-profile-info label="Admission Date:">
-            <div info>{{teacher.admissionDate | date:'longDate'}}</div>
-        </sman-profile-info>
+      <div class="text-lg text-blue-800 font-semibold">
+        {{ teacher.firstName + " " + teacher.lastName }}
+      </div>
+      <sman-profile-info label="Teacher ID:">
+        <div info>{{ teacher.id }}</div>
+      </sman-profile-info>
+      <sman-profile-info label="Phone:">
+        <div info>{{ teacher.phone }}</div>
+      </sman-profile-info>
+      <sman-profile-info label="Gender:">
+        <div info>{{ teacher.gender | titlecase }}</div>
+      </sman-profile-info>
+      <sman-profile-info label="Email:">
+        <div info>{{ teacher.email }}</div>
+      </sman-profile-info>
+      <sman-profile-info label="Address:">
+        <div info>{{ teacher.address }}</div>
+      </sman-profile-info>
+      <sman-profile-info label="Admission Date:">
+        <div info>{{ teacher.admissionDate | date: "longDate" }}</div>
+      </sman-profile-info>
     </ng-container>
-</sman-profile-layout>
+  </sman-profile-layout>
 } @else {
-<div class="text-center mt-6 text-gray-400">This teacher does not exist!</div>
+  <div class="text-center mt-6 text-gray-400">This teacher does not exist!</div>
 }

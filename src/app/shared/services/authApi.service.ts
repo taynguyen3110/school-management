@@ -4,26 +4,25 @@ import { AuthState, UserProfile } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApiService {
+  constructor(private api: ApiService) {}
 
-    constructor(private api: ApiService) { }
+  login(username: string, password: string) {
+    return this.api.post<AuthState>('/login', { username, password });
+  }
 
-    login(username: string, password: string) {
-        return this.api.post<AuthState>("/login", { username, password });
-    }
+  refreshAuthState(refreshToken: string) {
+    return this.api.post<AuthState>('/refresh-token', { refreshToken });
+  }
 
-    refreshAuthState(refreshToken: string) {
-        return this.api.post<AuthState>("/refresh-token", { refreshToken });
-    }
+  getAccount() {
+    return this.api.get<UserProfile>('/account');
+  }
 
-    getAccount() {
-        return this.api.get<UserProfile>("/account");
-    }
+  updateAccount(user: UserProfile) {
+    return this.api.post<UserProfile>('/account', user);
+  }
 
-    updateAccount(user: UserProfile) {
-        return this.api.post<UserProfile>("/account", user);
-    }
-
-    changePassword(password: string) {
-        return this.api.post
-    }
+  changePassword(password: string) {
+    return this.api.post<any>('/account/change-password', { password });
+  }
 }

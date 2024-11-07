@@ -5,43 +5,47 @@ import { QueryService } from './query.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
-    constructor(
-        private route: Router,
-        private location: Location,
-        private queryService: QueryService
-    ) { }
+  constructor(
+    private route: Router,
+    private location: Location,
+    private queryService: QueryService,
+  ) {}
 
-    toRoute(url: route, action?: '' | 'add' | 'delete', query?: Params | string[], replace?: boolean) {
-        let params: Params = typeof query === 'object' ? query : {};
-        if (query && action !== '') {
-            if (action === 'add' && typeof query === 'object') {
-                params = this.queryService.addToCurrentParam(query);
-            }
-            if (action === 'delete' && Array.isArray(query)) {
-                params = this.queryService.deleteFromCurrentParam(query);
-            }
-        }
-        this.route.navigate([url], {
-            queryParams: params,
-            replaceUrl: replace
-        })
+  toRoute(
+    url: route,
+    action?: '' | 'add' | 'delete',
+    query?: Params | string[],
+    replace?: boolean,
+  ) {
+    let params: Params = typeof query === 'object' ? query : {};
+    if (query && action !== '') {
+      if (action === 'add' && typeof query === 'object') {
+        params = this.queryService.addToCurrentParam(query);
+      }
+      if (action === 'delete' && Array.isArray(query)) {
+        params = this.queryService.deleteFromCurrentParam(query);
+      }
     }
+    this.route.navigate([url], {
+      queryParams: params,
+      replaceUrl: replace,
+    });
+  }
 
-    goBack() {
-        this.location.back()
-    }
+  goBack() {
+    this.location.back();
+  }
 
-    isCurrentPathMatch(path: route) {
-        return this.route.url.includes(path);
-    }
+  isCurrentPathMatch(path: route) {
+    return this.route.url.includes(path);
+  }
 }
 
 export type route =
-    '' |
-    'students' |
-    'teachers' |
-    'parents' |
-    'subjects' |
-    'classes' |
-    'user'
-    ;
+  | ''
+  | 'students'
+  | 'teachers'
+  | 'parents'
+  | 'subjects'
+  | 'classes'
+  | 'user';

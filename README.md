@@ -26,18 +26,21 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 1. Clone the repository:
    ```sh
    git clone https://github.com/taynguyen3110/school-management.git
+   ```
 2. Navigate to the project directory:
-    ```sh
-    cd school-management-dashboard
+   ```sh
+   cd school-management-dashboard
+   ```
 3. Install the dependencies:
-    ```sh
-    npm install
+   ```sh
+   npm install
+   ```
 4. Start the development server:
-    ```sh
-    ng serve -o
+   ```sh
+   ng serve -o
+   ```
 
 ## Project Structure
-
 
 ## Components
 
