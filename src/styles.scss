@@ -20,20 +20,9 @@ body {
 
 /* Set a consistent line-height and remove text decoration for links */
 body {
+  margin: 0;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", sans-serif;
-}
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-/* styles.css or styles.scss */
-.success-notification {
 }

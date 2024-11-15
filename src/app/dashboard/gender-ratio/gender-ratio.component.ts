@@ -1,3 +1,4 @@
+import { animation } from '@angular/animations';
 import {
   Component,
   Input,
@@ -39,13 +40,23 @@ export class GenderRatioComponent implements OnInit, OnChanges {
       ['Female', this.femaleCount],
     ];
     this.chartOptions = {
-      pieHole: 0.8,
+      backgroundColor: 'transparent',
+      pieHole: 0.7,
       pieSliceTextStyle: {
         color: '',
+      },
+      slices: {
+        0: { color: '#4C78FF' },
+        1: { color: '#FFBB38' },
       },
       legend: 'none',
       width: this.width,
       height: this.height,
+      animation: {
+        startup: true,
+        duration: 1000,  
+        easing: 'out'  
+      }
     };
   }
   ngOnInit() {}

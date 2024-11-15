@@ -1,8 +1,13 @@
 th,
 td {
-  padding: 12px 15px;
+  padding: 10px 8px;
 }
 
-tbody tr:hover {
-  background-color: rgb(209, 227, 245);
+th {
+  font-weight: 300;
 }
+
+tr {
+  border-top: 1px solid rgb(229, 231, 235);
+}
+

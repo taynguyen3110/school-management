@@ -13,6 +13,7 @@ import { Params, RouterLink } from '@angular/router';
 export class ItemTableComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() listOf: string = '';
+  @Input() fromDashboard: boolean = false;
 
   @Output() sort = new EventEmitter<Params>();
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GenderRatioComponent } from './gender-ratio/gender-ratio.component';
 import { StatsWrapperComponent } from './stats-wrapper/stats-wrapper.component';
 import { EnrollmentStatsComponent } from './enrollment-stats/enrollment-stats.component';
@@ -9,6 +9,12 @@ import {
 } from '../shared/services/navigation.service';
 import { DashboardService } from './service/dashboard.service';
 import { NoticeNewsComponent } from './notice-news/notice-news.component';
+import { ScreenService } from '../shared/services/screen.service';
+import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { HeadingComponent } from '../shared/components/heading/heading.component';
+import { SchoolSubject } from '../shared/types';
+import { SubjectService } from '../subjects/services/subject.service';
+import { ItemTableComponent } from "../shared/components/item-table/item-table.component";
 
 @Component({
   selector: 'sman-dashboard',
@@ -19,7 +25,9 @@ import { NoticeNewsComponent } from './notice-news/notice-news.component';
     EnrollmentStatsComponent,
     StatsCellComponent,
     NoticeNewsComponent,
-  ],
+    HeadingComponent,
+    ItemTableComponent
+],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
 })
@@ -31,6 +39,9 @@ export class DashboardComponent implements OnInit {
   teacherCount: number = 0;
   classCount: number = 0;
   enrollmentsPerYear: any[] = [];
+  todaySubjects: SchoolSubject[] = [];
+
+  screenSize: string = '';
 
   notices: Notice[] = [
     {
@@ -68,10 +79,17 @@ export class DashboardComponent implements OnInit {
   constructor(
     private navigationService: NavigationService,
     private dashboardService: DashboardService,
+    private screenService: ScreenService,
+    private subjectService: SubjectService
   ) {}
 
   ngOnInit() {
     this.getStats();
+    this.screenService.screenSize$
+      .pipe(distinctUntilChanged())
+      .subscribe((size) => {
+        this.screenSize = size;
+      });
   }
 
   getStats() {
@@ -84,6 +102,15 @@ export class DashboardComponent implements OnInit {
       this.classCount = data.classCount;
       this.enrollmentsPerYear = data.enrollmentsPerYear;
     });
+    this.subjectService.getSubjects({schedule: this.getDayOfWeek()}).subscribe((data) => {
+      this.todaySubjects = data.subjects;
+    });
+  }
+
+  getDayOfWeek(): string {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const today = new Date().getDay();
+    return daysOfWeek[today];
   }
 
   handleClick(url: route) {

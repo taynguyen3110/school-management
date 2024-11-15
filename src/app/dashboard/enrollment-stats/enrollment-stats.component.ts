@@ -29,10 +29,16 @@ export class EnrollmentStatsComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.chartData = this.enrollmentStats;
     this.chartOptions = {
+      backgroundColor: 'transparent',
       width: this.width,
       height: this.height,
       curveType: 'function',
       legend: { position: 'bottom' },
+      animation: {
+        startup: true,
+        duration: 600,  
+        easing: 'out'
+      }
     };
   }
 

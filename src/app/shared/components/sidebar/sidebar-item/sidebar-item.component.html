@@ -1,0 +1,20 @@
+<div
+  [routerLink]="[title === 'dashboard' ? '/' : title]"
+  routerLinkActive="!text-primary3"
+  [routerLinkActiveOptions]="{ exact: title === 'dashboard' }"
+  class="flex gap-5 items-center relative text-sidebar transition-all duration-300 ease-in-out cursor-pointer select-none"
+  (click)="select()"
+>
+  <div
+    class="absolute -left-6 transition-all duration-300 ease-in-out transform scale-x-0 origin-left"
+    [ngClass]="{ 'scale-x-100': isActive }"
+  >
+    <img src="./assets/icons/sidebar-rectangle.png" alt="" />
+  </div>
+  <div class="w-5 flex justify-center items-center">
+    <ng-content></ng-content>
+  </div>
+  <p class="relative top-[1px] text-base font-medium">
+    {{ title | titlecase }}
+  </p>
+</div>

@@ -1,17 +1,25 @@
-<div
-  class="container px-4 h-20 bg-white relative shadow-md z-30 flex justify-between"
->
-  <div class="relative flex w-3/5">
+<div class="container px-6 h-36 bg-white">
+  <div
+    class="relative z-30 flex justify-between items-center py-6"
+  >
+  @if(!isShow) {
+    <div>
+      <i class="fa-solid fa-bars text-primary2 cursor-pointer text-lg" (click)="displayMenu()"></i>
+    </div>
+  }
+    <div class="text-title text-primary2">{{title === '' ? 'Dashboard' : title | titlecase}}</div>
+    <div class="flex justify-between items-center">
+      <i class="fa-regular fa-user cursor-pointer" (click)="goToUserInfo()"></i>
+    </div>
+  </div>
+  <div class="relative flex">
     <i
       class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 ml-4 opacity-40"
     ></i>
     <input
-      class="placeholder:text-sm pl-11 w-full rounded-full focus:outline-none"
+      class="placeholder:text-sm pl-11 py-2 w-full rounded-full bg-background focus:outline-none"
       type="text"
-      placeholder="Search"
+      placeholder="Search for something"
     />
-  </div>
-  <div class="flex justify-between items-center py-6 pr-2">
-    <i class="fa-regular fa-user cursor-pointer" (click)="goToUserInfo()"></i>
   </div>
 </div>

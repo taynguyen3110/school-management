@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard-page.component';
 import { StudentsComponent } from './students/student-page/students-page.component';
 import { TeachersComponent } from './teachers/teachers-page.component';
 import { ParentsComponent } from './parents/parents-page.component';
@@ -21,7 +20,7 @@ export const routes: Routes = [
       {
         path: '',
         title: 'Dashboard',
-        component: DashboardComponent,
+        loadComponent: ()=> import('./dashboard/dashboard-page.component').then(m=>m.DashboardComponent),
       },
       {
         path: 'students',

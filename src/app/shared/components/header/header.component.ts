@@ -1,34 +1,25 @@
-import { Component, inject } from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { UserProfile } from '../../types';
 import { AuthApiService } from '../../services/authApi.service';
 import { Router } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'sman-header',
   standalone: true,
-  imports: [SidebarComponent],
+  imports: [TitleCasePipe],
   templateUrl: './header.component.html',
-  // styleUrl: ''
 })
 export class HeaderComponent {
-  private router = inject(Router);
+  @Input() isShow: boolean = false;
+  @Input() title: string = '';
+  @Output() show = new EventEmitter<void>();
+  constructor(private router: Router) {}
 
-  // displayMenu = false;
-  // selectedMenu = "Dashboard";
-
-  // showMenu() {
-  //   this.displayMenu = true;
-  // }
-
-  // hideMenu = () => {
-  //   this.displayMenu = false;
-  // }
-
-  // selectMenu(item: string) {
-  //   this.selectedMenu = item;
-  //   this.hideMenu();
-  // }
+  displayMenu() {
+    this.isShow = true;
+    this.show.emit();
+  }
 
   goToUserInfo() {
     this.router.navigate(['/user']);
