@@ -1,0 +1,31 @@
+<div [ngClass]="className">
+  <label [for]="name" class="text-inputTitle text-sm md:text-base">{{
+    label
+  }}</label>
+  <ng-container>
+    <mat-form-field
+      class="w-full mt-2"
+      [ngClass]="{ 'border-red': hasError['fieldInvalid'] }"
+    >
+      <input
+        matInput
+        [min]="name === 'admissionDate' ? today : null"
+        [max]="name === 'dateOfBirth' ? maxDate : null"
+        [matDatepicker]="picker"
+        [formControl]="dateControl"
+        (blur)="onBlur()"
+      />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+        <i matDatepickerToggleIcon class="fa-solid fa-chevron-down text-sm"></i>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </ng-container>
+  <div class="text-red-600 text-sm">
+    @if (hasError['fieldInvalid']) { @for (err of errorKeys; track $index) { @if
+    (err !== 'fieldInvalid') {
+    {{ errMsgs[err] }}
+    } } } @else { &nbsp; }
+  </div>
+</div>

@@ -1,170 +1,201 @@
 <sman-add-form-layout
-  [title]="isEdit ? 'Edit Student' : 'Add New Student'"
-  [layout]="isEdit ? 'edit' : 'add'"
+  title="Add New Student"
+  layout="add"
   [formGroup]="addStudentForm"
-  (submit)="isEdit ? editStudent($event) : addStudent($event)"
-  (cancel)="cancelAddForm()"
+  [isDirty]="isDirty"
+  [dialogRef]="dialogRef"
+  (submit)="addStudent($event)"
 >
   <ng-container formInputs>
-    <div class="flex gap-4 w-full">
+    <hr />
+    <sman-heading
+      title="Personal Information"
+      classname="lg:text-lg"
+      [spacing]="6"
+    />
+    <div class="md:flex md:gap-4 w-full">
       <!-- First Name -->
-      <div class="w-1/2">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="firstName"
-          label="First Name:"
-          name="firstName"
-          type="text"
-          placeholder="First Name"
-          [errMsgs]="{
+      <sman-input
+        formControlName="firstName"
+        className="pb-2"
+        label="First Name:"
+        name="firstName"
+        placeholder="First Name"
+        [hasError]="formService.getCombinedErrors(firstName)"
+        [errMsgs]="{
             required: 'Please enter your first name.',
-            minlength: 'Minimum character for first name doesn\'t met.',
           }"
-        />
-      </div>
+      />
       <!-- Last Name -->
-      <div class="w-1/2">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="lastName"
-          label="Last Name:"
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          [errMsgs]="{
+      <sman-input
+        formControlName="lastName"
+        className="pb-2"
+        label="Last Name:"
+        name="lastName"
+        placeholder="Last Name"
+        [hasError]="formService.getCombinedErrors(lastName)"
+        [errMsgs]="{
             required: 'Please enter your last name.',
-            minlength: 'Minimum character for last name doesn\'t met.',
           }"
-        />
-      </div>
+      />
     </div>
-    <div class="flex gap-4">
+    <div class="md:flex md:gap-4">
       <!-- Gender -->
-      <div class="flex flex-col w-1/2">
+      <div class="flex flex-col md:w-1/2 mb-5">
         <div class="flex flex-col w-full">
-          <label for="gender">Gender:</label>
-          <select
-            class="px-2 py-3 border rounded-md"
-            [ngClass]="{ 'border-red-600': formService.isFieldInvalid(gender) }"
-            name="gender"
-            id="gender"
-            formControlName="gender"
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
+            >Gender:</label
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          <div class="relative">
+            <select
+              class="appearance-none border w-full rounded-xl py-3 px-2 text-sm md:text-base"
+              [ngClass]="{
+                'border-red-600': formService.isFieldInvalid(gender)
+              }"
+              name="gender"
+              id="gender"
+              formControlName="gender"
+            >
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="male"
+              >
+                Male
+              </option>
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="female"
+              >
+                Female
+              </option>
+            </select>
+            <div
+              class="absolute top-1/2 -translate-y-1/2 right-4 pointer-events-none"
+            >
+              <i class="fa-solid fa-chevron-down text-sm"></i>
+            </div>
+          </div>
         </div>
         <div class="text-red-600 text-sm">
-          @if (formService.isFieldInvalid(gender)) {
-            @if (gender.hasError("required")) {
-              Please select gender.
-            }
-          }
+          @if (formService.isFieldInvalid(gender)) { @if
+          (gender.hasError("required")) { Please select gender. } }
         </div>
       </div>
       <!-- Date of Birth -->
-      <div class="w-1/2">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="dateOfBirth"
-          label="Date of Birth:"
-          name="dateOfBirth"
-          type="date"
-          [errMsgs]="{
+      <sman-date-input
+        class="md:w-1/2"
+        formControlName="dateOfBirth"
+        label="Date of Birth:"
+        name="dateOfBirth"
+        [hasError]="formService.getCombinedErrors(dateOfBirth)"
+        [errMsgs]="{
             required: 'Please enter your date of birth.',
           }"
-        />
-      </div>
+      />
     </div>
     <div class="flex gap-4">
       <!-- Address -->
-      <div class="w-full">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="address"
-          label="Address:"
-          name="address"
-          type="text"
-          placeholder="Address"
-          [errMsgs]="{
+      <sman-address-autocomplete
+        formControlName="address"
+        class="w-full"
+        label="Address:"
+        name="address"
+        placeholder="Address"
+        [hasError]="formService.getCombinedErrors(address)"
+        [errMsgs]="{
             required: 'Please enter your address.',
           }"
-        />
-      </div>
+      />
     </div>
-    <div class="flex gap-4">
+    <div class="md:flex md:gap-4">
       <!-- Phone -->
-      <div class="w-1/2">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="phone"
-          label="Phone:"
-          name="phone"
-          placeholder="Phone"
-          type="tel"
-          [errMsgs]="{
+      <sman-input
+        formControlName="phone"
+        class="w-1/2"
+        label="Phone:"
+        name="phone"
+        placeholder="Phone"
+        type="tel"
+        [hasError]="formService.getCombinedErrors(phone)"
+        [errMsgs]="{
             required: 'Please enter your phone.',
           }"
-        />
-      </div>
+      />
       <!-- Email -->
-      <div class="w-1/2">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="email"
-          label="Email:"
-          name="email"
-          type="text"
-          placeholder="Email"
-          [errMsgs]="{
+      <sman-input
+        formControlName="email"
+        class="w-1/2"
+        label="Email:"
+        name="email"
+        type="text"
+        placeholder="Email"
+        [hasError]="formService.getCombinedErrors(email)"
+        [errMsgs]="{
             required: 'Please enter your email.',
           }"
-        />
-      </div>
+      />
     </div>
-    <div class="flex gap-4">
-      <!-- Admission Date -->
-      <div class="w-1/3">
-        <sman-input
-          [group]="addStudentForm"
-          [control]="admissionDate"
-          label="Admission Date:"
-          name="admissionDate"
-          type="date"
-          [errMsgs]="{
-            required: 'Please enter your admission date.',
-          }"
-        />
-      </div>
-      <div class="flex flex-col w-1/3">
-        <label for="">Classes:</label>
+    <hr />
+    <sman-heading
+      title="Enrollment Information"
+      classname="lg:text-lg"
+      [spacing]="6"
+    />
+    <!-- Admission Date -->
+    <sman-date-input
+      formControlName="admissionDate"
+      label="Admission Date:"
+      name="admissionDate"
+      [hasError]="formService.getCombinedErrors(admissionDate)"
+      [errMsgs]="{
+        required: 'Please enter your admission date.',
+      }"
+    />
+    <div class="md:flex md:gap-4 mb-5">
+      <div class="flex flex-col md:w-1/2 relative z-50">
+        <label class="text-inputTitle mb-2 text-sm md:text-base"
+          >Classes:</label
+        >
         <sman-multiselector
           [items]="classesList"
           placeholder="Select class to enroll."
           [lookUp]="true"
           [supportMulti]="true"
-          [selected]="isEdit ? student.classIds : []"
           (inputTyped)="lookUpClassesByName($event)"
           (select)="handleSelectClass($event)"
+          [hasError]="formService.getCombinedErrors(classIds)"
+          [errMsgs]="{
+            required: 'Please select student\'s classes.',
+          }"
         ></sman-multiselector>
       </div>
-      <div class="flex flex-col w-1/3">
-        <label for="">Parents:</label>
+      <div class="flex flex-col md:w-1/2">
+        <label class="text-inputTitle mb-2 text-sm md:text-base"
+          >Parents:</label
+        >
         <sman-multiselector
           [items]="parentsList"
           placeholder="Parents of this student."
           [lookUp]="true"
           [supportMulti]="true"
-          [selected]="isEdit ? student.parentIds : []"
           (inputTyped)="lookUpParentsByName($event)"
           (select)="handleSelectParents($event)"
+          [hasError]="formService.getCombinedErrors(parentIds)"
+          [errMsgs]="{
+            required: 'Please select student\'s parents.',
+          }"
         ></sman-multiselector>
       </div>
     </div>
+    <hr />
+    <sman-heading
+      title="Profile Picture"
+      classname="lg:text-lg"
+      [spacing]="6"
+    />
   </ng-container>
   <sman-photo-uploader
     photoUploader
-    [inputUrl]="isEdit ? student.profileUrl : ''"
     (photoUploaded)="choosePhoto($event)"
   ></sman-photo-uploader>
 </sman-add-form-layout>

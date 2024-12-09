@@ -6,7 +6,7 @@
   <div class="flex justify-between h-20 items-center">
     <img class="h-5" src=".\assets\images\logo (2).png" alt="Logo" />
     <i
-      class="fa-solid fa-xmark cursor-pointer text-sidebar"
+      class="fa-solid fa-xmark cursor-pointer md:hidden text-sidebar"
       (click)="hideMenu()"
     ></i>
   </div>
@@ -22,7 +22,7 @@
 
     <sman-sidebar-item
       title="students"
-      [isActive]="selectedMenu === 'students'"
+      [isActive]="['students', 'students/:id'].includes(selectedMenu)"
       (selected)="onSelectMenu('students')"
     >
       <i class="fa-solid fa-user-graduate"></i>
@@ -30,7 +30,7 @@
 
     <sman-sidebar-item
       title="parents"
-      [isActive]="selectedMenu === 'parents'"
+      [isActive]="['parents', 'parents/:id'].includes(selectedMenu)"
       (selected)="onSelectMenu('parents')"
     >
       <i class="fa-solid fa-person-breastfeeding"></i>
@@ -38,7 +38,7 @@
 
     <sman-sidebar-item
       title="teachers"
-      [isActive]="selectedMenu === 'teachers'"
+      [isActive]="['teachers', 'teachers/:id'].includes(selectedMenu)"
       (selected)="onSelectMenu('teachers')"
     >
       <i class="fa-solid fa-chalkboard-user"></i>
@@ -46,7 +46,7 @@
 
     <sman-sidebar-item
       title="subjects"
-      [isActive]="selectedMenu === 'subjects'"
+      [isActive]="['subjects', 'subjects/:id'].includes(selectedMenu)"
       (selected)="onSelectMenu('subjects')"
     >
       <i class="fa-solid fa-book"></i>
@@ -54,7 +54,7 @@
 
     <sman-sidebar-item
       title="classes"
-      [isActive]="selectedMenu === 'classes'"
+      [isActive]="['classes', 'classes/:id'].includes(selectedMenu)"
       (selected)="onSelectMenu('classes')"
     >
       <i class="fa-solid fa-people-roof"></i>

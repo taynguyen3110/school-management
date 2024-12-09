@@ -1,77 +1,93 @@
 <sman-add-form-layout
-  [title]="isEdit ? 'Edit Teacher' : 'Add New Tacher'"
-  [layout]="isEdit ? 'edit' : 'add'"
+  [title]="'Add New Teacher'"
+  [layout]="'add'"
   [formGroup]="addTeacherForm"
-  (submit)="isEdit ? editTeacher($event) : addTeacher($event)"
-  (cancel)="cancelAddForm()"
+  [isDirty]="isDirty"
+  [dialogRef]="dialogRef"
+  (submit)="addTeacher($event)"
 >
   <ng-container formInputs>
     <div class="flex gap-4 w-full">
       <!-- First Name -->
       <div class="w-1/2">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="firstName"
+          formControlName="firstName"
           label="First Name:"
           name="firstName"
           type="text"
           placeholder="First Name"
+          [hasError]="formService.getCombinedErrors(firstName)"
           [errMsgs]="{
             required: 'Please enter your first name.',
-            minlength: 'Minimum character for first name doesn\'t met.',
           }"
         />
       </div>
       <!-- Last Name -->
       <div class="w-1/2">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="lastName"
+          formControlName="lastName"
           label="Last Name:"
           name="lastName"
           type="text"
           placeholder="Last Name"
+          [hasError]="formService.getCombinedErrors(lastName)"
           [errMsgs]="{
             required: 'Please enter your last name.',
-            minlength: 'Minimum character for last name doesn\'t met.',
           }"
         />
       </div>
     </div>
     <div class="flex gap-4">
       <!-- Gender -->
-      <div class="flex flex-col w-1/2">
+      <div class="flex flex-col md:w-1/2 mb-5">
         <div class="flex flex-col w-full">
-          <label for="gender">Gender:</label>
-          <select
-            class="px-2 py-3 border rounded-md"
-            [ngClass]="{ 'border-red-600': formService.isFieldInvalid(gender) }"
-            name="gender"
-            id="gender"
-            formControlName="gender"
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
+            >Gender:</label
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          <div class="relative">
+            <select
+              class="appearance-none border w-full rounded-xl py-3 px-2 text-sm md:text-base"
+              [ngClass]="{
+                'border-red-600': formService.isFieldInvalid(gender)
+              }"
+              name="gender"
+              id="gender"
+              formControlName="gender"
+            >
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="male"
+              >
+                Male
+              </option>
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="female"
+              >
+                Female
+              </option>
+            </select>
+            <div
+              class="absolute top-1/2 -translate-y-1/2 right-4 pointer-events-none"
+            >
+              <i class="fa-solid fa-chevron-down text-sm"></i>
+            </div>
+          </div>
         </div>
         <div class="text-red-600 text-sm">
-          @if (formService.isFieldInvalid(gender)) {
-            @if (gender.hasError("required")) {
-              Please select gender.
-            }
-          }
+          @if (formService.isFieldInvalid(gender)) { @if
+          (gender.hasError("required")) { Please select gender. } }
         </div>
       </div>
       <!-- Phone -->
       <div class="w-1/2">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="phone"
+          formControlName="phone"
           label="Phone:"
           name="phone"
           placeholder="Phone"
           type="tel"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          [hasError]="formService.getCombinedErrors(phone)"
           [errMsgs]="{
             required: 'Please enter your phone.',
           }"
@@ -82,12 +98,12 @@
       <!-- Address -->
       <div class="w-full">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="address"
+          formControlName="address"
           label="Address:"
           name="address"
           type="text"
           placeholder="Address"
+          [hasError]="formService.getCombinedErrors(address)"
           [errMsgs]="{
             required: 'Please enter your address.',
           }"
@@ -99,12 +115,12 @@
       <!-- Email -->
       <div class="w-1/2">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="email"
+          formControlName="email"
           label="Email:"
           name="email"
           type="text"
           placeholder="Email"
+          [hasError]="formService.getCombinedErrors(email)"
           [errMsgs]="{
             required: 'Please enter your email.',
           }"
@@ -113,11 +129,11 @@
       <!-- Admission Date -->
       <div class="w-1/2">
         <sman-input
-          [group]="addTeacherForm"
-          [control]="admissionDate"
+          formControlName="admissionDate"
           label="Admission Date:"
           name="admissionDate"
           type="date"
+          [hasError]="formService.getCombinedErrors(admissionDate)"
           [errMsgs]="{
             required: 'Please enter your admission date.',
           }"
@@ -127,7 +143,6 @@
   </ng-container>
   <sman-photo-uploader
     photoUploader
-    [inputUrl]="isEdit ? teacher.profileUrl : ''"
     (photoUploaded)="choosePhoto($event)"
   ></sman-photo-uploader>
 </sman-add-form-layout>

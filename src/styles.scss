@@ -26,3 +26,58 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", sans-serif;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+mat-form-field {
+  --mdc-filled-text-field-container-color: white;
+  height: 66px;
+  border-radius: 0.75rem;
+}
+mat-calendar {
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid rgb(235, 235, 235);
+}
+
+.mdc-line-ripple {
+  display: none;
+}
+
+.mdc-text-field--filled {
+  border-radius: 0.75rem !important;
+  border: 1px solid rgb(235, 235, 235);
+}
+
+.border-red .mdc-text-field--filled {
+  border: 1px solid rgb(220 38 38);
+}
+
+.mat-mdc-dialog-surface {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mat-mdc-dialog-surface::-webkit-scrollbar {
+  display: none;
+}
+
+.mat-mdc-form-field-hint {
+  color: #969696;
+}
+
+// address-autocomplete
+.pac-container {
+@apply rounded-lg p-2
+}
+
+.pac-item {
+  font-family: "Inter", sans-serif;
+  @apply py-1;
+}

@@ -27,6 +27,7 @@ module.exports = {
         sidebar: "#B1B1B1",
         thead: "#718EBF",
         tbody: "#232323",
+        inputTitle: '#7D8592',
       },
     },
   },

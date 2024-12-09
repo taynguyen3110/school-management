@@ -1,10 +1,8 @@
-<sman-page-layout title="teachers">
-  @if (displayAddTeacher) {
-    <sman-add-teacher addNewForm (cancelForm)="hideAddTeacherForm()" />
-  }
+<sman-page-layout title="Teachers" (createNew)="openDialog()">
   <sman-filter
     filter
     (filter)="filterTeachers($event)"
+    (reset)="resetFilter()"
     [queryParams]="filterParams"
   ></sman-filter>
   <sman-item-table
@@ -13,6 +11,7 @@
     [items]="teachers"
     (sort)="filterTeachers($event)"
   ></sman-item-table>
+  @if (teachersCount) {
   <sman-pagination
     pagination
     [pageSize]="itemPerPage"
@@ -20,4 +19,5 @@
     [currentPage]="currentPage"
     (pageChange)="handlePageChange($event)"
   />
+  }
 </sman-page-layout>

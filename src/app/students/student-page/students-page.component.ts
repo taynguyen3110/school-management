@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { AddStudentComponent } from '../student-add/student-add.component';
 import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StudentService } from '../service/student.service';
@@ -11,6 +12,8 @@ import { MultiSelectorComponent } from '../../shared/components/multiselector/mu
 import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
 import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../../shared/components/filter/filter.component';
+import { HeadingComponent } from '@/app/shared/components/heading/heading.component';
+import { ButtonComponent } from '@/app/shared/components/button/button.component';
 
 @Component({
   selector: 'sman-students, students',
@@ -24,41 +27,42 @@ import { FilterComponent } from '../../shared/components/filter/filter.component
     AddStudentComponent,
     PageLayoutComponent,
     FilterComponent,
+    HeadingComponent,
+    ButtonComponent,
   ],
   templateUrl: './students-page.component.html',
   styleUrl: './students-page.component.scss',
 })
+//  implements CanComponentDeactivate
 export class StudentsComponent {
   studentsCount: number = 0;
   itemPerPage: number = 0;
   totalPage: number = 0;
   students: Student[] = [];
-  displayAddStudent: boolean = false;
   currentPage: number = 1;
   filterParams: Params = {};
 
   unsubscribe$ = new Subject<void>();
 
+  readonly dialog = inject(MatDialog);
+
   constructor(
     private route: ActivatedRoute,
     private navigationService: NavigationService,
-    private studentService: StudentService,
+    private studentService: StudentService
   ) {}
 
   ngOnInit() {
-    this.displayAddStudent =
-      this.route.snapshot.queryParamMap.get('addStudent') === 'true';
     this.route.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddStudent = params['addStudent'] === 'true';
         this.filterParams = params;
         if (!params['page']) {
           this.navigationService.toRoute(
             'students',
             'add',
             { page: this.currentPage },
-            true,
+            true
           );
         } else {
           this.currentPage = +params['page'];
@@ -69,6 +73,15 @@ export class StudentsComponent {
       });
   }
 
+  openDialog(): void {
+    this.dialog.open(AddStudentComponent, {
+      panelClass: ['overflow-auto', 'hide-scrollbar'],
+      maxWidth: '700px',
+      width: '80vw',
+      disableClose: true,
+    });
+  }
+
   fetchStudents(filter?: Params) {
     return this.studentService.getStudents(filter);
   }
@@ -76,14 +89,6 @@ export class StudentsComponent {
   handlePageChange(page: number) {
     this.navigationService.toRoute('students', 'add', { page }, true);
   }
-
-  showAddStudentForm() {
-    this.displayAddStudent = true;
-  }
-
-  hideAddStudentForm = () => {
-    this.navigationService.toRoute('students', 'delete', ['addStudent'], true);
-  };
 
   filterStudents(filterParams: any) {
     let newParams: Params = {};
@@ -93,6 +98,10 @@ export class StudentsComponent {
       newParams = { ...filterParams, page: 1 };
       this.navigationService.toRoute('students', 'add', newParams, true);
     }
+  }
+
+  resetFilter() {
+    this.navigationService.toRoute('students', 'delete', ['name', 'classIds']);
   }
 
   setPagination(data: any) {

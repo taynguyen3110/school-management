@@ -1,62 +1,43 @@
-<div (clickOutside)="hideItem()" class="relative z-10">
-  @if (supportMulti) {
-    <div class="absolute flex gap-1 text-sm top-12 left-0 w-full flex-wrap">
+<div class="relative z-10" (click)="showItem()">
+  @if (supportMulti) { }
+  <div
+    class="w-full bg-white flex items-center justify-center text-sm/6 border px-3 py-[10px] rounded-xl"
+    [ngClass]="fieldInvalid ? 'border-red-600' : 'border-gray-200'"
+  >
+    @if(selectedItem.length == 0) {
+    <div class="text-gray-400 line-clamp-1">{{ placeholder }}</div>
+    } @else {
+    <div class="flex gap-1 flex-wrap">
       @for (item of selectedItem; track $index) {
+      <div
+        class="h-6 relative px-1 flex items-center justify-between gap-1 bg-blue-400 text-white cursor-pointer border rounded-full select-none"
+        (click)="selectItem(item, $event)"
+      >
+        {{ item.label }}
         <div
-          class="px-1 cursor-pointer border rounded-sm select-none"
-          (click)="selectItem(item)"
+          class="relative -top-[1px] flex items-center justify-center border h-[18px] w-[18px] bg-white rounded-full"
         >
-          {{ item }}
+          <i class="fa-solid fa-xmark text-slate-800 relative top-[1px]"></i>
         </div>
+      </div>
       }
     </div>
-  }
-  <div
-    class="w-auto flex items-center justify-center text-sm/6 border border-gray-200 px-3 py-[10px] rounded-lg"
-  >
-    <div class="cursor-default w-full">
-      <input
-        class="w-full bg-white focus:outline-none relative z-10"
-        type="text"
-        [(ngModel)]="searchValue"
-        [placeholder]="placeholder"
-        #searchInput
-        [disabled]="!lookUp"
-      />
-    </div>
-    <i
-      class="fa-solid fa-chevron-down cursor-pointer ml-auto"
-      (click)="showItem()"
-    ></i>
+    }
+    <i class="fa-solid fa-chevron-down cursor-pointer ml-auto"></i>
+  </div>
+  <div class="absolute text-red-600 text-sm">
+    @if (fieldInvalid) { @for (err of errorKeys; track $index) {
+    {{ errMsgs[err] }}
+    } } @else { &nbsp; }
   </div>
   @if (isShow) {
-    <div
-      class="bg-white w-full absolute top-11 left-1/2 max-h-40 overflow-auto -translate-x-1/2 p-2 rounded-md border border-gray-300 shadow-2xl z-50"
-    >
-      @if (items.length == 0) {
-        <div
-          class="hover:bg-slate-100 flex w-full text-sm text-center text-gray-400 select-none"
-        >
-          @if (searchValue === "") {
-            Start typing to search..
-          } @else {
-            No matched records.
-          }
-        </div>
-      } @else {
-        @for (item of items; track $index) {
-          <div
-            class="hover:bg-slate-100 flex w-full cursor-pointer z-50"
-            [ngClass]="{
-              'bg-green-200 hover:bg-green-50':
-                selectedItem && selectedItem.includes(item.id),
-            }"
-            (click)="selectItem(item.id)"
-          >
-            {{ item.label }}
-          </div>
-        }
-      }
-    </div>
+  <sman-items-panel
+    [lookUp]="lookUp"
+    (clickedOutside)="hideItem()"
+    [items]="items"
+    (select)="selectItem($event)"
+    [selectedItem]="selectedItem"
+    (inputTyped)="lookupItems($event)"
+  ></sman-items-panel>
   }
 </div>

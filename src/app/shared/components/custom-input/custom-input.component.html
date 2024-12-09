@@ -1,0 +1,11 @@
+<input
+  class="border w-full rounded-xl py-3 px-2 mt-2 text-sm md:text-base"
+  [ngClass]="{ 'border-red-600': hasError }"
+  [(ngModel)]="value"
+  [type]="type"
+  [name]="name"
+  [id]="name"
+  [placeholder]="placeholder"
+  (input)="onInput($event)"
+  (blur)="onBlur()"
+/>

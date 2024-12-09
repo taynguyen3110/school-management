@@ -1,0 +1,117 @@
+<sman-add-form-layout
+  title="Edit Student Personal Information"
+  layout="edit"
+  [formGroup]="editStudentPersonalInfoForm"
+  [isDirty]="editStudentPersonalInfoForm.dirty"
+  [dialogRef]="dialogRef"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <div class="md:flex md:gap-4">
+      <!-- Gender -->
+      <div class="flex flex-col md:w-1/2 mb-5">
+        <div class="flex flex-col w-full">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
+            >Gender:</label
+          >
+          <div class="relative">
+            <select
+              class="appearance-none border w-full rounded-xl py-3 px-2 text-sm md:text-base"
+              [ngClass]="{
+                'border-red-600': formService.isFieldInvalid(gender)
+              }"
+              name="gender"
+              id="gender"
+              formControlName="gender"
+            >
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value=""
+                disabled
+                selected
+              >
+                Select Gender
+              </option>
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="male"
+              >
+                Male
+              </option>
+              <option
+                class="!text-sm md:text-base text-inputTitle"
+                value="female"
+              >
+                Female
+              </option>
+            </select>
+            <div
+              class="absolute top-1/2 -translate-y-1/2 right-4 pointer-events-none"
+            >
+              <i class="fa-solid fa-chevron-down text-sm"></i>
+            </div>
+          </div>
+        </div>
+        <div class="text-red-600 text-sm">
+          @if (formService.isFieldInvalid(gender)) { @if
+          (gender.hasError("required")) { Please select gender. } }
+        </div>
+      </div>
+      <!-- Date of Birth -->
+      <sman-date-input
+        class="md:w-1/2"
+        formControlName="dateOfBirth"
+        label="Date of Birth:"
+        name="dateOfBirth"
+        [hasError]="formService.getCombinedErrors(dateOfBirth)"
+        [errMsgs]="{
+          required: 'Please enter your date of birth.',
+        }"
+      />
+    </div>
+    <div class="flex gap-4">
+      <!-- Address -->
+      <sman-input
+        formControlName="address"
+        class="w-full"
+        label="Address:"
+        name="address"
+        type="text"
+        placeholder="Address"
+        [hasError]="formService.getCombinedErrors(address)"
+        [errMsgs]="{
+          required: 'Please enter your address.',
+        }"
+      />
+    </div>
+    <div class="md:flex md:gap-4">
+      <!-- Phone -->
+      <sman-input
+        formControlName="phone"
+        class="w-1/2"
+        label="Phone:"
+        name="phone"
+        placeholder="Phone"
+        type="tel"
+        [hasError]="formService.getCombinedErrors(phone)"
+        [errMsgs]="{
+          required: 'Please enter your phone.',
+        }"
+      />
+      <!-- Email -->
+      <sman-input
+        formControlName="email"
+        class="w-1/2"
+        label="Email:"
+        name="email"
+        type="text"
+        placeholder="Email"
+        [hasError]="formService.getCombinedErrors(email)"
+        [errMsgs]="{
+          required: 'Please enter your email.',
+        }"
+      />
+    </div>
+  </ng-container>
+</sman-add-form-layout>

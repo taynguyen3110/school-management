@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { QueryService } from './query.service';
+import { route } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -17,6 +18,8 @@ export class NavigationService {
     query?: Params | string[],
     replace?: boolean,
   ) {
+    console.log("url",url);
+
     let params: Params = typeof query === 'object' ? query : {};
     if (query && action !== '') {
       if (action === 'add' && typeof query === 'object') {
@@ -41,11 +44,3 @@ export class NavigationService {
   }
 }
 
-export type route =
-  | ''
-  | 'students'
-  | 'teachers'
-  | 'parents'
-  | 'subjects'
-  | 'classes'
-  | 'user';

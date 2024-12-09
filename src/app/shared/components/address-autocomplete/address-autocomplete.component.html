@@ -1,0 +1,22 @@
+<div [ngClass]="className">
+  <label [for]="name" class="text-inputTitle text-sm md:text-base">{{
+    label
+  }}</label>
+  <ng-container>
+    <input
+      class="border w-full rounded-xl py-3 px-2 mt-2 text-sm md:text-base"
+      [ngClass]="{ 'border-red-600': hasError['fieldInvalid'] }"
+      type="text"
+      [(ngModel)]="value"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+      #addresstext
+    />
+  </ng-container>
+  <div class="text-red-600 text-sm">
+    @if (hasError['fieldInvalid']) { @for (err of errorKeys; track $index) { @if
+    (err !== 'fieldInvalid') {
+    {{ errMsgs[err] }}
+    } } } @else { &nbsp; }
+  </div>
+</div>

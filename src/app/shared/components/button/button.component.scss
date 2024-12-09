@@ -1,0 +1,28 @@
+.base-button {
+  @apply px-4 py-2 rounded-full text-sm font-medium lg:text-base;
+}
+.btn-primary {
+  @apply bg-primary3 border-primary3 text-white;
+}
+.btn-secondary {
+  @apply border-primary3 text-primary3;
+}
+
+.btn-secondary-disabled {
+  @apply border-blue-300 text-blue-300;
+}
+
+.btn-edit {
+  @apply text-inputTitle px-3 py-[6px] text-xs mr-0;
+}
+.btn-cancel {
+  @apply bg-gray-200  border-gray-200;
+}
+
+.btn-delete {
+  @apply border-red-600 text-red-600;
+}
+
+.btn-primary-disabled {
+  @apply bg-blue-300 opacity-50 cursor-not-allowed;
+}

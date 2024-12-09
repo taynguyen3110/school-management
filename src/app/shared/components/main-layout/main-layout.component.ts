@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { HeaderComponent } from '../header/header.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { BackdropLayerComponent } from '../backdrop-layer/backdrop-layer.component';
 import { CommonModule } from '@angular/common';
-import { route } from '../../services/navigation.service';
+import { route } from '../../types';
+import { filter } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -24,11 +30,17 @@ export class MainLayoutComponent implements OnInit {
   showMenu: boolean = false;
   selectedMenu: route = '';
 
-  constructor(private router: ActivatedRoute) {}
+  constructor(private activeRouter: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.selectedMenu = this.router.snapshot.firstChild?.routeConfig
+    this.selectedMenu = this.activeRouter.firstChild?.routeConfig
       ?.path as route;
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.selectedMenu = this.activeRouter.firstChild?.routeConfig
+          ?.path as route;
+      });
   }
 
   setSelectedMenu(menu: route) {

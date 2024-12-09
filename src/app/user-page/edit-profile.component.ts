@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,30 +10,49 @@ import { AuthApiService } from '../shared/services/authApi.service';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HeadingComponent } from '../shared/components/heading/heading.component';
+import { ButtonComponent } from '../shared/components/button/button.component';
+import { InputComponent } from '../shared/components/input/input.component';
+import { FormService } from '../shared/services/form.service';
 
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    HeadingComponent,
+    ButtonComponent,
+    InputComponent,
+  ],
   selector: 'sman-edit-profile',
   templateUrl: 'edit-profile.component.html',
 })
 export class EditProfileComponent {
-  @Input() user!: UserProfile;
   @Input() setUser!: (user: UserProfile) => void;
-  @Input() cancelEdit!: () => void;
 
   isLoading: boolean = false;
-
+  formIsChanged: boolean = false;
   private unsubscribe$ = new Subject<void>();
+  dialogRef = inject(MatDialogRef<EditProfileComponent>);
 
   constructor(
     private authApi: AuthApiService,
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    @Inject(MAT_DIALOG_DATA)
+    private user: UserProfile | undefined,
+    public formService: FormService
   ) {}
 
   ngOnInit() {
-    this.setFormData(this.user.firstName, this.user.lastName, this.user.email);
+    if (this.user) {
+      this.setFormData(
+        this.user.firstName,
+        this.user.lastName,
+        this.user.email
+      );
+    }
 
     this.userProfileForm.valueChanges.subscribe(() => {
       if (
@@ -48,12 +67,10 @@ export class EditProfileComponent {
     });
   }
 
-  formIsChanged: boolean = false;
-
   userProfileForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
-    email: ['', [Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
   });
 
   // change profile form
@@ -75,6 +92,10 @@ export class EditProfileComponent {
       lastName: lastName,
       email: email,
     });
+  }
+
+  cancelEdit() {
+    this.dialogRef.close();
   }
 
   updateUser() {

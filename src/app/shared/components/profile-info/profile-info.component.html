@@ -1,4 +1,6 @@
-<div class="flex">
-  <div class="w-40">{{ label }}</div>
-  <ng-content select="[info]"></ng-content>
+<div class="flex flex-col w-[180px] md:w-[160px] lg:w-[290px] xl:w-[400px] gap-1">
+  <div class="text-inputTitle text-xs md:text-sm lg:text-base">{{ label }}</div>
+  <div class="text-sm lg:text-base">
+    <ng-content select="[info]"></ng-content>
+  </div>
 </div>

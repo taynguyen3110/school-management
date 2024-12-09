@@ -1,25 +1,31 @@
-<div class="container px-6 h-36 bg-white">
-  <div
-    class="relative z-30 flex justify-between items-center py-6"
-  >
-  @if(!isShow) {
-    <div>
-      <i class="fa-solid fa-bars text-primary2 cursor-pointer text-lg" (click)="displayMenu()"></i>
+<div class="container px-6 h-36 md:h-[80px] bg-white md:flex md:items-center md:justify-between">
+  <div class="relative z-30 flex justify-between items-center py-6">
+    <div class="md:hidden" [ngClass]="{ 'opacity-0': isShow }">
+      <i
+        class="fa-solid fa-bars text-primary2 cursor-pointer text-lg"
+        (click)="displayMenu($event)"
+      ></i>
     </div>
-  }
-    <div class="text-title text-primary2">{{title === '' ? 'Dashboard' : title | titlecase}}</div>
-    <div class="flex justify-between items-center">
-      <i class="fa-regular fa-user cursor-pointer" (click)="goToUserInfo()"></i>
+    <div class="text-title text-primary2 md:hidden">
+      {{ title === "" ? "Dashboard" : title === "students/:id" ? "Student Profile" : (title | titlecase) }}
+    </div>
+    <div class="md:hidden">
+      <sman-user-icon (clickedOn)="goToUserInfo()" />
     </div>
   </div>
-  <div class="relative flex">
-    <i
-      class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 ml-4 opacity-40"
-    ></i>
-    <input
-      class="placeholder:text-sm pl-11 py-2 w-full rounded-full bg-background focus:outline-none"
-      type="text"
-      placeholder="Search for something"
-    />
+  <div class="md:flex md:items-center md:gap-6">
+    <div class="relative flex h-10 md:w-64">
+      <i
+        class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 ml-4 opacity-40"
+      ></i>
+      <input
+        class="placeholder:text-sm pl-11 py-2 w-full rounded-full bg-background focus:outline-none"
+        type="text"
+        placeholder="Search for something"
+      />
+    </div>
+    <div class="hidden md:block">
+      <sman-user-icon (clickedOn)="goToUserInfo()" />
+    </div>
   </div>
 </div>

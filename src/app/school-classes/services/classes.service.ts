@@ -15,8 +15,8 @@ export class ClassesService {
     return this.apiService.get<Classes>(`/classes/${id}`);
   }
 
-  lookUpByName(name: string) {
-    return this.apiService.get<any>('/classes/lookup', { name });
+  lookUpByName(name?: string) {
+    return this.apiService.get<any>('/classes/lookup', name ? { name } : {});
   }
 
   addClass(classes: Classes) {

@@ -1,10 +1,8 @@
-<sman-page-layout title="subjects">
-  @if (displayAddSubject) {
-    <sman-add-subject addNewForm (cancelForm)="hideAddSubjectForm()" />
-  }
+<sman-page-layout title="Subjects" (createNew)="openDialog()">
   <sman-filter
     filter
     (filter)="filterSubjects($event)"
+    (reset)="resetFilter()"
     [queryParams]="filterParams"
   ></sman-filter>
   <sman-item-table

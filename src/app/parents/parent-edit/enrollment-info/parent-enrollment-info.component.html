@@ -1,0 +1,35 @@
+<sman-add-form-layout
+  title="Edit Parent Enrollment Information"
+  layout="edit"
+  [formGroup]="editParentEnrollmentInfoForm"
+  (submit)="edit()"
+  (cancel)="cancel()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <form>
+      <div class="md:flex md:gap-4 mb-5">
+        <div class="flex flex-col w-full">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Students:</label
+          >
+          <sman-multiselector
+            [items]="studentsList"
+            placeholder="Students of this parent."
+            [lookUp]="true"
+            [supportMulti]="true"
+            [selected]="
+              toLabelObject(parent.students!, 'id', ['firstName', 'lastName'])
+            "
+            (inputTyped)="lookUpStudentsByName($event)"
+            (select)="handleSelectStudents($event)"
+            [hasError]="formService.getCombinedErrors(studentIds)"
+            [errMsgs]="{
+        required: 'Please enter your students.',
+      }"
+          ></sman-multiselector>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</sman-add-form-layout>

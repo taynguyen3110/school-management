@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,6 +24,7 @@ import { InputComponent } from '../../shared/components/input/input.component';
 import { MultiSelectorComponent } from '../../shared/components/multiselector/multiselector.component';
 import { StudentService } from '../../students/service/student.service';
 import { toLabelObject } from '../../shared/components/multiselector/utils/toLabelObject';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   standalone: true,
@@ -32,19 +40,19 @@ import { toLabelObject } from '../../shared/components/multiselector/utils/toLab
   templateUrl: 'classes-add.component.html',
 })
 export class AddClassComponent implements OnInit {
-  @Input() isEdit: boolean = false;
   @Input() classes!: Classes;
 
-  @Output() cancelForm = new EventEmitter();
-
   studentList: LabelObj[] = [];
+  isDirty: boolean = false;
+
+  readonly dialogRef = inject(MatDialogRef<AddClassComponent>);
 
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
     private classesService: ClassesService,
     private studentService: StudentService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   addClassForm = this.fb.group({
@@ -60,18 +68,9 @@ export class AddClassComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.patchClassInfo();
-    }
-  }
-
-  patchClassInfo() {
-    const { id, ...values } = this.classes;
-    this.addClassForm.setValue(values as any);
-  }
-
-  cancelAddForm() {
-    this.cancelForm.emit();
+    this.addClassForm.valueChanges.subscribe(() => {
+      this.isDirty = this.addClassForm.dirty;
+    });
   }
 
   lookUpStudentsByName(name: string) {
@@ -92,18 +91,9 @@ export class AddClassComponent implements OnInit {
     this.classesService
       .addClass(this.addClassForm.value as Classes)
       .subscribe(() => {
-        this.cancelAddForm();
+        this.isDirty = false;
+        this.dialogRef.close();
         this.notificationService.notify('Class added successfully!');
-      });
-  }
-
-  editClass(e: Event) {
-    e.preventDefault();
-    this.classesService
-      .updateClass(this.classes.id!, this.addClassForm.value as Classes)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Class updated successfully!');
       });
   }
 }

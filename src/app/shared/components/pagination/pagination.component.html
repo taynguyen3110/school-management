@@ -7,20 +7,20 @@
   >
     Previous
   </button>
-  <div class="flex gap-3">
+  <div class="flex gap-3 text-sm md:text-base">
     @for (i of arr; track $index) {
       @if (i === currentPage) {
         <p
-          class="font-semibold cursor-default select-none bg-blue-200 rounded-md px-2"
+          class="font-semibold flex items-center cursor-default select-none bg-blue-200 rounded-md px-2"
           (click)="handleJumpToPage(i)"
         >
           {{ i }}
         </p>
       } @else if (i === DOTS) {
-        <p class="cursor-default select-none">{{ i }}</p>
+        <p class="cursor-default select-none flex items-center">{{ i }}</p>
       } @else {
         <p
-          class="px-2 cursor-pointer select-none"
+          class="px-2 cursor-pointer select-none flex items-center"
           (click)="handleJumpToPage(i)"
         >
           {{ i }}

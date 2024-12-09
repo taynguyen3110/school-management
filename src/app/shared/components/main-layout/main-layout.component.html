@@ -1,16 +1,31 @@
 <div class="flex justify-stretch min-h-screen">
-  @if(showMenu) {
-  <sman-backdrop>
-    <div class="absolute top-0 left-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
-    [ngClass]="{ 'translate-x-0': showMenu }"
-    >
-      <sman-sidebar (closeMenu)="hideMenu()" [selectedMenu]="selectedMenu" (selectMenu)="setSelectedMenu($event)"></sman-sidebar>
+  <sman-backdrop [ngClass]="{ hidden: !showMenu, block: showMenu }">
+    <div class="absolute top-0 left-0 z-50">
+      <sman-sidebar
+        (closeMenu)="hideMenu()"
+        [selectedMenu]="selectedMenu"
+        (selectMenu)="setSelectedMenu($event)"
+      ></sman-sidebar>
     </div>
   </sman-backdrop>
-  }
+  <div class="hidden md:block">
+    <sman-sidebar
+      (closeMenu)="hideMenu()"
+      [selectedMenu]="selectedMenu"
+      (selectMenu)="setSelectedMenu($event)"
+    ></sman-sidebar>
+  </div>
   <div class="w-full relative">
-    <sman-header (show)="displayMenu()" [isShow]="showMenu" [title]="selectedMenu"></sman-header>
+    <sman-header
+      (show)="displayMenu()"
+      [isShow]="showMenu"
+      [title]="selectedMenu"
+    ></sman-header>
     <sman-loading-spinner></sman-loading-spinner>
-    <router-outlet></router-outlet>
+    <div
+      class="bg-background min-h-[calc(100%-85px)] rounded-l-3xl p-6 relative z-0"
+    >
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

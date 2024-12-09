@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,6 +13,7 @@ import { Teacher } from '../../shared/types';
 import { NotificationService } from '../../shared/services/notification.service';
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '../../shared/components/input/input.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   standalone: true,
@@ -27,16 +28,16 @@ import { InputComponent } from '../../shared/components/input/input.component';
   templateUrl: 'teacher-add.component.html',
 })
 export class AddTeacherComponent implements OnInit {
-  @Input() isEdit: boolean = false;
   @Input() teacher!: Teacher;
+  isDirty: boolean = false;
 
-  @Output() cancelForm = new EventEmitter();
+  readonly dialogRef = inject(MatDialogRef<AddTeacherComponent>);
 
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
     private teacherService: TeacherService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   addTeacherForm = this.fb.group({
@@ -79,22 +80,13 @@ export class AddTeacherComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.patchTeacherInfo();
-    }
-  }
-
-  patchTeacherInfo() {
-    const { id, ...values } = this.teacher;
-    this.addTeacherForm.setValue(values as any);
+    this.addTeacherForm.valueChanges.subscribe(() => {
+      this.isDirty = this.addTeacherForm.dirty;
+    });
   }
 
   choosePhoto(photoUrl: string) {
     this.profileUrl.setValue(photoUrl);
-  }
-
-  cancelAddForm() {
-    this.cancelForm.emit();
   }
 
   addTeacher(e: Event) {
@@ -102,18 +94,9 @@ export class AddTeacherComponent implements OnInit {
     this.teacherService
       .addTeacher(this.addTeacherForm.value as Teacher)
       .subscribe(() => {
-        this.cancelAddForm();
+        this.isDirty = false;
+        this.dialogRef.close();
         this.notificationService.notify('Teacher added successfully!');
       });
   }
-
-  editTeacher = (e: Event) => {
-    e.preventDefault();
-    this.teacherService
-      .updateTeacher(this.teacher.id!, this.addTeacherForm.value as Teacher)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Teacher updated successfully!');
-      });
-  };
 }

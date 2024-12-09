@@ -1,69 +1,73 @@
-<table class="text-sm md:text-base text-left w-full cursor-pointer">
+<table
+  class="text-sm md:text-base text-left w-full"
+  [ngClass]="enableSorting ? 'cursor-pointer' : 'cursor-default'"
+>
   <thead class="text-thead text-nowrap">
-    @switch (listOf) { @case ("students") {
-    <th (click)="onSort('name')">Name</th>
-    <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
-    <th (click)="onSort('gender')">Gender</th>
-    <th (click)="onSort('dateOfBirth')">Date of Birth</th>
-    <th (click)="onSort('admissionDate')">Admission Date</th>
-    } @case ("parents") {
-    <th (click)="onSort('name')">Name</th>
-    <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
-    <th (click)="onSort('email')">Email</th>
-    <th (click)="onSort('phone')">Phone</th>
-    } @case ("teachers") {
-    <th (click)="onSort('name')">Name</th>
-    <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
-    <th (click)="onSort('email')">Email</th>
-    <th (click)="onSort('phone')">Phone</th>
-    <th (click)="onSort('admissionDate')">Admission Date</th>
-    } @case ("subjects") {
-    <th (click)="onSort('name')">Name</th>
-    <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
-    <th (click)="onSort('class')">Class</th>
-    <th (click)="onSort('teacher')">Teacher</th>
-    } @case ("classes") {
-    <th (click)="onSort('name')">Name</th>
-    <th (click)="onSort('id')">{{ listOf | titlecase }} ID</th>
-    } }
+    @for (col of tableCollumns; track $index) {
+    <th (click)="onSort(col.key)">
+      {{ col.label }}
+      @if (enableSorting) {
+      <span class="text-[8px] text-slate-400 inline-block h-[13px] relative">
+        @if(sortOrder === 0 ) {
+        <i class="fa-solid fa-chevron-up absolute top-0"></i>
+        <i class="fa-solid fa-chevron-down absolute bottom-0"></i>
+        } @if (currentSort === col.key && sortOrder === 1) {
+        <i class="fa-solid fa-chevron-up absolute top-0"></i>
+        } @else if (currentSort === col.key && sortOrder === -1) {
+        <i class="fa-solid fa-chevron-down absolute bottom-0"></i>
+        }
+      </span>
+      }
+    </th>
+    }
   </thead>
-  <tbody class="text-tbody text-xs lg:text-sm">
+  <tbody class="text-tbody text-xs md:text-sm">
     @for (item of items; track $index; let e = $even) {
-    <tr [routerLink]="['./' + item.id]" class="hover:bg-blue-100 rounded-full">
-      @switch (listOf) { @case ("students") {
-      <td>{{ item.firstName + " " + item.lastName }}</td>
-      <td>{{ item.id }}</td>
-      <td>{{ item.gender | titlecase }}</td>
-      <td>{{ item.dateOfBirth | date : "dd/MM/yyyy" }}</td>
-      <td>{{ item.admissionDate | date : "dd/MM/yyyy" }}</td>
-      } @case ("parents") {
-      <td>{{ item.firstName + " " + item.lastName }}</td>
-      <td>{{ item.id }}</td>
-      <td>{{ item.email }}</td>
-      <td>{{ item.phone }}</td>
-      } @case ("teachers") {
-      <td>{{ item.firstName + " " + item.lastName }}</td>
-      <td>{{ item.id }}</td>
-      <td>{{ item.email }}</td>
-      <td>{{ item.phone }}</td>
-      <td>{{ item.admissionDate | date : "dd/MM/yyyy" }}</td>
-      } @case ("subjects") {
-      <td>{{ item.name }}</td>
-      <td>{{ item.id }}</td>
-      <td>{{ item.class.name }}</td>
-      <td>{{ item.teacher.firstName + " " + item.teacher.lastName }}</td>
-      } @case ("classes") {
-      <td>{{ item.name }}</td>
-      <td>{{ item.id }}</td>
-      } }
+    <tr
+      [routerLink]="enableSorting ? ['./' + item.id] : null"
+      class="hover:bg-blue-100 rounded-full"
+    >
+      @for (col of tableCollumns; track $index) {
+      <td>
+        @if (col.key === "name") { @if(['students', 'teachers',
+        'parents'].includes(listOf)){
+        {{ item.firstName + " " + item.lastName }}
+        } @else {
+        {{ item.name }}
+        } } @else if (["dateOfBirth", "admissionDate"].includes(listOf)) {
+        {{ item[col.key] | date : "dd/MM/yyyy" }}
+        } @else if (col.key === "gender") {
+        {{ item[col.key] | titlecase }}
+        } @else if (col.key === "class") {
+        {{ item.class?.name }}
+        } @else if (col.key === "teacher") {
+        {{ item.teacher?.firstName + " " + item.teacher?.lastName }}
+        } @else {
+        {{ item[col.key] }}
+        }
+      </td>
+      }
     </tr>
     } @empty {
     <tr>
-      <td colSpan="6" class="text-center text-gray-400 select-none">
+      <td
+        [colSpan]="tableCollumns.length"
+        class="text-center text-gray-400 select-none"
+      >
         @if(fromDashboard) { There are no {{ listOf }} today! } @else { There
         are no {{ listOf }}! }
       </td>
     </tr>
-    }
+    } @if (items.length < 10 && enableSorting) { @for (item of [].constructor(10 - items.length);
+    track $index) {
+    <tr class="cursor-default">
+      <td
+        [colSpan]="tableCollumns.length"
+        class="text-center text-gray-400 select-none"
+      >
+        &nbsp;
+      </td>
+    </tr>
+    } }
   </tbody>
 </table>

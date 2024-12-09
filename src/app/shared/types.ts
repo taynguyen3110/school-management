@@ -1,3 +1,5 @@
+import { ScreenService } from './services/screen.service';
+
 export interface AuthState {
   access: {
     token: string;
@@ -35,6 +37,26 @@ export interface Student {
   phone: string;
   parents?: Parent[];
   classes?: Classes[];
+}
+
+export interface StudentProfileInfo {
+  lastName: string;
+  firstName: string;
+  profileUrl: string;
+}
+
+export interface StudentPersonalInfo {
+  gender: 'male' | 'female';
+  dateOfBirth: string;
+  address: string;
+  email: string;
+  phone: string;
+}
+
+export interface StudentEnrollmentInfo {
+  admissionDate: string;
+  classes: Array<Classes>;
+  parents: Array<Parent>;
 }
 
 export interface Parent {
@@ -84,3 +106,14 @@ export interface LabelObj {
   id: string;
   label: string;
 }
+
+export type route =
+  | ''
+  | 'students'
+  | 'teachers'
+  | 'parents'
+  | 'subjects'
+  | 'classes'
+  | 'user';
+
+export type ScreenSize = keyof typeof ScreenService.prototype.breakpoints;

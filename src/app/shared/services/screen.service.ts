@@ -1,54 +1,34 @@
-import { HostListener, Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  fromEvent,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ScreenSize } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class ScreenService {
-  private breakpoints = {
-    xs: 375,
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-    xxl: 1536,
+  breakpoints = {
+    xs: '(max-width: 639px)',
+    sm: '(min-width: 640px)',
+    md: '(min-width: 768px)',
+    lg: '(min-width: 1024px)',
+    xl: '(min-width: 1280px)',
+    xxl: '(min-width: 1536px)',
   };
 
-  private screen = new BehaviorSubject<string>(
-    this.getScreenSizeLabel(window.innerWidth)
-  );
-  screenSize$ = this.screen.asObservable();
   unsubscribe$ = new Subject<void>();
 
-  constructor() {
-    fromEvent(window, 'resize')
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => this.onResize());
-  }
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
-  onResize() {
-    const width = window.innerWidth;
-    this.screen.next(this.getScreenSizeLabel(width));
-  }
-
-  getScreenSizeLabel(width: number): string {
-    if (width >= this.breakpoints.xxl) {
-      return '2xl';
-    } else if (width >= this.breakpoints.xl) {
-      return 'xl';
-    } else if (width >= this.breakpoints.lg) {
-      return 'lg';
-    } else if (width >= this.breakpoints.md) {
-      return 'md';
-    } else if (width >= this.breakpoints.sm) {
-      return 'sm';
-    } else {
-      return 'xs';
+  observeScreen(size: ScreenSize): Observable<boolean> {
+    const query = this.breakpoints[size];
+    if (!query) {
+      console.error(`Breakpoint "${size}" is not defined.`);
+      return new Observable<boolean>((observer) => observer.next(false));
     }
+    return this.breakpointObserver.observe(query).pipe(
+      takeUntil(this.unsubscribe$),
+      map((result) => result.matches),
+      distinctUntilChanged()
+    );
   }
 
   ngOnDestroy() {
