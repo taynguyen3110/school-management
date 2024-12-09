@@ -19,19 +19,18 @@ import { SubjectService } from '../subjects/services/subject.service';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 
 @Component({
-  selector: 'sman-dashboard',
-  standalone: true,
-  imports: [
-    GenderRatioComponent,
-    StatsWrapperComponent,
-    EnrollmentStatsComponent,
-    StatsCellComponent,
-    NoticeNewsComponent,
-    HeadingComponent,
-    ItemTableComponent,
-  ],
-  templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss',
+    selector: 'sman-dashboard',
+    imports: [
+        GenderRatioComponent,
+        StatsWrapperComponent,
+        EnrollmentStatsComponent,
+        StatsCellComponent,
+        NoticeNewsComponent,
+        HeadingComponent,
+        ItemTableComponent,
+    ],
+    templateUrl: './dashboard-page.component.html',
+    styleUrl: './dashboard-page.component.scss'
 })
 export class DashboardComponent implements OnInit {
   studentCount: number = 0;

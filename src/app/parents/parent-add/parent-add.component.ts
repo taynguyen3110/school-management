@@ -16,16 +16,15 @@ import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-l
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    InputComponent,
-    AddNewFormLayoutComponent,
-  ],
-  selector: 'sman-add-parent',
-  templateUrl: 'parent-add.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        InputComponent,
+        AddNewFormLayoutComponent,
+    ],
+    selector: 'sman-add-parent',
+    templateUrl: 'parent-add.component.html'
 })
 export class AddParentComponent implements OnInit {
   @Input() parent!: Parent;

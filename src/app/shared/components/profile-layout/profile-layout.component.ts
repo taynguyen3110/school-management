@@ -3,10 +3,9 @@ import { HeadingComponent } from '../heading/heading.component';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  standalone: true,
-  imports: [HeadingComponent, ButtonComponent],
-  selector: 'sman-profile-layout',
-  templateUrl: 'profile-layout.component.html',
+    imports: [HeadingComponent, ButtonComponent],
+    selector: 'sman-profile-layout',
+    templateUrl: 'profile-layout.component.html'
 })
 export class ProfileLayoutComponent implements OnInit {
   @Input() title: string = '';

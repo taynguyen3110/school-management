@@ -11,16 +11,15 @@ import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    InputComponent,
-    AddNewFormLayoutComponent,
-    PhotoUploaderComponent,
-  ],
-  selector: 'sman-student-profile-info',
-  templateUrl: 'student-profile-info.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        InputComponent,
+        AddNewFormLayoutComponent,
+        PhotoUploaderComponent,
+    ],
+    selector: 'sman-student-profile-info',
+    templateUrl: 'student-profile-info.component.html'
 })
 export class StudentProfileInfoComponent implements OnInit {
   formChanged: boolean = false;

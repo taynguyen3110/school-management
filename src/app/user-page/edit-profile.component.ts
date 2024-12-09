@@ -17,16 +17,15 @@ import { InputComponent } from '../shared/components/input/input.component';
 import { FormService } from '../shared/services/form.service';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    HeadingComponent,
-    ButtonComponent,
-    InputComponent,
-  ],
-  selector: 'sman-edit-profile',
-  templateUrl: 'edit-profile.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        HeadingComponent,
+        ButtonComponent,
+        InputComponent,
+    ],
+    selector: 'sman-edit-profile',
+    templateUrl: 'edit-profile.component.html'
 })
 export class EditProfileComponent {
   @Input() setUser!: (user: UserProfile) => void;

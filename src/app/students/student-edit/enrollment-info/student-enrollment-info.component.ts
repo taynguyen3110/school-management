@@ -21,18 +21,17 @@ import { NotificationService } from '@/app/shared/services/notification.service'
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    InputComponent,
-    AddNewFormLayoutComponent,
-    MultiSelectorComponent,
-    CustomInputComponent,
-    ReactiveFormsModule,
-    DateInputComponent,
-  ],
-  selector: 'sman-student-enrollment-info',
-  templateUrl: 'student-enrollment-info.component.html',
+    imports: [
+        CommonModule,
+        InputComponent,
+        AddNewFormLayoutComponent,
+        MultiSelectorComponent,
+        CustomInputComponent,
+        ReactiveFormsModule,
+        DateInputComponent,
+    ],
+    selector: 'sman-student-enrollment-info',
+    templateUrl: 'student-enrollment-info.component.html'
 })
 export class StudentEnrollmentInfoComponent implements OnInit {
   formChanged: boolean = false;

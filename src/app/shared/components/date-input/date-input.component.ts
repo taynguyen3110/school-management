@@ -22,29 +22,28 @@ import { MY_DATE_FORMATS } from './dateFormat';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
-  standalone: true,
-  providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: DateInputComponent,
-      multi: true,
-    },
-    {
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_DATE_FORMATS,
-    },
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    FormsModule,
-  ],
-  selector: 'sman-date-input',
-  templateUrl: 'date-input.component.html',
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: DateInputComponent,
+            multi: true,
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_DATE_FORMATS,
+        },
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        FormsModule,
+    ],
+    selector: 'sman-date-input',
+    templateUrl: 'date-input.component.html'
 })
 export class DateInputComponent implements OnInit, ControlValueAccessor {
   @Input() label: string = '';

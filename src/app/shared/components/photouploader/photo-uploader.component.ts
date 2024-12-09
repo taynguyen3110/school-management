@@ -15,10 +15,9 @@ import { ScreenService } from '../../services/screen.service';
 import { ScreenSize } from '../../types';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, ProfilePhotoComponent],
-  selector: 'sman-photo-uploader',
-  templateUrl: 'photo-uploader.component.html',
+    imports: [CommonModule, ProfilePhotoComponent],
+    selector: 'sman-photo-uploader',
+    templateUrl: 'photo-uploader.component.html'
 })
 export class PhotoUploaderComponent implements OnInit {
   @Input() inputUrl: string = '';

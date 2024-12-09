@@ -13,15 +13,14 @@ import { ClassesService } from '../../../school-classes/services/classes.service
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    MultiSelectorComponent,
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-  ],
-  selector: 'sman-filter',
-  templateUrl: 'filter.component.html',
+    imports: [
+        MultiSelectorComponent,
+        CommonModule,
+        ReactiveFormsModule,
+        ButtonComponent,
+    ],
+    selector: 'sman-filter',
+    templateUrl: 'filter.component.html'
 })
 export class FilterComponent implements OnInit {
   @Input() queryParams: Params = {};

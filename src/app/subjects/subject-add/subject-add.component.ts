@@ -29,17 +29,16 @@ import { SchoolSubject, LabelObj } from '../../shared/types';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    AddNewFormLayoutComponent,
-    InputComponent,
-    MultiSelectorComponent,
-  ],
-  selector: 'sman-add-subject',
-  templateUrl: 'subject-add.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        AddNewFormLayoutComponent,
+        InputComponent,
+        MultiSelectorComponent,
+    ],
+    selector: 'sman-add-subject',
+    templateUrl: 'subject-add.component.html'
 })
 export class AddSubjectComponent implements OnInit {
   @Input() subject!: SchoolSubject;

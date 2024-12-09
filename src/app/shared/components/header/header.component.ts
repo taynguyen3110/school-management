@@ -6,10 +6,9 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
 import { UserIconComponent } from './user-icon/user-icon.component';
 
 @Component({
-  selector: 'sman-header',
-  standalone: true,
-  imports: [TitleCasePipe, CommonModule, UserIconComponent],
-  templateUrl: './header.component.html',
+    selector: 'sman-header',
+    imports: [TitleCasePipe, CommonModule, UserIconComponent],
+    templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   @Input() isShow: boolean = false;

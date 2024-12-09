@@ -8,17 +8,16 @@ import {
 } from '@angular/forms';
 
 @Component({
-  standalone: true,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: CustomInputComponent,
-      multi: true,
-    },
-  ],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  selector: 'sman-custom-input',
-  templateUrl: 'custom-input.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: CustomInputComponent,
+            multi: true,
+        },
+    ],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+    selector: 'sman-custom-input',
+    templateUrl: 'custom-input.component.html'
 })
 export class CustomInputComponent implements OnInit, ControlValueAccessor {
   @Input() hasError: boolean = false;

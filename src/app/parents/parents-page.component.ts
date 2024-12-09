@@ -12,17 +12,16 @@ import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'sman-parents',
-  standalone: true,
-  imports: [
-    ItemTableComponent,
-    PaginationComponent,
-    AddParentComponent,
-    PageLayoutComponent,
-    FilterComponent,
-  ],
-  templateUrl: './parents-page.component.html',
-  styleUrl: './parents-page.component.scss',
+    selector: 'sman-parents',
+    imports: [
+        ItemTableComponent,
+        PaginationComponent,
+        AddParentComponent,
+        PageLayoutComponent,
+        FilterComponent,
+    ],
+    templateUrl: './parents-page.component.html',
+    styleUrl: './parents-page.component.scss'
 })
 export class ParentsComponent {
   parentsCount: number = 0;

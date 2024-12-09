@@ -19,18 +19,17 @@ import { ItemsPanelComponent } from './items-panel/items-panel.component';
 import { LabelObj } from '../../types';
 
 @Component({
-  standalone: true,
-  imports: [
-    ClickOutsideDirective,
-    CommonModule,
-    IdToLabelPipe,
-    FormsModule,
-    ItemsPanelComponent,
-  ],
-  selector: 'sman-multiselector',
-  templateUrl: 'multiselector.component.html',
-  styleUrl: 'multiselector.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        ClickOutsideDirective,
+        CommonModule,
+        IdToLabelPipe,
+        FormsModule,
+        ItemsPanelComponent,
+    ],
+    selector: 'sman-multiselector',
+    templateUrl: 'multiselector.component.html',
+    styleUrl: 'multiselector.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MultiSelectorComponent
   implements OnChanges, OnInit, AfterViewInit

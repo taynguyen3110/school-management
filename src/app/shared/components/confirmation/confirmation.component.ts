@@ -3,10 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  standalone: true,
-  imports: [ButtonComponent],
-  selector: 'sman-confirmation',
-  templateUrl: 'confirmation.component.html',
+    imports: [ButtonComponent],
+    selector: 'sman-confirmation',
+    templateUrl: 'confirmation.component.html'
 })
 export class ConfirmationComponent implements OnInit {
   constructor(

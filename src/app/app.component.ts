@@ -8,18 +8,17 @@ import { AuthService } from './shared/services/auth.service';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
-  selector: 'sman-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    StudentsComponent,
-    HeaderComponent,
-    FontAwesomeModule,
-    LoginComponent,
-    LoadingSpinnerComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'sman-root',
+    imports: [
+        RouterOutlet,
+        StudentsComponent,
+        HeaderComponent,
+        FontAwesomeModule,
+        LoginComponent,
+        LoadingSpinnerComponent,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'school-management';

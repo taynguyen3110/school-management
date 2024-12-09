@@ -16,16 +16,15 @@ import { InputComponent } from '../../shared/components/input/input.component';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    AddNewFormLayoutComponent,
-    InputComponent,
-  ],
-  selector: 'sman-add-teacher',
-  templateUrl: 'teacher-add.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        AddNewFormLayoutComponent,
+        InputComponent,
+    ],
+    selector: 'sman-add-teacher',
+    templateUrl: 'teacher-add.component.html'
 })
 export class AddTeacherComponent implements OnInit {
   @Input() teacher!: Teacher;

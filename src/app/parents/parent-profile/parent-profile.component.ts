@@ -18,17 +18,16 @@ import { InformationWrapperComponent } from '@/app/shared/components/information
 import { ParentEnrollmentInfoComponent } from '../parent-edit/enrollment-info/parent-enrollment-info.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    AddParentComponent,
-    ProfileLayoutComponent,
-    ProfilePhotoComponent,
-    ProfileInfoComponent,
-    RouterLink,
-    InformationWrapperComponent,
-  ],
-  selector: 'sman-parent-profile',
-  templateUrl: 'parent-profile.component.html',
+    imports: [
+        AddParentComponent,
+        ProfileLayoutComponent,
+        ProfilePhotoComponent,
+        ProfileInfoComponent,
+        RouterLink,
+        InformationWrapperComponent,
+    ],
+    selector: 'sman-parent-profile',
+    templateUrl: 'parent-profile.component.html'
 })
 export class ParentProfileComponent implements OnInit {
   parent: Parent | null = null;

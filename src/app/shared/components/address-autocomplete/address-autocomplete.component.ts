@@ -12,17 +12,16 @@ import {
 import { FormService } from '../../services/form.service';
 
 @Component({
-  standalone: true,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: AddressAutocompleteComponent,
-      multi: true,
-    },
-  ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  selector: 'sman-address-autocomplete',
-  templateUrl: 'address-autocomplete.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: AddressAutocompleteComponent,
+            multi: true,
+        },
+    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    selector: 'sman-address-autocomplete',
+    templateUrl: 'address-autocomplete.component.html'
 })
 export class AddressAutocompleteComponent
   implements OnInit, ControlValueAccessor

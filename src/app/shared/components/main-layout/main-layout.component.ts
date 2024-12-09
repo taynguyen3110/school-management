@@ -14,17 +14,16 @@ import { route } from '../../types';
 import { filter } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    SidebarComponent,
-    HeaderComponent,
-    LoadingSpinnerComponent,
-    BackdropLayerComponent,
-    CommonModule,
-  ],
-  selector: 'sman-main-layout',
-  templateUrl: 'main-layout.component.html',
+    imports: [
+        RouterOutlet,
+        SidebarComponent,
+        HeaderComponent,
+        LoadingSpinnerComponent,
+        BackdropLayerComponent,
+        CommonModule,
+    ],
+    selector: 'sman-main-layout',
+    templateUrl: 'main-layout.component.html'
 })
 export class MainLayoutComponent implements OnInit {
   showMenu: boolean = false;

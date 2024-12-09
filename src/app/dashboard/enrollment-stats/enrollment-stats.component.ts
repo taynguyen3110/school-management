@@ -8,10 +8,9 @@ import {
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [GoogleChartsModule],
-  selector: 'sman-enrollment-stats-chart',
-  templateUrl: 'enrollment-stats.component.html',
+    imports: [GoogleChartsModule],
+    selector: 'sman-enrollment-stats-chart',
+    templateUrl: 'enrollment-stats.component.html'
 })
 export class EnrollmentStatsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() enrollmentStats: any[] = [];

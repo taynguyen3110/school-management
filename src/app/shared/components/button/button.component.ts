@@ -9,11 +9,10 @@ import {
 } from '@angular/core';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule],
-  selector: 'sman-button',
-  templateUrl: 'button.component.html',
-  styleUrl: 'button.component.scss',
+    imports: [CommonModule],
+    selector: 'sman-button',
+    templateUrl: 'button.component.html',
+    styleUrl: 'button.component.scss'
 })
 export class ButtonComponent implements OnInit, OnChanges {
   @Input() text: string = 'Click Me';

@@ -29,18 +29,17 @@ import { StudentService } from '@/app/students/service/student.service';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    InputComponent,
-    AddNewFormLayoutComponent,
-    MultiSelectorComponent,
-    CustomInputComponent,
-    ReactiveFormsModule,
-    DateInputComponent,
-  ],
-  selector: 'sman-parent-enrollment-info',
-  templateUrl: 'parent-enrollment-info.component.html',
+    imports: [
+        CommonModule,
+        InputComponent,
+        AddNewFormLayoutComponent,
+        MultiSelectorComponent,
+        CustomInputComponent,
+        ReactiveFormsModule,
+        DateInputComponent,
+    ],
+    selector: 'sman-parent-enrollment-info',
+    templateUrl: 'parent-enrollment-info.component.html'
 })
 export class ParentEnrollmentInfoComponent implements OnInit {
   formChanged: boolean = false;

@@ -12,16 +12,15 @@ import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'sman-classes',
-  standalone: true,
-  imports: [
-    ItemTableComponent,
-    PaginationComponent,
-    AddClassComponent,
-    PageLayoutComponent,
-    FilterComponent,
-  ],
-  templateUrl: './classes-page.component.html',
+    selector: 'sman-classes',
+    imports: [
+        ItemTableComponent,
+        PaginationComponent,
+        AddClassComponent,
+        PageLayoutComponent,
+        FilterComponent,
+    ],
+    templateUrl: './classes-page.component.html'
 })
 export class ClassesComponent {
   classesCount: number = 0;

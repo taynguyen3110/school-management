@@ -31,22 +31,21 @@ import { AddressAutocompleteComponent } from '../../shared/components/address-au
 import { DateInputComponent } from '../../shared/components/date-input/date-input.component';
 
 @Component({
-  selector: 'sman-add-student',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    AddNewFormLayoutComponent,
-    InputComponent,
-    MultiSelectorComponent,
-    MatDialogModule,
-    MatButtonModule,
-    HeadingComponent,
-    AddressAutocompleteComponent,
-    DateInputComponent,
-  ],
-  templateUrl: './student-add.component.html',
+    selector: 'sman-add-student',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        AddNewFormLayoutComponent,
+        InputComponent,
+        MultiSelectorComponent,
+        MatDialogModule,
+        MatButtonModule,
+        HeadingComponent,
+        AddressAutocompleteComponent,
+        DateInputComponent,
+    ],
+    templateUrl: './student-add.component.html'
 })
 export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() student!: Student;

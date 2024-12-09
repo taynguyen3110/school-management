@@ -16,22 +16,21 @@ import { HeadingComponent } from '@/app/shared/components/heading/heading.compon
 import { ButtonComponent } from '@/app/shared/components/button/button.component';
 
 @Component({
-  selector: 'sman-students, students',
-  standalone: true,
-  imports: [
-    PaginationComponent,
-    RouterLink,
-    ReactiveFormsModule,
-    MultiSelectorComponent,
-    ItemTableComponent,
-    AddStudentComponent,
-    PageLayoutComponent,
-    FilterComponent,
-    HeadingComponent,
-    ButtonComponent,
-  ],
-  templateUrl: './students-page.component.html',
-  styleUrl: './students-page.component.scss',
+    selector: 'sman-students, students',
+    imports: [
+        PaginationComponent,
+        RouterLink,
+        ReactiveFormsModule,
+        MultiSelectorComponent,
+        ItemTableComponent,
+        AddStudentComponent,
+        PageLayoutComponent,
+        FilterComponent,
+        HeadingComponent,
+        ButtonComponent,
+    ],
+    templateUrl: './students-page.component.html',
+    styleUrl: './students-page.component.scss'
 })
 //  implements CanComponentDeactivate
 export class StudentsComponent {

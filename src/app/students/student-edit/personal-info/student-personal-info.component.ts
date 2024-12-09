@@ -16,16 +16,15 @@ import { NotificationService } from '@/app/shared/services/notification.service'
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    InputComponent,
-    AddNewFormLayoutComponent,
-    ReactiveFormsModule,
-    DateInputComponent,
-  ],
-  selector: 'sman-student-personal-info',
-  templateUrl: 'student-personal-info.component.html',
+    imports: [
+        CommonModule,
+        InputComponent,
+        AddNewFormLayoutComponent,
+        ReactiveFormsModule,
+        DateInputComponent,
+    ],
+    selector: 'sman-student-personal-info',
+    templateUrl: 'student-personal-info.component.html'
 })
 export class StudentPersonalInfoComponent implements OnInit {
   formChanged: boolean = false;

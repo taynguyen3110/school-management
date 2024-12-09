@@ -8,11 +8,10 @@ import {
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'sman-pagination',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss',
+    selector: 'sman-pagination',
+    imports: [CommonModule],
+    templateUrl: './pagination.component.html',
+    styleUrl: './pagination.component.scss'
 })
 export class PaginationComponent implements OnChanges {
   @Input() pageSize!: number;

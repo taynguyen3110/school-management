@@ -15,10 +15,9 @@ import { FormsModule } from '@angular/forms';
 import { fromEvent, debounceTime } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FormsModule, ClickOutsideDirective],
-  selector: 'sman-items-panel',
-  templateUrl: 'items-panel.component.html',
+    imports: [CommonModule, FormsModule, ClickOutsideDirective],
+    selector: 'sman-items-panel',
+    templateUrl: 'items-panel.component.html'
 })
 export class ItemsPanelComponent implements OnInit, AfterViewInit {
   @Input() lookUp: boolean = false;

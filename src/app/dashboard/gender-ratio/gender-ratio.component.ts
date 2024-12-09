@@ -13,10 +13,9 @@ import {
 } from 'angular-google-charts';
 
 @Component({
-  standalone: true,
-  imports: [GoogleChartsModule],
-  selector: 'sman-gender-ratio-chart',
-  templateUrl: 'gender-ratio.component.html',
+    imports: [GoogleChartsModule],
+    selector: 'sman-gender-ratio-chart',
+    templateUrl: 'gender-ratio.component.html'
 })
 export class GenderRatioComponent implements OnInit, OnChanges {
   @Input() width: number = 0;

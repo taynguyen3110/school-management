@@ -20,15 +20,14 @@ import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HeadingComponent,
-    ButtonComponent,
-  ],
-  selector: 'sman-change-password',
-  templateUrl: './change-password.component.html',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        HeadingComponent,
+        ButtonComponent,
+    ],
+    selector: 'sman-change-password',
+    templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent {
   @Output() changePwd = new EventEmitter<string>();

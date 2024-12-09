@@ -22,22 +22,21 @@ import { ConfirmationService } from '@/app/shared/services/confirmation.service'
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  standalone: true,
-  imports: [
-    JsonPipe,
-    TitleCasePipe,
-    DatePipe,
-    RouterLink,
-    ProfilePhotoComponent,
-    ProfileInfoComponent,
-    AddStudentComponent,
-    ProfileLayoutComponent,
-    ButtonComponent,
-    InformationWrapperComponent,
-    HeadingComponent,
-  ],
-  selector: 'sman-student-profile',
-  templateUrl: 'student-profile.component.html',
+    imports: [
+        JsonPipe,
+        TitleCasePipe,
+        DatePipe,
+        RouterLink,
+        ProfilePhotoComponent,
+        ProfileInfoComponent,
+        AddStudentComponent,
+        ProfileLayoutComponent,
+        ButtonComponent,
+        InformationWrapperComponent,
+        HeadingComponent,
+    ],
+    selector: 'sman-student-profile',
+    templateUrl: 'student-profile.component.html'
 })
 export class StudentProfileComponent implements OnInit, OnDestroy {
   student: Student | null = null;

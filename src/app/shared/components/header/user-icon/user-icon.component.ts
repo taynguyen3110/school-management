@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
-    standalone: true,
     imports: [],
     selector: 'sman-user-icon',
     templateUrl: 'user-icon.component.html'

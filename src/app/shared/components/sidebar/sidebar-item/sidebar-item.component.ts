@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
-    standalone: true,
     imports: [TitleCasePipe, CommonModule, RouterLink, RouterModule],
     selector: 'sman-sidebar-item',
     templateUrl: 'sidebar-item.component.html'

@@ -5,11 +5,10 @@ import { Params, RouterLink } from '@angular/router';
 import { ScreenService } from '../../services/screen.service';
 
 @Component({
-  standalone: true,
-  imports: [RouterLink, TitleCasePipe, DatePipe, CommonModule],
-  selector: 'sman-item-table',
-  templateUrl: 'item-table.component.html',
-  styleUrl: 'item-table.component.scss',
+    imports: [RouterLink, TitleCasePipe, DatePipe, CommonModule],
+    selector: 'sman-item-table',
+    templateUrl: 'item-table.component.html',
+    styleUrl: 'item-table.component.scss'
 })
 export class ItemTableComponent implements OnInit {
   @Input() items: any[] = [];

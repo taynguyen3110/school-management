@@ -11,17 +11,16 @@ import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'sman-user-page',
-  standalone: true,
-  imports: [
-    CommonModule,
-    JsonPipe,
-    ReactiveFormsModule,
-    ChangePasswordComponent,
-    EditProfileComponent,
-    ButtonComponent,
-  ],
-  templateUrl: './user-page.component.html',
+    selector: 'sman-user-page',
+    imports: [
+        CommonModule,
+        JsonPipe,
+        ReactiveFormsModule,
+        ChangePasswordComponent,
+        EditProfileComponent,
+        ButtonComponent,
+    ],
+    templateUrl: './user-page.component.html'
 })
 export class UserPageComponent {
   user?: UserProfile;

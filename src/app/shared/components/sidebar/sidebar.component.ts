@@ -9,17 +9,16 @@ import { SidebarItemComponent } from './sidebar-item/sidebar-item.component';
 import { route } from '../../types';
 
 @Component({
-  selector: 'sman-sidebar',
-  standalone: true,
-  imports: [
-    RouterLink,
-    AccordionItemComponent,
-    AccordionButtonComponent,
-    ClickOutsideDirective,
-    SidebarItemComponent,
-  ],
-  templateUrl: './sidebar.component.html',
-  schemas: [],
+    selector: 'sman-sidebar',
+    imports: [
+        RouterLink,
+        AccordionItemComponent,
+        AccordionButtonComponent,
+        ClickOutsideDirective,
+        SidebarItemComponent,
+    ],
+    templateUrl: './sidebar.component.html',
+    schemas: []
 })
 export class SidebarComponent implements OnInit, OnChanges {
   @Input() selectedMenu: route = '';

@@ -16,16 +16,15 @@ import { InputComponent } from '../shared/components/input/input.component';
 import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
-  selector: 'sman-login',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    MatProgressSpinnerModule,
-    InputComponent,
-  ],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.scss',
+    selector: 'sman-login',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        MatProgressSpinnerModule,
+        InputComponent,
+    ],
+    templateUrl: './login-page.component.html',
+    styleUrl: './login-page.component.scss'
 })
 export class LoginComponent {
   loginForm = this.formBuilder.group({

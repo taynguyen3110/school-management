@@ -15,10 +15,9 @@ import { ConfirmationService } from '../../services/confirmation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [ReactiveFormsModule, TitleCasePipe, CommonModule, ButtonComponent],
-  selector: 'sman-add-form-layout',
-  templateUrl: 'addnew-form-layout.component.html',
+    imports: [ReactiveFormsModule, TitleCasePipe, CommonModule, ButtonComponent],
+    selector: 'sman-add-form-layout',
+    templateUrl: 'addnew-form-layout.component.html'
 })
 export class AddNewFormLayoutComponent implements OnInit, OnChanges {
   @Input() title: string = '';

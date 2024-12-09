@@ -4,10 +4,9 @@ import { Params } from '@angular/router';
 import { route } from '@/app/shared/types';
 
 @Component({
-  standalone: true,
-  imports: [],
-  selector: 'accordion-button',
-  templateUrl: 'accordion-button.component.html',
+    imports: [],
+    selector: 'accordion-button',
+    templateUrl: 'accordion-button.component.html'
 })
 export class AccordionButtonComponent {
   @Input() title: string = '';

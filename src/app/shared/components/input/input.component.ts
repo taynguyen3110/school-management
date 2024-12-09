@@ -17,25 +17,24 @@ import {
 } from '@angular/forms';
 
 @Component({
-  standalone: true,
-  providers: [
-    provideNativeDateAdapter(),
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: InputComponent,
-      multi: true,
-    },
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    FormsModule,
-  ],
-  selector: 'sman-input',
-  templateUrl: 'input.component.html',
+    providers: [
+        provideNativeDateAdapter(),
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: InputComponent,
+            multi: true,
+        },
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        FormsModule,
+    ],
+    selector: 'sman-input',
+    templateUrl: 'input.component.html'
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label: string = '';
