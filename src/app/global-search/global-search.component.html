@@ -1,0 +1,82 @@
+<div>
+  <sman-button
+    btnType="primary"
+    text="Back"
+    className="mb-4"
+    (buttonClick)="goBack()"
+  >
+    <i icon class="fa-solid fa-chevron-left text-xs"></i>
+  </sman-button>
+
+  <mat-tab-group (selectedTabChange)="onSwitchTab()">
+    <mat-tab label="Students">
+      @if (studentData.students) {
+      <sman-item-table
+        table
+        listOf="students"
+        [items]="studentData.students"
+        [enableSorting]="false"
+      ></sman-item-table>
+      <sman-pagination
+        pagination
+        [pageSize]="studentData.rowsPerPage"
+        [totalCount]="studentData.total"
+        [currentPage]="studentData.page"
+        (pageChange)="handlePageChange($event)"
+      />
+      }
+    </mat-tab>
+    <mat-tab label="Parents">
+      @if (parentData.parents) {
+      <sman-item-table
+        table
+        listOf="parents"
+        [items]="parentData.parents"
+        [enableSorting]="false"
+      ></sman-item-table>
+      <sman-pagination
+        pagination
+        [pageSize]="parentData.rowsPerPage"
+        [totalCount]="parentData.total"
+        [currentPage]="parentData.page"
+        (pageChange)="handlePageChange($event)"
+      />
+      }
+    </mat-tab>
+    <mat-tab label="Teachers">
+      @if (teacherData.teachers) {
+      <sman-item-table
+        table
+        listOf="teachers"
+        [items]="teacherData.teachers"
+        [enableSorting]="false"
+      ></sman-item-table>
+      <sman-pagination
+        pagination
+        [pageSize]="teacherData.rowsPerPage"
+        [totalCount]="teacherData.total"
+        [currentPage]="teacherData.page"
+        (pageChange)="handlePageChange($event)"
+      />
+      }
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<!-- filter
+: 
+{name: 'a', classIds: Array(0), page: 1, order: 'asc'}
+page
+: 
+1
+rowsPerPage
+: 
+10
+students
+: 
+(10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+total
+: 
+55
+totalPages
+: 
+6 -->

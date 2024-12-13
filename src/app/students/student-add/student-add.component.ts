@@ -29,27 +29,26 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { HeadingComponent } from '../../shared/components/heading/heading.component';
 import { AddressAutocompleteComponent } from '../../shared/components/address-autocomplete/address-autocomplete.component';
 import { DateInputComponent } from '../../shared/components/date-input/date-input.component';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
-    selector: 'sman-add-student',
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        PhotoUploaderComponent,
-        AddNewFormLayoutComponent,
-        InputComponent,
-        MultiSelectorComponent,
-        MatDialogModule,
-        MatButtonModule,
-        HeadingComponent,
-        AddressAutocompleteComponent,
-        DateInputComponent,
-    ],
-    templateUrl: './student-add.component.html'
+  selector: 'sman-add-student',
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PhotoUploaderComponent,
+    AddNewFormLayoutComponent,
+    InputComponent,
+    MultiSelectorComponent,
+    MatDialogModule,
+    MatButtonModule,
+    HeadingComponent,
+    AddressAutocompleteComponent,
+    DateInputComponent,
+  ],
+  templateUrl: './student-add.component.html',
 })
 export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() student!: Student;
-
   classesList: LabelObj[] = [];
   parentsList: LabelObj[] = [];
   isDirty: boolean = false;
@@ -68,7 +67,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.getClassList();
     this.addStudentForm.valueChanges.subscribe(() => {
-      this.isDirty = this.addStudentForm.dirty;
+      this.isDirty = checkFormChange(this.addStudentForm);
     });
   }
 

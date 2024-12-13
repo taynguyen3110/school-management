@@ -1,9 +1,10 @@
 <sman-add-form-layout
   title="Edit Student Profile"
   layout="edit"
-  [formGroup]="editStudentProfileInfoForm"
+  [formGroup]="editParentProfileInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
   (submit)="edit()"
-  (cancel)="cancel()"
   [disableSubmit]="!formChanged"
 >
   <ng-container formInputs>
@@ -33,7 +34,7 @@
     />
     <sman-photo-uploader
       photoUploader
-      [inputUrl]="student.profileUrl"
+      [inputUrl]="parent.profileUrl"
       (photoUploaded)="choosePhoto($event)"
     ></sman-photo-uploader>
   </ng-container>

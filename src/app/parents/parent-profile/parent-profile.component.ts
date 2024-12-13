@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Parent, Student } from '../../shared/types';
-import { Location } from '@angular/common';
 import { AddParentComponent } from '../parent-add/parent-add.component';
 import { ParentsService } from '../services/parents.service';
 import { StudentService } from '../../students/service/student.service';
@@ -16,18 +15,20 @@ import { Title } from '@angular/platform-browser';
 import { NavigationService } from '@/app/shared/services/navigation.service';
 import { InformationWrapperComponent } from '@/app/shared/components/information-wrapper/information-wrapper.component';
 import { ParentEnrollmentInfoComponent } from '../parent-edit/enrollment-info/parent-enrollment-info.component';
+import { ParentPersonalInfoComponent } from '../parent-edit/personal-info/parent-personal-info.component';
+import { ParentProfileInfoComponent } from '../parent-edit/profile-info/parent-profile-info.component';
 
 @Component({
-    imports: [
-        AddParentComponent,
-        ProfileLayoutComponent,
-        ProfilePhotoComponent,
-        ProfileInfoComponent,
-        RouterLink,
-        InformationWrapperComponent,
-    ],
-    selector: 'sman-parent-profile',
-    templateUrl: 'parent-profile.component.html'
+  imports: [
+    AddParentComponent,
+    ProfileLayoutComponent,
+    ProfilePhotoComponent,
+    ProfileInfoComponent,
+    RouterLink,
+    InformationWrapperComponent,
+  ],
+  selector: 'sman-parent-profile',
+  templateUrl: 'parent-profile.component.html',
 })
 export class ParentProfileComponent implements OnInit {
   parent: Parent | null = null;
@@ -76,33 +77,12 @@ export class ParentProfileComponent implements OnInit {
       });
   }
 
-  showEditProfileInfo() {
-    // this.dialog.open(StudentProfileInfoComponent, {
-    //   panelClass: ['overflow-auto', 'hide-scrollbar'],
-    //   maxWidth: '700px',
-    //   width: '80vw',
-    //   data: {
-    //     ...this.student,
-    //   } as Student,
-    // });
-  }
-
-  showEditPersonalInfo() {
-    // this.dialog.open(StudentPersonalInfoComponent, {
-    //   panelClass: ['overflow-auto', 'hide-scrollbar'],
-    //   maxWidth: '700px',
-    //   width: '80vw',
-    //   data: {
-    //     ...this.student,
-    //   } as Student,
-    // });
-  }
-
-  showEditEnrollmentInfo() {
-    this.dialog.open(ParentEnrollmentInfoComponent, {
+  showDialog(component: any) {
+    this.dialog.open(component, {
       panelClass: ['overflow-auto', 'hide-scrollbar'],
       maxWidth: '700px',
       width: '80vw',
+      disableClose: true,
       data: {
         students: this.students,
         ...this.parent,
@@ -110,12 +90,24 @@ export class ParentProfileComponent implements OnInit {
     });
   }
 
-  deleteParent() {
+  showEditProfileInfo() {
+    this.showDialog(ParentProfileInfoComponent);
+  }
+
+  showEditPersonalInfo() {
+    this.showDialog(ParentPersonalInfoComponent);
+  }
+
+  showEditEnrollmentInfo() {
+    this.showDialog(ParentEnrollmentInfoComponent);
+  }
+
+  deleteParent = () => {
     this.parentService.deleteParent(this.parentId).subscribe((data) => {
-      this.notiService.notify(`deleted student id: ${this.parentId}`);
+      this.notiService.notify(`Deleted parent id: ${this.parentId}`);
       this.goBack();
     });
-  }
+  };
 
   onDelete() {
     this.confirmationService.openConfirmation(

@@ -39,13 +39,13 @@ export const routes: Routes = [
             (m) => m.TeachersComponent
           ),
       },
-      // {
-      //   path: 'teachers/:id',
-      //   loadComponent: () =>
-      //     import('./teachers/teacher-profile/teacher-profile.component').then(
-      //       (m) => m.TeacherProfileComponent
-      //     ),
-      // },
+      {
+        path: 'teachers/:id',
+        loadComponent: () =>
+          import('./teachers/teacher-profile/teacher-profile.component').then(
+            (m) => m.TeacherProfileComponent
+          ),
+      },
       {
         path: 'parents',
         title: 'Parents - School Management',
@@ -69,13 +69,13 @@ export const routes: Routes = [
             (m) => m.SubjectsComponent
           ),
       },
-      // {
-      //   path: 'subjects/:id',
-      //   loadComponent: () =>
-      //     import('./subjects/subject-detail/subject-detail.component').then(
-      //       (m) => m.SubjectDetailComponent
-      //     ),
-      // },
+      {
+        path: 'subjects/:id',
+        loadComponent: () =>
+          import('./subjects/subject-detail/subject-detail.component').then(
+            (m) => m.SubjectDetailComponent
+          ),
+      },
       {
         path: 'classes',
         title: 'Classes - School Management',
@@ -84,19 +84,27 @@ export const routes: Routes = [
             (m) => m.ClassesComponent
           ),
       },
-      // {
-      //   path: 'classes/:id',
-      //   loadComponent: () =>
-      //     import('./school-classes/classes-detail/classes-detail.component').then(
-      //       (m) => m.ClassDetailComponent
-      //     ),
-      // },
+      {
+        path: 'classes/:id',
+        loadComponent: () =>
+          import(
+            './school-classes/classes-detail/classes-detail.component'
+          ).then((m) => m.ClassDetailComponent),
+      },
       {
         path: 'user',
         title: 'User - School Management',
         loadComponent: () =>
           import('./user-page/user-page.component').then(
             (m) => m.UserPageComponent
+          ),
+      },
+      {
+        path: 'search',
+        title: 'Search Result - School Management',
+        loadComponent: () =>
+          import('./global-search/global-search.component').then(
+            (m) => m.GlobalSearchComponent
           ),
       },
       {

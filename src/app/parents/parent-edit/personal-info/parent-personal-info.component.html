@@ -1,74 +1,13 @@
 <sman-add-form-layout
-  title="Edit Student Personal Information"
+  title="Edit Parent Personal Information"
   layout="edit"
-  [formGroup]="editStudentPersonalInfoForm"
+  [formGroup]="editParentPersonalInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
   (submit)="edit()"
-  (cancel)="cancel()"
   [disableSubmit]="!formChanged"
 >
   <ng-container formInputs>
-    <div class="md:flex md:gap-4">
-      <!-- Gender -->
-      <div class="flex flex-col md:w-1/2 mb-5">
-        <div class="flex flex-col w-full">
-          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
-            >Gender:</label
-          >
-          <div class="relative">
-            <select
-              class="appearance-none border w-full rounded-xl py-3 px-2 text-sm md:text-base"
-              [ngClass]="{
-                'border-red-600': formService.isFieldInvalid(gender)
-              }"
-              name="gender"
-              id="gender"
-              formControlName="gender"
-            >
-              <option
-                class="!text-sm md:text-base text-inputTitle"
-                value=""
-                disabled
-                selected
-              >
-                Select Gender
-              </option>
-              <option
-                class="!text-sm md:text-base text-inputTitle"
-                value="male"
-              >
-                Male
-              </option>
-              <option
-                class="!text-sm md:text-base text-inputTitle"
-                value="female"
-              >
-                Female
-              </option>
-            </select>
-            <div
-              class="absolute top-1/2 -translate-y-1/2 right-4 pointer-events-none"
-            >
-              <i class="fa-solid fa-chevron-down text-sm"></i>
-            </div>
-          </div>
-        </div>
-        <div class="text-red-600 text-sm">
-          @if (formService.isFieldInvalid(gender)) { @if
-          (gender.hasError("required")) { Please select gender. } }
-        </div>
-      </div>
-      <!-- Date of Birth -->
-      <sman-date-input
-        class="md:w-1/2"
-        formControlName="dateOfBirth"
-        label="Date of Birth:"
-        name="dateOfBirth"
-        [hasError]="formService.getCombinedErrors(dateOfBirth)"
-        [errMsgs]="{
-          required: 'Please enter your date of birth.',
-        }"
-      />
-    </div>
     <div class="flex gap-4">
       <!-- Address -->
       <sman-input

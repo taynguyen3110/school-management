@@ -1,19 +1,22 @@
-<div class="flex flex-col justify-center items-center px-4">
-  <sman-heading
-    title="Edit Admin Profile"
-    classname="my-4 font-bold"
-  ></sman-heading>
+<sman-add-form-layout
+  title="Edit Admin Profile"
+  layout="edit"
+  [formGroup]="userProfileForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formIsChanged"
+  (submit)="updateUser()"
+  [disableSubmit]="!formIsChanged"
+>
   <form
+    formInputs
     class="w-full flex flex-col items-center gap-2"
-    (ngSubmit)="updateUser()"
     [formGroup]="userProfileForm"
   >
     <sman-input
       formControlName="firstName"
-      className="w-full"
+      class="w-full"
       label="First Name:"
       name="firstName"
-      type="text"
       placeholder="First Name"
       [hasError]="formService.getCombinedErrors(firstName)"
       [errMsgs]="{
@@ -22,10 +25,9 @@
     />
     <sman-input
       formControlName="lastName"
-      className="w-full"
+      class="w-full"
       label="Last Name:"
       name="lastName"
-      type="text"
       placeholder="Last Name"
       [hasError]="formService.getCombinedErrors(lastName)"
       [errMsgs]="{
@@ -34,29 +36,15 @@
     />
     <sman-input
       formControlName="email"
-      class=""
+      class="w-full"
       label="Email:"
       name="email"
-      type="text"
       placeholder="Email"
       [hasError]="formService.getCombinedErrors(email)"
       [errMsgs]="{
-            required: 'Please enter your email.',
-            email: 'Wrong email format.'
-          }"
+        required: 'Please enter your email.',
+        email: 'Wrong email format.'
+      }"
     />
   </form>
-  <div class="flex justify-between items-center gap-5 w-full mt-6 mb-8">
-    <sman-button
-      text="Cancel"
-      btnType="cancel"
-      (buttonClick)="cancelEdit()"
-    ></sman-button>
-    <sman-button
-      text="Save"
-      btnType="primary"
-      (buttonClick)="updateUser()"
-      [isDisabled]="userProfileForm.invalid || isLoading || !formIsChanged"
-    ></sman-button>
-  </div>
-</div>
+</sman-add-form-layout>

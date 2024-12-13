@@ -3,7 +3,7 @@
   layout="edit"
   [formGroup]="editStudentEnrollmentInfoForm"
   [dialogRef]="dialogRef"
-  [isDirty]="editStudentEnrollmentInfoForm.dirty"
+  [isDirty]="formChanged"
   (submit)="edit()"
   [disableSubmit]="!formChanged"
 >

@@ -2,13 +2,18 @@ import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-l
 import { InputComponent } from '@/app/shared/components/input/input.component';
 import { PhotoUploaderComponent } from '@/app/shared/components/photouploader/photo-uploader.component';
 import { FormService } from '@/app/shared/services/form.service';
-import { Student, StudentProfileInfo } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
+import { Parent } from '@/app/shared/types';
+import { ParentsService } from '../../services/parents.service';
 
 @Component({
   standalone: true,
@@ -19,42 +24,42 @@ import { NotificationService } from '@/app/shared/services/notification.service'
     AddNewFormLayoutComponent,
     PhotoUploaderComponent,
   ],
-  selector: 'sman-student-profile-info',
-  templateUrl: 'student-profile-info.component.html',
+  selector: 'sman-parent-profile-info',
+  templateUrl: 'parent-profile-info.component.html',
 })
-export class StudentProfileInfoComponent implements OnInit {
+export class ParentProfileInfoComponent implements OnInit {
   formChanged: boolean = false;
 
   constructor(
     public formService: FormService,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
-    public student: Student,
-    private dialogRef: MatDialogRef<StudentProfileInfoComponent>,
-    private studentService: StudentService,
+    public parent: Parent,
+    public dialogRef: MatDialogRef<ParentProfileInfoComponent>,
+    private parentService: ParentsService,
     private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
-    this.editStudentProfileInfoForm.valueChanges.subscribe(() => {
+    this.editParentProfileInfoForm.valueChanges.subscribe(() => {
       this.formChanged = this.checkFormChange();
     });
   }
 
-  editStudentProfileInfoForm = this.fb.group({
-    firstName: [this.student.firstName, [Validators.required]],
-    lastName: [this.student.lastName, [Validators.required]],
-    profileUrl: [this.student.profileUrl, [Validators.required]],
+  editParentProfileInfoForm = this.fb.group({
+    firstName: [this.parent.firstName, [Validators.required]],
+    lastName: [this.parent.lastName, [Validators.required]],
+    profileUrl: [this.parent.profileUrl, [Validators.required]],
   });
 
   get firstName() {
-    return this.editStudentProfileInfoForm.get('firstName') as FormControl;
+    return this.editParentProfileInfoForm.get('firstName') as FormControl;
   }
   get lastName() {
-    return this.editStudentProfileInfoForm.get('lastName') as FormControl;
+    return this.editParentProfileInfoForm.get('lastName') as FormControl;
   }
   get profileUrl() {
-    return this.editStudentProfileInfoForm.get('profileUrl') as FormControl;
+    return this.editParentProfileInfoForm.get('profileUrl') as FormControl;
   }
 
   choosePhoto(photoUrl: string) {
@@ -63,9 +68,9 @@ export class StudentProfileInfoComponent implements OnInit {
 
   checkFormChange() {
     for (const [key, control] of Object.entries(
-      this.editStudentProfileInfoForm.controls
+      this.editParentProfileInfoForm.controls
     )) {
-      if (control?.value !== this.student[key as keyof Student]) {
+      if (control?.value !== this.parent[key as keyof Parent]) {
         return true;
       }
     }
@@ -73,21 +78,21 @@ export class StudentProfileInfoComponent implements OnInit {
   }
 
   edit() {
-    this.studentService
-      .updateStudent(this.student.id!, {
-        ...this.student,
-        ...this.editStudentProfileInfoForm.value,
-      } as Student)
+    this.parentService
+      .updateParent(this.parent.id!, {
+        ...this.parent,
+        ...this.editParentProfileInfoForm.value,
+      } as Parent)
       .subscribe(() => {
-        this.notificationService.notify('Student info updated successfully!');
-        this.cancel();
+        this.notificationService.notify('Parent info updated successfully!');
+        this.dialogRef.close();
       });
   }
 
   cancel() {
-    console.log(this.editStudentProfileInfoForm.value);
-    console.log(this.student);
-    
+    console.log(this.editParentProfileInfoForm.value);
+    console.log(this.parent);
+
     // this.dialogRef.close();
   }
 }

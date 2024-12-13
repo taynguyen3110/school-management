@@ -1,38 +1,29 @@
 import { Component, inject } from '@angular/core';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { AddStudentComponent } from '../student-add/student-add.component';
-import { ActivatedRoute, Params, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { Subject, takeUntil } from 'rxjs';
 import { StudentService } from '../service/student.service';
 import { Student } from '../../shared/types';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MultiSelectorComponent } from '../../shared/components/multiselector/multiselector.component';
 import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
 import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../../shared/components/filter/filter.component';
-import { HeadingComponent } from '@/app/shared/components/heading/heading.component';
-import { ButtonComponent } from '@/app/shared/components/button/button.component';
 
 @Component({
     selector: 'sman-students, students',
     imports: [
-        PaginationComponent,
-        RouterLink,
-        ReactiveFormsModule,
-        MultiSelectorComponent,
-        ItemTableComponent,
-        AddStudentComponent,
-        PageLayoutComponent,
-        FilterComponent,
-        HeadingComponent,
-        ButtonComponent,
-    ],
+    PaginationComponent,
+    ReactiveFormsModule,
+    ItemTableComponent,
+    PageLayoutComponent,
+    FilterComponent
+],
     templateUrl: './students-page.component.html',
     styleUrl: './students-page.component.scss'
 })
-//  implements CanComponentDeactivate
 export class StudentsComponent {
   studentsCount: number = 0;
   itemPerPage: number = 0;

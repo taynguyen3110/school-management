@@ -27,16 +27,16 @@ import { toLabelObject } from '../../shared/components/multiselector/utils/toLab
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        PhotoUploaderComponent,
-        AddNewFormLayoutComponent,
-        InputComponent,
-        MultiSelectorComponent,
-    ],
-    selector: 'sman-add-class',
-    templateUrl: 'classes-add.component.html'
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PhotoUploaderComponent,
+    AddNewFormLayoutComponent,
+    InputComponent,
+    MultiSelectorComponent,
+  ],
+  selector: 'sman-add-class',
+  templateUrl: 'classes-add.component.html',
 })
 export class AddClassComponent implements OnInit {
   @Input() classes!: Classes;
@@ -82,6 +82,7 @@ export class AddClassComponent implements OnInit {
   }
 
   handleSelectStudent(selectedStudents: string[] | string) {
+    this.studentIds.markAsDirty();
     this.studentIds.setValue(selectedStudents as string[]);
   }
 

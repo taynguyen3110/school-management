@@ -1,0 +1,1 @@
+export const action = createAction('[Source] Event', props<{key: type}>());

@@ -41,7 +41,7 @@
       <!-- Gender -->
       <div class="flex flex-col md:w-1/2 mb-5">
         <div class="flex flex-col w-full">
-          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
+          <label class="text-inputTitle mb-[9.5px] text-sm md:text-base" for="gender"
             >Gender:</label
           >
           <div class="relative">
@@ -97,11 +97,10 @@
     <div class="flex gap-4">
       <!-- Address -->
       <div class="w-full">
-        <sman-input
+        <sman-address-autocomplete
           formControlName="address"
           label="Address:"
           name="address"
-          type="text"
           placeholder="Address"
           [hasError]="formService.getCombinedErrors(address)"
           [errMsgs]="{
@@ -128,11 +127,10 @@
       </div>
       <!-- Admission Date -->
       <div class="w-1/2">
-        <sman-input
+        <sman-date-input
           formControlName="admissionDate"
           label="Admission Date:"
           name="admissionDate"
-          type="date"
           [hasError]="formService.getCombinedErrors(admissionDate)"
           [errMsgs]="{
             required: 'Please enter your admission date.',

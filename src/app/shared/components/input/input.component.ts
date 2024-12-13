@@ -17,24 +17,24 @@ import {
 } from '@angular/forms';
 
 @Component({
-    providers: [
-        provideNativeDateAdapter(),
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: InputComponent,
-            multi: true,
-        },
-    ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        FormsModule,
-    ],
-    selector: 'sman-input',
-    templateUrl: 'input.component.html'
+  providers: [
+    provideNativeDateAdapter(),
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: InputComponent,
+      multi: true,
+    },
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    FormsModule,
+  ],
+  selector: 'sman-input',
+  templateUrl: 'input.component.html',
 })
 export class InputComponent implements OnInit, ControlValueAccessor {
   @Input() label: string = '';
@@ -73,10 +73,13 @@ export class InputComponent implements OnInit, ControlValueAccessor {
   onInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     this.value = inputValue;
-    this.onChange(this.value); // Notify Angular of the value change
+    this.onChange(this.value);
+    console.log(this.hasError);
+    console.log(this.errorKeys);
+    console.log(this.errMsgs);
   }
 
   onBlur(): void {
-    this.onTouched(); // Notify Angular the control is touched
+    this.onTouched();
   }
 }

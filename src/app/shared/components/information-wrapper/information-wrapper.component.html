@@ -15,8 +15,15 @@
     class="ml-auto min-w-[68px]"
     [ngClass]="{ 'h-full mb-auto': !profilePic }"
   >
-    <sman-button text="Edit" btnType="edit" className="" (buttonClick)="edit.emit()">
+    @if (editable) {
+    <sman-button
+      text="Edit"
+      btnType="edit"
+      className=""
+      (buttonClick)="edit.emit()"
+    >
       <i icon class="fa-regular fa-pen-to-square"></i>
     </sman-button>
+    }
   </div>
 </div>

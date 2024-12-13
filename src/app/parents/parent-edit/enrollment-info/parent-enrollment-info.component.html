@@ -2,8 +2,9 @@
   title="Edit Parent Enrollment Information"
   layout="edit"
   [formGroup]="editParentEnrollmentInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
   (submit)="edit()"
-  (cancel)="cancel()"
   [disableSubmit]="!formChanged"
 >
   <ng-container formInputs>

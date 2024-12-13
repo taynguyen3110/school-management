@@ -15,21 +15,22 @@ import { HeadingComponent } from '../shared/components/heading/heading.component
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { InputComponent } from '../shared/components/input/input.component';
 import { FormService } from '../shared/services/form.service';
+import checkFormChange from '../shared/utils/checkFormChanged';
+import { AddNewFormLayoutComponent } from '../shared/components/addnew-form-layout/addnew-form-layout.component';
 
 @Component({
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        HeadingComponent,
-        ButtonComponent,
-        InputComponent,
-    ],
-    selector: 'sman-edit-profile',
-    templateUrl: 'edit-profile.component.html'
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    HeadingComponent,
+    ButtonComponent,
+    InputComponent,
+    AddNewFormLayoutComponent,
+  ],
+  selector: 'sman-edit-profile',
+  templateUrl: 'edit-profile.component.html',
 })
 export class EditProfileComponent {
-  @Input() setUser!: (user: UserProfile) => void;
-
   isLoading: boolean = false;
   formIsChanged: boolean = false;
   private unsubscribe$ = new Subject<void>();
@@ -40,36 +41,20 @@ export class EditProfileComponent {
     private fb: FormBuilder,
     private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA)
-    private user: UserProfile | undefined,
+    private user: UserProfile,
     public formService: FormService
   ) {}
 
   ngOnInit() {
-    if (this.user) {
-      this.setFormData(
-        this.user.firstName,
-        this.user.lastName,
-        this.user.email
-      );
-    }
-
     this.userProfileForm.valueChanges.subscribe(() => {
-      if (
-        this.firstName.value === this.user?.firstName &&
-        this.lastName.value === this.user?.lastName &&
-        this.email.value === this.user?.email
-      ) {
-        this.formIsChanged = false;
-      } else {
-        this.formIsChanged = true;
-      }
+      this.formIsChanged = checkFormChange(this.userProfileForm, this.user);
     });
   }
 
   userProfileForm = this.fb.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
+    firstName: [this.user.firstName, [Validators.required]],
+    lastName: [this.user.lastName, [Validators.required]],
+    email: [this.user.email, [Validators.required, Validators.email]],
   });
 
   // change profile form
@@ -93,10 +78,6 @@ export class EditProfileComponent {
     });
   }
 
-  cancelEdit() {
-    this.dialogRef.close();
-  }
-
   updateUser() {
     if (this.user) {
       const newUser = {
@@ -109,9 +90,8 @@ export class EditProfileComponent {
         .updateAccount(newUser)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((newU) => {
-          this.setUser(newU);
           this.notificationService.notify('Profile updated successfully');
-          this.cancelEdit();
+          this.dialogRef.close({...newUser});
         });
     }
   }

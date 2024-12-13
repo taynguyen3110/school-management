@@ -34,8 +34,8 @@
         {{ item.firstName + " " + item.lastName }}
         } @else {
         {{ item.name }}
-        } } @else if (["dateOfBirth", "admissionDate"].includes(listOf)) {
-        {{ item[col.key] | date : "dd/MM/yyyy" }}
+        } } @else if (["dateOfBirth", "admissionDate"].includes(col.key)) {
+        {{ item[col.key] | date : "dd/MM/YYYY" }}
         } @else if (col.key === "gender") {
         {{ item[col.key] | titlecase }}
         } @else if (col.key === "class") {
@@ -58,7 +58,7 @@
         are no {{ listOf }}! }
       </td>
     </tr>
-    } @if (items.length < 10 && enableSorting) { @for (item of [].constructor(10 - items.length);
+    } @if (items.length < 10 && !fromDashboard) { @for (item of [].constructor(10 - items.length);
     track $index) {
     <tr class="cursor-default">
       <td

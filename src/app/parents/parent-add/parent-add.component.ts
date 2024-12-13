@@ -14,6 +14,7 @@ import { InputComponent } from '../../shared/components/input/input.component';
 import { NotificationService } from '../../shared/services/notification.service';
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
 
 @Component({
     imports: [
@@ -22,6 +23,7 @@ import { MatDialogRef } from '@angular/material/dialog';
         PhotoUploaderComponent,
         InputComponent,
         AddNewFormLayoutComponent,
+        AddressAutocompleteComponent
     ],
     selector: 'sman-add-parent',
     templateUrl: 'parent-add.component.html'
@@ -83,12 +85,14 @@ export class AddParentComponent implements OnInit {
 
   addParent(e: Event) {
     e.preventDefault();
-    this.parentService
-      .addParent(this.addParentForm.value as Parent)
-      .subscribe(() => {
-        this.isDirty = false;
-        this.dialogRef.close();
-        this.notificationService.notify('Parent added successfully!');
-      });
+    // this.parentService
+    //   .addParent(this.addParentForm.value as Parent)
+    //   .subscribe(() => {
+    //     this.isDirty = false;
+    //     this.dialogRef.close();
+    //     this.notificationService.notify('Parent added successfully!');
+    //   });
+    console.log(this.addParentForm.value);
+    
   }
 }

@@ -74,8 +74,8 @@ export class ItemTableComponent implements OnInit {
   }
 
   getCollumns() {
-    this.screenService.observeScreen('md').subscribe((result) => {
-      this.tableCollumns = result
+    this.screenService.observeScreen('md').subscribe((screenMd) => {
+      this.tableCollumns = screenMd
         ? this.columnConfigurations[this.listOf]
         : this.columnConfigurations[this.listOf].filter(
             (col) => col.key !== 'email'

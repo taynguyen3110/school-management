@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,20 +21,24 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
+import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        PhotoUploaderComponent,
-        AddNewFormLayoutComponent,
-        InputComponent,
-    ],
-    selector: 'sman-add-teacher',
-    templateUrl: 'teacher-add.component.html'
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    PhotoUploaderComponent,
+    AddNewFormLayoutComponent,
+    InputComponent,
+    AddressAutocompleteComponent,
+    DateInputComponent,
+  ],
+  selector: 'sman-add-teacher',
+  templateUrl: 'teacher-add.component.html',
 })
 export class AddTeacherComponent implements OnInit {
-  @Input() teacher!: Teacher;
   isDirty: boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<AddTeacherComponent>);
@@ -80,7 +91,7 @@ export class AddTeacherComponent implements OnInit {
 
   ngOnInit() {
     this.addTeacherForm.valueChanges.subscribe(() => {
-      this.isDirty = this.addTeacherForm.dirty;
+      this.isDirty = checkFormChange(this.addTeacherForm);
     });
   }
 
@@ -94,8 +105,8 @@ export class AddTeacherComponent implements OnInit {
       .addTeacher(this.addTeacherForm.value as Teacher)
       .subscribe(() => {
         this.isDirty = false;
-        this.dialogRef.close();
         this.notificationService.notify('Teacher added successfully!');
+        this.dialogRef.close();
       });
   }
 }

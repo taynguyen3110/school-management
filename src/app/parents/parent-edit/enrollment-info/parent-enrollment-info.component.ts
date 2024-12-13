@@ -1,24 +1,15 @@
-import { ParentsService } from '@/app/parents/services/parents.service';
-import { ClassesService } from '@/app/school-classes/services/classes.service';
 import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-layout/addnew-form-layout.component';
 import { CustomInputComponent } from '@/app/shared/components/custom-input/custom-input.component';
 import { InputComponent } from '@/app/shared/components/input/input.component';
 import { MultiSelectorComponent } from '@/app/shared/components/multiselector/multiselector.component';
 import { toLabelObject } from '@/app/shared/components/multiselector/utils/toLabelObject';
 import { FormService } from '@/app/shared/services/form.service';
-import {
-  Classes,
-  LabelObj,
-  Parent,
-  Student,
-  StudentEnrollmentInfo,
-} from '@/app/shared/types';
+import { LabelObj, Student } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -26,20 +17,20 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 import { StudentService } from '@/app/students/service/student.service';
-import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of } from 'rxjs';
 
 @Component({
-    imports: [
-        CommonModule,
-        InputComponent,
-        AddNewFormLayoutComponent,
-        MultiSelectorComponent,
-        CustomInputComponent,
-        ReactiveFormsModule,
-        DateInputComponent,
-    ],
-    selector: 'sman-parent-enrollment-info',
-    templateUrl: 'parent-enrollment-info.component.html'
+  imports: [
+    CommonModule,
+    InputComponent,
+    AddNewFormLayoutComponent,
+    MultiSelectorComponent,
+    CustomInputComponent,
+    ReactiveFormsModule,
+    DateInputComponent,
+  ],
+  selector: 'sman-parent-enrollment-info',
+  templateUrl: 'parent-enrollment-info.component.html',
 })
 export class ParentEnrollmentInfoComponent implements OnInit {
   formChanged: boolean = false;
@@ -54,7 +45,7 @@ export class ParentEnrollmentInfoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public parent: any,
     private studentService: StudentService,
-    private dialogRef: MatDialogRef<ParentEnrollmentInfoComponent>,
+    public dialogRef: MatDialogRef<ParentEnrollmentInfoComponent>,
     private notificationService: NotificationService
   ) {}
 
@@ -96,13 +87,29 @@ export class ParentEnrollmentInfoComponent implements OnInit {
 
   checkFormChange() {
     const existIds: string[] = this.parent.students.map((s: Student) => s.id);
-    return (
-      existIds.every((id) => this.studentIds.value.include(id)) &&
+    return !(
+      existIds.every((id) => this.studentIds.value.includes(id)) &&
       this.studentIds.value.every((id: string) => existIds.includes(id))
     );
   }
 
+  initAddRemoveList() {
+    this.editAddIds = [];
+    this.editRemoveIds = [];
+    this.parent.students.forEach((student: Student) => {
+      if (!this.studentIds.value.includes(student.id!)) {
+        this.editRemoveIds.push(student.id!);
+      }
+    });
+    this.studentIds.value.forEach((id: string) => {
+      if (!this.parent.students.includes(id)) {
+        this.editAddIds.push(id);
+      }
+    });
+  }
+
   edit() {
+    this.initAddRemoveList();
     if (this.formChanged) {
       let obsArr: Observable<any>[] = [];
       this.editRemoveIds.forEach((removeStudentId) => {
@@ -118,35 +125,40 @@ export class ParentEnrollmentInfoComponent implements OnInit {
           })
         );
       });
-      this.editAddIds.forEach((addStudentId) => {
-        const targetStudent: Student = this.parent.students.find(
-          (s: Student) => s.id === addStudentId
-        );
-        obsArr.push(
-          this.studentService.updateStudent(addStudentId, {
-            ...targetStudent,
-            parentIds: [...targetStudent.parentIds, this.parent.id],
-          })
-        );
-      });
-      forkJoin(obsArr)
-        .pipe(
-          catchError((error) => {
-            this.notificationService.notify(
-              'An error occurred during edit operations'
-            );
-            console.error('An error occurred during edit operations:', error);
-            return of([]);
-          })
+      const addOperations$ = forkJoin(
+        this.editAddIds.map((addStudentId) =>
+          this.studentService.getStudent(addStudentId).pipe(
+            map((student) =>
+              this.studentService.updateStudent(addStudentId, {
+                ...student,
+                parentIds: [...student.parentIds, this.parent.id],
+              })
+            )
+          )
         )
-        .subscribe(() => {
-          this.notificationService.notify('Student info updated successfully!');
-          this.cancel();
-        });
+      ).pipe(
+        map((updateStudentObservables) => {
+          obsArr.push(...updateStudentObservables);
+        })
+      );
+      addOperations$.subscribe(() => {
+        forkJoin(obsArr)
+          .pipe(
+            catchError((error) => {
+              this.notificationService.notify(
+                'An error occurred during edit operations'
+              );
+              console.error('An error occurred during edit operations:', error);
+              return of([]);
+            })
+          )
+          .subscribe(() => {
+            this.notificationService.notify(
+              'Parent info updated successfully!'
+            );
+            this.dialogRef.close();
+          });
+      });
     }
-  }
-
-  cancel() {
-    this.dialogRef.close();
   }
 }

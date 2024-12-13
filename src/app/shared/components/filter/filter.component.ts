@@ -11,14 +11,16 @@ import { Classes, LabelObj } from '../../types';
 import { MultiSelectorComponent } from '../multiselector/multiselector.component';
 import { ClassesService } from '../../../school-classes/services/classes.service';
 import { ButtonComponent } from '../button/button.component';
+import { InputComponent } from "../input/input.component";
 
 @Component({
     imports: [
-        MultiSelectorComponent,
-        CommonModule,
-        ReactiveFormsModule,
-        ButtonComponent,
-    ],
+    MultiSelectorComponent,
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonComponent,
+    InputComponent
+],
     selector: 'sman-filter',
     templateUrl: 'filter.component.html'
 })

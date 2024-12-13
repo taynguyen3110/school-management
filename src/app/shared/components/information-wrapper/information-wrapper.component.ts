@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class InformationWrapperComponent implements OnInit {
   @Input() profilePic: boolean = false;
+  @Input() editable: boolean = true;
   @Output() edit = new EventEmitter<void>();
 
   constructor() {}

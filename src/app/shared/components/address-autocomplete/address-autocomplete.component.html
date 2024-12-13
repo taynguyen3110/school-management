@@ -7,6 +7,7 @@
       class="border w-full rounded-xl py-3 px-2 mt-2 text-sm md:text-base"
       [ngClass]="{ 'border-red-600': hasError['fieldInvalid'] }"
       type="text"
+      [placeholder]="placeholder"
       [(ngModel)]="value"
       (input)="onInput($event)"
       (blur)="onBlur()"

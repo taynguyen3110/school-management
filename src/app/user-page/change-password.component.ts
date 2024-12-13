@@ -18,26 +18,41 @@ import { passwordMismatchValidator } from '../shared/validators/passwordMismatch
 import { HeadingComponent } from '../shared/components/heading/heading.component';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { InputComponent } from '../shared/components/input/input.component';
+import { FormService } from '../shared/services/form.service';
+import { AddNewFormLayoutComponent } from '../shared/components/addnew-form-layout/addnew-form-layout.component';
+import checkFormChange from '../shared/utils/checkFormChanged';
+import { AuthApiService } from '../shared/services/authApi.service';
+import { NotificationService } from '../shared/services/notification.service';
 
 @Component({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        HeadingComponent,
-        ButtonComponent,
-    ],
-    selector: 'sman-change-password',
-    templateUrl: './change-password.component.html'
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HeadingComponent,
+    ButtonComponent,
+    InputComponent,
+    AddNewFormLayoutComponent,
+  ],
+  selector: 'sman-change-password',
+  templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent {
-  @Output() changePwd = new EventEmitter<string>();
-
-  isLoading: boolean = false;
+  formIsChanged: boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<ChangePasswordComponent>);
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    public formService: FormService,
+    private authApi: AuthApiService,
+    private notificationService: NotificationService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.changePwdForm.valueChanges.subscribe(() => {
+      this.formIsChanged = checkFormChange(this.changePwdForm);
+    });
+  }
 
   changePwdForm = this.fb.group(
     {
@@ -45,10 +60,7 @@ export class ChangePasswordComponent {
         '',
         [Validators.required, Validators.minLength(8), passwordValidator()],
       ],
-      confirmNewPwd: [
-        '',
-        [Validators.required, Validators.minLength(8), passwordValidator()],
-      ],
+      confirmNewPwd: ['', [Validators.required]],
     },
     {
       validators: passwordMismatchValidator('newPwd', 'confirmNewPwd'),
@@ -64,11 +76,10 @@ export class ChangePasswordComponent {
     return this.changePwdForm.get('confirmNewPwd') as FormControl;
   }
 
-  cancelChangePassword() {
-    this.dialogRef.close();
-  }
-
   changePassword() {
-    this.changePwd.emit(this.newPwd.value);
+    this.authApi.changePassword(this.newPwd.value).subscribe(() => {
+      this.notificationService.notify('Password updated successfully!');
+      this.dialogRef.close();
+    });
   }
 }

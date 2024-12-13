@@ -37,13 +37,14 @@ body {
 
 mat-form-field {
   --mdc-filled-text-field-container-color: white;
-  height: 66px;
+  height: 69px;
   border-radius: 0.75rem;
 }
 mat-calendar {
   background-color: white;
   border-radius: 15px;
   border: 1px solid rgb(235, 235, 235);
+  @apply shadow-xl
 }
 
 .mdc-line-ripple {

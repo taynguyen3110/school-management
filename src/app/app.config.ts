@@ -15,7 +15,6 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import {provideDateFnsAdapter} from '@angular/material-date-fns-adapter'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +30,6 @@ export const appConfig: ApplicationConfig = {
       // CommonModule
     ]),
     { provide: MAT_DATE_LOCALE, useValue: 'en-au' },
-    provideDateFnsAdapter(),
 
     // MatSnackBarModule,
     // { provide: ErrorHandler, useClass: CustomErrorHandler }

@@ -8,7 +8,7 @@ export class StudentService {
   constructor(private apiService: ApiService) {}
 
   getStudents(params?: Params) {
-    return this.apiService.get<Student[]>('/students', params);
+    return this.apiService.get<any>('/students', params);
   }
 
   getStudent(id: string) {

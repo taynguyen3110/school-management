@@ -18,8 +18,6 @@ export class NavigationService {
     query?: Params | string[],
     replace?: boolean,
   ) {
-    console.log("url",url);
-
     let params: Params = typeof query === 'object' ? query : {};
     if (query && action !== '') {
       if (action === 'add' && typeof query === 'object') {

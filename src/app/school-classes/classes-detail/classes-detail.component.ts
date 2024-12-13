@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Classes, Teacher } from '../../shared/types';
 import { DatePipe, Location, TitleCasePipe } from '@angular/common';
@@ -11,6 +11,12 @@ import { ProfileInfoComponent } from '../../shared/components/profile-info/profi
 import { ClassesService } from '../services/classes.service';
 import { StudentService } from '../../students/service/student.service';
 import { AddClassComponent } from '../classes-add/classes-add.component';
+import { ParentProfileInfoComponent } from '@/app/parents/parent-edit/profile-info/parent-profile-info.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ScreenService } from '@/app/shared/services/screen.service';
+import { ClassEditComponent } from '../class-edit/class-edit.component';
+import { ConfirmationService } from '@/app/shared/services/confirmation.service';
+import { InformationWrapperComponent } from '@/app/shared/components/information-wrapper/information-wrapper.component';
 
 @Component({
   standalone: true,
@@ -23,55 +29,81 @@ import { AddClassComponent } from '../classes-add/classes-add.component';
     TitleCasePipe,
     DatePipe,
     RouterLink,
+    InformationWrapperComponent,
   ],
   selector: 'sman-class-detail',
   templateUrl: 'classes-detail.component.html',
 })
 export class ClassDetailComponent implements OnInit {
   classes: Classes | null = null;
+  classId: string = '';
+  screenXs: boolean = false;
 
-  isShow: boolean = false;
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private route: ActivatedRoute,
     private classesService: ClassesService,
     private studentService: StudentService,
     private navigationService: NavigationService,
+    private confirmationService: ConfirmationService,
+    private screenService: ScreenService,
     private notiService: NotificationService
   ) {}
 
   ngOnInit() {
     this.fetchClass();
+    this.screenService.observeScreen('xs').subscribe((data) => {
+      this.screenXs = data;
+    });
   }
 
   fetchClass() {
-    const classId = this.route.snapshot.params['id'];
-    if (classId) {
-      this.classesService.getClass(classId).subscribe((classes) => {
+    this.classId = this.route.snapshot.params['id'];
+    if (this.classId) {
+      this.classesService.getClass(this.classId).subscribe((classes) => {
         this.classes = classes;
+        console.log(classes);
+        
       });
     }
   }
 
-  showEditForm() {
-    this.isShow = true;
+  showDialog(component: any) {
+    this.dialog.open(component, {
+      panelClass: ['overflow-auto', 'hide-scrollbar'],
+      maxWidth: '700px',
+      width: '80vw',
+      disableClose: true,
+      data: {
+        ...this.classes,
+      },
+    });
   }
 
-  hideEditForm() {
-    this.isShow = false;
+  showEditClassDetail() {
+    this.showDialog(ClassEditComponent);
   }
 
-  deleteClass() {
-    const confirm = window.confirm(
-      'Are you sure you want to delete this class?'
+  onDelete() {
+    this.confirmationService.openConfirmation(
+      'Confirm Delete Class',
+      `Do you really want to delete this class: ${this.classes?.name}?`,
+      'Cancel',
+      'Delete',
+      () => {
+        console.log('canceled');
+      },
+      this.deleteClass
     );
-    if (confirm) {
-      this.classesService.deleteClass(this.classes!.id!).subscribe((data) => {
-        this.notiService.notify(`Deleted class id: ${this.classes!.id}`);
-        this.goBack();
-      });
-    }
   }
+
+  deleteClass = () => {
+    this.classesService.deleteClass(this.classes!.id!).subscribe((data) => {
+      this.notiService.notify(`Deleted class id: ${this.classId}`);
+      this.goBack();
+    });
+  };
 
   goBack() {
     this.navigationService.goBack();

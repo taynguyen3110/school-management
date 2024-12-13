@@ -16,9 +16,12 @@
     />
   </ng-container>
   <div class="text-red-600 text-sm">
-    @if (hasError['fieldInvalid']) { @for (err of errorKeys; track
-    $index) { @if (err !== 'fieldInvalid') {
-    {{ errMsgs[err] }}
-    } } } @else { &nbsp; }
+    @if(name === 'confirmNewPwd') { @if (hasError['fieldInvalid']) {
+    {{ errMsgs["required"] }}
+    } @else if (hasError['passwordMismatch']) {
+    {{ errMsgs["passwordMismatch"] }}
+    } @else { &nbsp; } } @else { @if (hasError['fieldInvalid']) {
+    {{ errMsgs[errorKeys[1]] }}
+    } @else { &nbsp; } }
   </div>
 </div>

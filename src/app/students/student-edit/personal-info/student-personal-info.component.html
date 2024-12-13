@@ -2,7 +2,7 @@
   title="Edit Student Personal Information"
   layout="edit"
   [formGroup]="editStudentPersonalInfoForm"
-  [isDirty]="editStudentPersonalInfoForm.dirty"
+  [isDirty]="formChanged"
   [dialogRef]="dialogRef"
   (submit)="edit()"
   [disableSubmit]="!formChanged"

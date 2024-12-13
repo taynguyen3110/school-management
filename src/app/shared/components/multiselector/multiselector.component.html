@@ -1,7 +1,6 @@
-<div class="relative z-10" (click)="showItem()">
-  @if (supportMulti) { }
+<div class="relative z-10 mt-[2px]" (click)="showItem()">
   <div
-    class="w-full bg-white flex items-center justify-center text-sm/6 border px-3 py-[10px] rounded-xl"
+    class="w-full bg-white flex items-center justify-center text-sm/6 border px-3 py-3 rounded-xl"
     [ngClass]="fieldInvalid ? 'border-red-600' : 'border-gray-200'"
   >
     @if(selectedItem.length == 0) {
@@ -13,7 +12,7 @@
         class="h-6 relative px-1 flex items-center justify-between gap-1 bg-blue-400 text-white cursor-pointer border rounded-full select-none"
         (click)="selectItem(item, $event)"
       >
-        {{ item.label }}
+        {{ item.label | titlecase }}
         <div
           class="relative -top-[1px] flex items-center justify-center border h-[18px] w-[18px] bg-white rounded-full"
         >

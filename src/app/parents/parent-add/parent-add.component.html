@@ -1,6 +1,6 @@
 <sman-add-form-layout
-  [title]="'Add New Parent'"
-  [layout]="'add'"
+  title="Add New Parent"
+  layout="add"
   [formGroup]="addParentForm"
   [isDirty]="isDirty"
   [dialogRef]="dialogRef"
@@ -40,11 +40,10 @@
     <div class="flex gap-4">
       <!-- Address -->
       <div class="w-full">
-        <sman-input
+        <sman-address-autocomplete
           formControlName="address"
           label="Address:"
           name="address"
-          type="text"
           placeholder="Address"
           [hasError]="formService.getCombinedErrors(address)"
           [errMsgs]="{

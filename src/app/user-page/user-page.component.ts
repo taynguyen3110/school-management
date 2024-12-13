@@ -11,16 +11,16 @@ import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-    selector: 'sman-user-page',
-    imports: [
-        CommonModule,
-        JsonPipe,
-        ReactiveFormsModule,
-        ChangePasswordComponent,
-        EditProfileComponent,
-        ButtonComponent,
-    ],
-    templateUrl: './user-page.component.html'
+  selector: 'sman-user-page',
+  imports: [
+    CommonModule,
+    JsonPipe,
+    ReactiveFormsModule,
+    ChangePasswordComponent,
+    EditProfileComponent,
+    ButtonComponent,
+  ],
+  templateUrl: './user-page.component.html',
 })
 export class UserPageComponent {
   user?: UserProfile;
@@ -49,13 +49,16 @@ export class UserPageComponent {
   };
 
   openEditProfileDialog() {
-    this.dialog.open(EditProfileComponent, {
+    const dialogRef = this.dialog.open(EditProfileComponent, {
       maxWidth: '500px',
       width: '80vw',
       disableClose: true,
       data: {
         ...this.user,
       },
+    });
+    dialogRef.afterClosed().subscribe((user) => {
+      if (user) this.user = user;
     });
   }
 

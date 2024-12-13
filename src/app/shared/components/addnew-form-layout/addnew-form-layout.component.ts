@@ -15,9 +15,9 @@ import { ConfirmationService } from '../../services/confirmation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    imports: [ReactiveFormsModule, TitleCasePipe, CommonModule, ButtonComponent],
-    selector: 'sman-add-form-layout',
-    templateUrl: 'addnew-form-layout.component.html'
+  imports: [ReactiveFormsModule, TitleCasePipe, CommonModule, ButtonComponent],
+  selector: 'sman-add-form-layout',
+  templateUrl: 'addnew-form-layout.component.html',
 })
 export class AddNewFormLayoutComponent implements OnInit, OnChanges {
   @Input() title: string = '';
@@ -28,7 +28,7 @@ export class AddNewFormLayoutComponent implements OnInit, OnChanges {
   @Input() disableSubmit: boolean = false;
   @Output() submit = new EventEmitter<Event>();
 
-  subscription : Subscription | null = null;
+  subscription: Subscription | null = null;
 
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {

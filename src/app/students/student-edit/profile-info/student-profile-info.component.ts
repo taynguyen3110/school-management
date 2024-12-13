@@ -2,24 +2,29 @@ import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-l
 import { InputComponent } from '@/app/shared/components/input/input.component';
 import { PhotoUploaderComponent } from '@/app/shared/components/photouploader/photo-uploader.component';
 import { FormService } from '@/app/shared/services/form.service';
-import { Student, StudentProfileInfo } from '@/app/shared/types';
+import { Student } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
 
 @Component({
-    imports: [
-        ReactiveFormsModule,
-        CommonModule,
-        InputComponent,
-        AddNewFormLayoutComponent,
-        PhotoUploaderComponent,
-    ],
-    selector: 'sman-student-profile-info',
-    templateUrl: 'student-profile-info.component.html'
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    InputComponent,
+    AddNewFormLayoutComponent,
+    PhotoUploaderComponent,
+  ],
+  selector: 'sman-student-profile-info',
+  templateUrl: 'student-profile-info.component.html',
 })
 export class StudentProfileInfoComponent implements OnInit {
   formChanged: boolean = false;
@@ -79,14 +84,6 @@ export class StudentProfileInfoComponent implements OnInit {
       } as Student)
       .subscribe(() => {
         this.notificationService.notify('Student info updated successfully!');
-        this.cancel();
       });
-  }
-
-  cancel() {
-    console.log(this.editStudentProfileInfoForm.value);
-    console.log(this.student);
-    
-    // this.dialogRef.close();
   }
 }

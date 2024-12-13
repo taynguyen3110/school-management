@@ -1,4 +1,6 @@
-<div class="container px-6 h-36 md:h-[80px] bg-white md:flex md:items-center md:justify-between">
+<div
+  class="container px-6 h-36 md:h-[80px] bg-white md:flex md:items-center md:justify-between"
+>
   <div class="relative z-30 flex justify-between items-center py-6">
     <div class="md:hidden" [ngClass]="{ 'opacity-0': isShow }">
       <i
@@ -7,7 +9,13 @@
       ></i>
     </div>
     <div class="text-title text-primary2 md:hidden">
-      {{ title === "" ? "Dashboard" : title === "students/:id" ? "Student Profile" : (title | titlecase) }}
+      {{
+        title === ""
+          ? "Dashboard"
+          : title === "students/:id"
+          ? "Student Profile"
+          : (title | titlecase)
+      }}
     </div>
     <div class="md:hidden">
       <sman-user-icon (clickedOn)="goToUserInfo()" />
@@ -22,6 +30,8 @@
         class="placeholder:text-sm pl-11 py-2 w-full rounded-full bg-background focus:outline-none"
         type="text"
         placeholder="Search for something"
+        [(ngModel)]="searchQuery"
+        (keydown.enter)="handleSearch()"
       />
     </div>
     <div class="hidden md:block">

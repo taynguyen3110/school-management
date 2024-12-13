@@ -27,6 +27,7 @@ import { TeacherService } from '../../teachers/services/teacher.service';
 import { ClassesService } from '../../school-classes/services/classes.service';
 import { SchoolSubject, LabelObj } from '../../shared/types';
 import { MatDialogRef } from '@angular/material/dialog';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
     imports: [
@@ -88,7 +89,7 @@ export class AddSubjectComponent implements OnInit {
 
   ngOnInit() {
     this.addSubjectForm.valueChanges.subscribe(() => {
-      this.isDirty = this.addSubjectForm.dirty;
+      this.isDirty = checkFormChange(this.addSubjectForm);
     });
   }
 

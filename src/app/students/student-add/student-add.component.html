@@ -2,8 +2,8 @@
   title="Add New Student"
   layout="add"
   [formGroup]="addStudentForm"
-  [isDirty]="isDirty"
   [dialogRef]="dialogRef"
+  [isDirty]="isDirty"
   (submit)="addStudent($event)"
 >
   <ng-container formInputs>
@@ -43,7 +43,7 @@
       <!-- Gender -->
       <div class="flex flex-col md:w-1/2 mb-5">
         <div class="flex flex-col w-full">
-          <label class="text-inputTitle mb-2 text-sm md:text-base" for="gender"
+          <label class="text-inputTitle mb-[10px] text-sm md:text-base" for="gender"
             >Gender:</label
           >
           <div class="relative">

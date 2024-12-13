@@ -1,7 +1,6 @@
 import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '@/app/shared/components/input/input.component';
 import { FormService } from '@/app/shared/services/form.service';
-import { Student, StudentPersonalInfo } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
@@ -11,9 +10,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
+import { ParentsService } from '../../services/parents.service';
+import { Parent } from '@/app/shared/types';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
   standalone: true,
@@ -24,75 +25,55 @@ import { DateInputComponent } from '@/app/shared/components/date-input/date-inpu
     ReactiveFormsModule,
     DateInputComponent,
   ],
-  selector: 'sman-student-personal-info',
-  templateUrl: 'student-personal-info.component.html',
+  selector: 'sman-parent-personal-info',
+  templateUrl: 'parent-personal-info.component.html',
 })
-export class StudentPersonalInfoComponent implements OnInit {
+export class ParentPersonalInfoComponent implements OnInit {
   formChanged: boolean = false;
 
   constructor(
     public formService: FormService,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private student: Student,
-    private dialogRef: MatDialogRef<StudentPersonalInfoComponent>,
-    private studentService: StudentService,
+    @Inject(MAT_DIALOG_DATA) private parent: Parent,
+    public dialogRef: MatDialogRef<ParentPersonalInfoComponent>,
+    private parentService: ParentsService,
     private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
-    this.editStudentPersonalInfoForm.valueChanges.subscribe(() => {
-      this.formChanged = this.checkFormChange();
+    this.editParentPersonalInfoForm.valueChanges.subscribe(() => {
+      this.formChanged = checkFormChange(
+        this.editParentPersonalInfoForm,
+        this.parent
+      );
     });
   }
 
-  editStudentPersonalInfoForm = this.fb.group({
-    gender: [this.student.gender, [Validators.required]],
-    dateOfBirth: [this.student.dateOfBirth, [Validators.required]],
-    address: [this.student.address, [Validators.required]],
-    phone: [this.student.phone, [Validators.required]],
-    email: [this.student.email, [Validators.required]],
+  editParentPersonalInfoForm = this.fb.group({
+    address: [this.parent.address, [Validators.required]],
+    phone: [this.parent.phone, [Validators.required]],
+    email: [this.parent.email, [Validators.required]],
   });
 
-  get gender() {
-    return this.editStudentPersonalInfoForm.get('gender') as FormControl;
-  }
   get address() {
-    return this.editStudentPersonalInfoForm.get('address') as FormControl;
-  }
-  get dateOfBirth() {
-    return this.editStudentPersonalInfoForm.get('dateOfBirth') as FormControl;
+    return this.editParentPersonalInfoForm.get('address') as FormControl;
   }
   get phone() {
-    return this.editStudentPersonalInfoForm.get('phone') as FormControl;
+    return this.editParentPersonalInfoForm.get('phone') as FormControl;
   }
   get email() {
-    return this.editStudentPersonalInfoForm.get('email') as FormControl;
-  }
-
-  checkFormChange() {
-    for (const [key, control] of Object.entries(
-      this.editStudentPersonalInfoForm.controls
-    )) {
-      if (control?.value !== this.student[key as keyof Student]) {
-        return true;
-      }
-    }
-    return false;
+    return this.editParentPersonalInfoForm.get('email') as FormControl;
   }
 
   edit() {
-    this.studentService
-      .updateStudent(this.student.id!, {
-        ...this.student,
-        ...this.editStudentPersonalInfoForm.value,
-      } as Student)
+    this.parentService
+      .updateParent(this.parent.id!, {
+        ...this.parent,
+        ...this.editParentPersonalInfoForm.value,
+      } as Parent)
       .subscribe(() => {
-        this.notificationService.notify('Student info updated successfully!');
-        this.cancel();
+        this.notificationService.notify('Parent info updated successfully!');
+        this.dialogRef.close();
       });
-  }
-
-  cancel() {
-    this.dialogRef.close();
   }
 }

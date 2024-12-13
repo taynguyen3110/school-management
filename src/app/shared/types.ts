@@ -39,26 +39,6 @@ export interface Student {
   classes?: Classes[];
 }
 
-export interface StudentProfileInfo {
-  lastName: string;
-  firstName: string;
-  profileUrl: string;
-}
-
-export interface StudentPersonalInfo {
-  gender: 'male' | 'female';
-  dateOfBirth: string;
-  address: string;
-  email: string;
-  phone: string;
-}
-
-export interface StudentEnrollmentInfo {
-  admissionDate: string;
-  classes: Array<Classes>;
-  parents: Array<Parent>;
-}
-
 export interface Parent {
   id?: string;
   lastName: string;
@@ -114,6 +94,7 @@ export type route =
   | 'parents'
   | 'subjects'
   | 'classes'
-  | 'user';
+  | 'user'
+  | 'search';
 
 export type ScreenSize = keyof typeof ScreenService.prototype.breakpoints;

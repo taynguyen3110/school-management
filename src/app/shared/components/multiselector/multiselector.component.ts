@@ -19,17 +19,17 @@ import { ItemsPanelComponent } from './items-panel/items-panel.component';
 import { LabelObj } from '../../types';
 
 @Component({
-    imports: [
-        ClickOutsideDirective,
-        CommonModule,
-        IdToLabelPipe,
-        FormsModule,
-        ItemsPanelComponent,
-    ],
-    selector: 'sman-multiselector',
-    templateUrl: 'multiselector.component.html',
-    styleUrl: 'multiselector.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [
+    ClickOutsideDirective,
+    CommonModule,
+    IdToLabelPipe,
+    FormsModule,
+    ItemsPanelComponent,
+  ],
+  selector: 'sman-multiselector',
+  templateUrl: 'multiselector.component.html',
+  styleUrl: 'multiselector.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiSelectorComponent
   implements OnChanges, OnInit, AfterViewInit
@@ -107,10 +107,15 @@ export class MultiSelectorComponent
       } else {
         this.selectedItem = this.selectedItem.filter((i) => i.id !== item.id);
       }
-      this.select.emit(this.selectedItem.map((i) => i.id) as string[]);
+    this.select.emit(this.selectedItem.map((i) => i.id) as string[]);
+
     } else {
-      this.selectedItem = [item];
-      this.select.emit(item.id);
+      if (this.selectedItem[0] === item) {
+        this.selectedItem = [];
+      } else {
+        this.selectedItem = [item];
+      }
+      this.select.emit(this.selectedItem[0].id as string);
     }
     this.checkFieldValid();
   }

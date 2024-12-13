@@ -1,7 +1,7 @@
 import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '@/app/shared/components/input/input.component';
 import { FormService } from '@/app/shared/services/form.service';
-import { Student, StudentPersonalInfo } from '@/app/shared/types';
+import { Student } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
@@ -16,15 +16,15 @@ import { NotificationService } from '@/app/shared/services/notification.service'
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 
 @Component({
-    imports: [
-        CommonModule,
-        InputComponent,
-        AddNewFormLayoutComponent,
-        ReactiveFormsModule,
-        DateInputComponent,
-    ],
-    selector: 'sman-student-personal-info',
-    templateUrl: 'student-personal-info.component.html'
+  imports: [
+    CommonModule,
+    InputComponent,
+    AddNewFormLayoutComponent,
+    ReactiveFormsModule,
+    DateInputComponent,
+  ],
+  selector: 'sman-student-personal-info',
+  templateUrl: 'student-personal-info.component.html',
 })
 export class StudentPersonalInfoComponent implements OnInit {
   formChanged: boolean = false;
@@ -87,11 +87,6 @@ export class StudentPersonalInfoComponent implements OnInit {
       } as Student)
       .subscribe(() => {
         this.notificationService.notify('Student info updated successfully!');
-        this.cancel();
       });
-  }
-
-  cancel() {
-    this.dialogRef.close();
   }
 }

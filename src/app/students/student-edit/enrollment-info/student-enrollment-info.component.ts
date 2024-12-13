@@ -19,19 +19,20 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
-    imports: [
-        CommonModule,
-        InputComponent,
-        AddNewFormLayoutComponent,
-        MultiSelectorComponent,
-        CustomInputComponent,
-        ReactiveFormsModule,
-        DateInputComponent,
-    ],
-    selector: 'sman-student-enrollment-info',
-    templateUrl: 'student-enrollment-info.component.html'
+  imports: [
+    CommonModule,
+    InputComponent,
+    AddNewFormLayoutComponent,
+    MultiSelectorComponent,
+    CustomInputComponent,
+    ReactiveFormsModule,
+    DateInputComponent,
+  ],
+  selector: 'sman-student-enrollment-info',
+  templateUrl: 'student-enrollment-info.component.html',
 })
 export class StudentEnrollmentInfoComponent implements OnInit {
   formChanged: boolean = false;
@@ -53,7 +54,10 @@ export class StudentEnrollmentInfoComponent implements OnInit {
 
   ngOnInit() {
     this.editStudentEnrollmentInfoForm.valueChanges.subscribe(() => {
-      this.formChanged = this.checkFormChange();
+      this.formChanged = checkFormChange(
+        this.editStudentEnrollmentInfoForm,
+        this.student
+      );
     });
   }
 
@@ -112,28 +116,6 @@ export class StudentEnrollmentInfoComponent implements OnInit {
     }
   }
 
-  checkFormChange() {
-    for (const [key, control] of Object.entries(
-      this.editStudentEnrollmentInfoForm.controls
-    )) {
-      if (Array.isArray(control.value)) {
-        if (
-          control.value.length !== this.student[key as keyof Student]!.length ||
-          !control.value.every((id: string) =>
-            (this.student[key as keyof Student] as string[])?.includes(id)
-          )
-        ) {
-          return true;
-        }
-      } else {
-        if (control?.value !== this.student[key as keyof Student]) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   edit() {
     this.studentService
       .updateStudent(this.student.id!, {
@@ -142,11 +124,7 @@ export class StudentEnrollmentInfoComponent implements OnInit {
       } as Student)
       .subscribe(() => {
         this.notificationService.notify('Student info updated successfully!');
-        this.cancel();
+        this.dialogRef.close();
       });
-  }
-
-  cancel() {
-    this.dialogRef.close();
   }
 }
