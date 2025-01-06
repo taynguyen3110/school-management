@@ -44,7 +44,7 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 ## Components
 
-![alt text](screenshots/image-2.png)
+![alt text](screenshots/v2.0/image-2.png)
 
 **Dashboard Components**
 
@@ -60,7 +60,7 @@ StatsCellComponent: Individual statistic display component.
 
 NoticeNewsComponent: Shows announcements and news updates.
 
-![alt text](screenshots/image-3.png)
+![alt text](screenshots/v2.0/image-3.png)
 
 **Other Components**
 
@@ -72,7 +72,7 @@ ParentsComponent: Manages parent-related data and actions.
 
 ClassesComponent: Manages class-related data and actions.
 
-![alt text](screenshots/image-1.png)
+![alt text](screenshots/v2.0/image-1.png)
 
 **Services**
 
@@ -116,7 +116,7 @@ All routes for the application are defined in src/app/app.routes.ts. Below are s
 
 Key Contributions
 
-![alt text](screenshots/image.png)
+![alt text](screenshots/v2.0/image.png)
 
 **Dashboard Development**
 
@@ -124,7 +124,7 @@ Implemented the main dashboard layout and components, including DashboardCompone
 
 Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
 
-![alt text](screenshots/image-6.png)
+![alt text](screenshots/v2.0/image-6.png)
 
 **Form Handling**
 
@@ -138,7 +138,7 @@ Developed profile components for students, teachers, and parents, including Stud
 
 Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
-![alt text](screenshots/image-4.png)
+![alt text](screenshots/v2.0/image-4.png)
 
 **Authentication**
 
@@ -148,7 +148,7 @@ Interceptor
 
 Created a secure login page with validation and error handling.
 
-![alt text](screenshots/image-5.png)
+![alt text](screenshots/v2.0/image-5.png)
 
 **Notification**
 
@@ -160,7 +160,7 @@ TypeScript: Used TypeScript for type safety and maintainability.
 
 Reactive Forms: Implemented reactive forms with dynamic controls and validation.
 
-![alt text](screenshots/image-7.png)
+![alt text](screenshots/v2.0/image-7.png)
 
 Reusability:
 
