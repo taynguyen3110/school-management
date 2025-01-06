@@ -9,14 +9,12 @@ import {
   Output,
 } from '@angular/core';
 import { AccordionButtonComponent } from '../accordion-button/accordion-button.component';
-import { route } from '../../../services/navigation.service';
 import { Params } from '@angular/router';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, AccordionButtonComponent, TitleCasePipe],
-  selector: 'sman-accordion-item',
-  templateUrl: 'accordion-item.component.html',
+    imports: [CommonModule, AccordionButtonComponent, TitleCasePipe],
+    selector: 'sman-accordion-item',
+    templateUrl: 'accordion-item.component.html'
 })
 export class AccordionItemComponent implements AfterContentInit {
   isAccordion: boolean = false;

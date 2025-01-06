@@ -1,36 +1,43 @@
-import { Component, inject } from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { UserProfile } from '../../types';
 import { AuthApiService } from '../../services/authApi.service';
 import { Router } from '@angular/router';
+import { CommonModule, TitleCasePipe } from '@angular/common';
+import { UserIconComponent } from './user-icon/user-icon.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'sman-header',
-  standalone: true,
-  imports: [SidebarComponent],
+  imports: [TitleCasePipe, CommonModule, UserIconComponent, FormsModule],
   templateUrl: './header.component.html',
-  // styleUrl: ''
 })
 export class HeaderComponent {
-  private router = inject(Router);
+  @Input() isShow: boolean = false;
+  @Input() title: string = '';
+  @Output() show = new EventEmitter<void>();
+  @Output() search = new EventEmitter<string>();
 
-  // displayMenu = false;
-  // selectedMenu = "Dashboard";
+  searchQuery: string = '';
 
-  // showMenu() {
-  //   this.displayMenu = true;
-  // }
+  constructor(private navigationService: NavigationService) {}
 
-  // hideMenu = () => {
-  //   this.displayMenu = false;
-  // }
-
-  // selectMenu(item: string) {
-  //   this.selectedMenu = item;
-  //   this.hideMenu();
-  // }
+  displayMenu(e: Event) {
+    e.stopPropagation();
+    this.show.emit();
+  }
 
   goToUserInfo() {
-    this.router.navigate(['/user']);
+    this.navigationService.toRoute('user');
+  }
+
+  handleSearch(): void {
+    this.navigationService.toRoute(
+      'search',
+      '',
+      { name: this.searchQuery },
+      false
+    );
   }
 }

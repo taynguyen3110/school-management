@@ -1,11 +1,9 @@
-<sman-page-layout title="classes">
-  @if (displayAddClass) {
-    <sman-add-class addNewForm (cancelForm)="hideAddForm()" />
-  }
+<sman-page-layout title="Classes" (createNew)="openDialog()">
   <sman-filter
     filter
     [nameOnly]="true"
     (filter)="filterClasses($event)"
+    (reset)="resetFilter()"
     [queryParams]="filterParams"
   ></sman-filter>
   <sman-item-table

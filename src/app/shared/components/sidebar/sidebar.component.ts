@@ -1,30 +1,45 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Params, RouterLink } from '@angular/router';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AccordionItemComponent } from './accordion-item/accordion-item.component';
 import { AccordionButtonComponent } from './accordion-button/accordion-button.component';
-import { NavigationService, route } from '../../services/navigation.service';
+import { NavigationService } from '../../services/navigation.service';
+import { ClickOutsideDirective } from '../../directives/clickOutside.directive';
+import { SidebarItemComponent } from './sidebar-item/sidebar-item.component';
+import { route } from '../../types';
 
 @Component({
-  selector: 'sman-sidebar',
-  standalone: true,
-  imports: [RouterLink, AccordionItemComponent, AccordionButtonComponent],
-  templateUrl: './sidebar.component.html',
-  schemas: [],
+    selector: 'sman-sidebar',
+    imports: [
+        RouterLink,
+        AccordionItemComponent,
+        AccordionButtonComponent,
+        ClickOutsideDirective,
+        SidebarItemComponent,
+    ],
+    templateUrl: './sidebar.component.html',
+    schemas: []
 })
-export class SidebarComponent {
-  selectedMenu: route = '';
+export class SidebarComponent implements OnInit, OnChanges {
+  @Input() selectedMenu: route = '';
+  @Output() closeMenu = new EventEmitter<void>();
+  @Output() selectMenu = new EventEmitter<route>();
 
   constructor(
     private authService: AuthService,
-    private navigateService: NavigationService,
   ) {}
 
+  ngOnChanges() {
+  }
+
+  ngOnInit() {}
+
   onSelectMenu(menu: route) {
-    this.selectedMenu = menu;
-    if (menu === '') {
-      this.navigateService.toRoute('');
-    }
+    this.selectMenu.emit(menu);
+  }
+
+  hideMenu() {
+    this.closeMenu.emit();
   }
 
   logOut() {

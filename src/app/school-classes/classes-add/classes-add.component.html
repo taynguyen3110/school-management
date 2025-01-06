@@ -1,35 +1,41 @@
 <sman-add-form-layout
-  [title]="isEdit ? 'Edit Class' : 'Add New Class'"
-  [layout]="isEdit ? 'edit' : 'add'"
+  title="Add New Class"
+  layout="add"
   [formGroup]="addClassForm"
-  (submit)="isEdit ? editClass($event) : addClass($event)"
-  (cancel)="cancelAddForm()"
+  [isDirty]="isDirty"
+  [dialogRef]="dialogRef"
+  (submit)="addClass($event)"
 >
   <ng-container formInputs>
     <div class="flex gap-4 w-full">
       <div class="w-1/2">
         <sman-input
-          [group]="addClassForm"
-          [control]="name"
+          formControlName="name"
           label="Class Name:"
           name="name"
           type="text"
           placeholder="Class Name"
+          [hasError]="formService.getCombinedErrors(name)"
           [errMsgs]="{
             required: 'Please enter the class name.',
           }"
         />
       </div>
-      <div class="flex flex-col w-1/3">
-        <label for="">Classes:</label>
+      <div class="flex flex-col w-1/2">
+        <label class="text-inputTitle mb-2 text-sm md:text-base"
+          >Students:</label
+        >
         <sman-multiselector
           [items]="studentList"
           placeholder="Select students to enroll."
           [lookUp]="true"
           [supportMulti]="true"
-          [selected]="isEdit ? classes.studentIds! : []"
           (inputTyped)="lookUpStudentsByName($event)"
           (select)="handleSelectStudent($event)"
+          [hasError]="formService.getCombinedErrors(studentIds)"
+          [errMsgs]="{
+            required: 'Please select student\'s classes.',
+          }"
         ></sman-multiselector>
       </div>
     </div>

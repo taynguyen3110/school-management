@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SchoolSubject } from '../shared/types';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,29 +9,30 @@ import { PaginationComponent } from '../shared/components/pagination/pagination.
 import { SubjectService } from './services/subject.service';
 import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'sman-subjects',
-  standalone: true,
-  imports: [
-    ItemTableComponent,
-    PaginationComponent,
-    AddSubjectComponent,
-    PageLayoutComponent,
-    FilterComponent,
-  ],
-  templateUrl: './subject-page.component.html',
+    selector: 'sman-subjects',
+    imports: [
+        ItemTableComponent,
+        PaginationComponent,
+        AddSubjectComponent,
+        PageLayoutComponent,
+        FilterComponent,
+    ],
+    templateUrl: './subject-page.component.html'
 })
 export class SubjectsComponent {
   subjectsCount: number = 0;
   itemPerPage: number = 0;
   totalPage: number = 0;
   subjects: SchoolSubject[] = [];
-  displayAddSubject: boolean = false;
   currentPage: number = 1;
   filterParams: Params = {};
 
   unsubscribe$ = new Subject<void>();
+
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private subjectService: SubjectService,
@@ -40,12 +41,9 @@ export class SubjectsComponent {
   ) {}
 
   ngOnInit() {
-    this.displayAddSubject =
-      this.route.snapshot.queryParamMap.get('addSubject') === 'true';
     this.route.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddSubject = params['addSubject'] === 'true';
         this.filterParams = params;
         if (!params['page']) {
           this.navigationService.toRoute(
@@ -63,6 +61,15 @@ export class SubjectsComponent {
       });
   }
 
+  openDialog(): void {
+    this.dialog.open(AddSubjectComponent, {
+      panelClass: ['overflow-auto', 'hide-scrollbar'],
+      maxWidth: '700px',
+      width: '80vw',
+      disableClose: true,
+    });
+  }
+
   fetchSubjects(filter?: Params) {
     return this.subjectService.getSubjects(filter);
   }
@@ -78,14 +85,6 @@ export class SubjectsComponent {
     this.totalPage = data.totalPages;
   }
 
-  showAddSubjectForm() {
-    this.displayAddSubject = true;
-  }
-
-  hideAddSubjectForm = () => {
-    this.navigationService.toRoute('subjects', 'delete', ['addSubject'], true);
-  };
-
   filterSubjects(filterParams: any) {
     let newParams: Params = {};
     if (filterParams.isNotSort) {
@@ -94,6 +93,10 @@ export class SubjectsComponent {
       newParams = { ...filterParams, page: 1 };
       this.navigationService.toRoute('subjects', 'add', newParams, true);
     }
+  }
+
+  resetFilter() {
+    this.navigationService.toRoute('subjects', 'delete', ['name', 'classIds']);
   }
 
   ngOnDestroy() {

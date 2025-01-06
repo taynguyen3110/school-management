@@ -1,0 +1,21 @@
+<sman-add-form-layout
+  title="Edit Student Enrollment Information"
+  layout="edit"
+  [formGroup]="editTeacherEnrollmentInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <sman-date-input
+      formControlName="admissionDate"
+      label="Admission Date:"
+      name="admissionDate"
+      [hasError]="formService.getCombinedErrors(admissionDate)"
+      [errMsgs]="{
+        required: 'Please enter your admission date.',
+      }"
+    />
+  </ng-container>
+</sman-add-form-layout>

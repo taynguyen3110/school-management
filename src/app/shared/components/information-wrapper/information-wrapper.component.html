@@ -1,0 +1,29 @@
+<div class="flex items-center border border-gray-200 rounded-2xl px-4 py-4">
+  @if(!profilePic) {
+  <div>
+    <div class="font-semibold text-sm mb-6 sm:mb-8">
+      <ng-content select="[title]"></ng-content>
+    </div>
+    <div class="flex flex-wrap gap-4 sm:gap-6">
+      <ng-content select="[content]"></ng-content>
+    </div>
+  </div>
+  } @else {
+  <ng-content></ng-content>
+  }
+  <div
+    class="ml-auto min-w-[68px]"
+    [ngClass]="{ 'h-full mb-auto': !profilePic }"
+  >
+    @if (editable) {
+    <sman-button
+      text="Edit"
+      btnType="edit"
+      className=""
+      (buttonClick)="edit.emit()"
+    >
+      <i icon class="fa-regular fa-pen-to-square"></i>
+    </sman-button>
+    }
+  </div>
+</div>

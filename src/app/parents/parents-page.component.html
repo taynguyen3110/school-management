@@ -1,10 +1,8 @@
-<sman-page-layout title="parents">
-  @if (displayAddParent) {
-    <sman-add-parent addNewForm (cancel)="hideAddParentForm()" />
-  }
+<sman-page-layout title="Parents" (createNew)="openDialog()">
   <sman-filter
     filter
     (filter)="filterParents($event)"
+    (reset)="resetFilter()"
     [queryParams]="filterParams"
   ></sman-filter>
   <sman-item-table
@@ -14,12 +12,12 @@
     (sort)="filterParents($event)"
   ></sman-item-table>
   @if (parentsCount) {
-    <sman-pagination
-      pagination
-      [pageSize]="itemPerPage"
-      [totalCount]="parentsCount"
-      [currentPage]="currentPage"
-      (pageChange)="handlePageChange($event)"
-    />
+  <sman-pagination
+    pagination
+    [pageSize]="itemPerPage"
+    [totalCount]="parentsCount"
+    [currentPage]="currentPage"
+    (pageChange)="handlePageChange($event)"
+  />
   }
 </sman-page-layout>

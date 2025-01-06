@@ -1,27 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { GenderRatioComponent } from './gender-ratio/gender-ratio.component';
 import { StatsWrapperComponent } from './stats-wrapper/stats-wrapper.component';
 import { EnrollmentStatsComponent } from './enrollment-stats/enrollment-stats.component';
 import { StatsCellComponent } from './stats-cell/stats-cell.component';
-import {
-  NavigationService,
-  route,
-} from '../shared/services/navigation.service';
+import { NavigationService } from '../shared/services/navigation.service';
 import { DashboardService } from './service/dashboard.service';
 import { NoticeNewsComponent } from './notice-news/notice-news.component';
+import { ScreenService } from '../shared/services/screen.service';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  Subject,
+  takeUntil,
+} from 'rxjs';
+import { HeadingComponent } from '../shared/components/heading/heading.component';
+import { route, SchoolSubject } from '../shared/types';
+import { SubjectService } from '../subjects/services/subject.service';
+import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 
 @Component({
-  selector: 'sman-dashboard',
-  standalone: true,
-  imports: [
-    GenderRatioComponent,
-    StatsWrapperComponent,
-    EnrollmentStatsComponent,
-    StatsCellComponent,
-    NoticeNewsComponent,
-  ],
-  templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss',
+    selector: 'sman-dashboard',
+    imports: [
+        GenderRatioComponent,
+        StatsWrapperComponent,
+        EnrollmentStatsComponent,
+        StatsCellComponent,
+        NoticeNewsComponent,
+        HeadingComponent,
+        ItemTableComponent,
+    ],
+    templateUrl: './dashboard-page.component.html',
+    styleUrl: './dashboard-page.component.scss'
 })
 export class DashboardComponent implements OnInit {
   studentCount: number = 0;
@@ -31,6 +40,7 @@ export class DashboardComponent implements OnInit {
   teacherCount: number = 0;
   classCount: number = 0;
   enrollmentsPerYear: any[] = [];
+  todaySubjects: SchoolSubject[] = [];
 
   notices: Notice[] = [
     {
@@ -63,11 +73,18 @@ export class DashboardComponent implements OnInit {
       image: 'http://localhost:3001/photos/student(7).jpg',
       views: 25,
     },
+    {
+      title: 'Sports day celebration 2023',
+      date: '2023-10-24',
+      image: 'http://localhost:3001/photos/student(3).jpg',
+      views: 151,
+    },
   ];
 
   constructor(
     private navigationService: NavigationService,
     private dashboardService: DashboardService,
+    private subjectService: SubjectService
   ) {}
 
   ngOnInit() {
@@ -84,6 +101,25 @@ export class DashboardComponent implements OnInit {
       this.classCount = data.classCount;
       this.enrollmentsPerYear = data.enrollmentsPerYear;
     });
+    this.subjectService
+      .getSubjects({ schedule: this.getDayOfWeek() })
+      .subscribe((data) => {
+        this.todaySubjects = data.subjects;
+      });
+  }
+
+  getDayOfWeek(): string {
+    const daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    const today = new Date().getDay();
+    return daysOfWeek[today];
   }
 
   handleClick(url: route) {

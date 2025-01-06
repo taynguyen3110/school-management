@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -17,10 +24,15 @@ import { toLabelObject } from '../../shared/components/multiselector/utils/toLab
 import { ParentsService } from '../../parents/services/parents.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { ClassesService } from '../../school-classes/services/classes.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { HeadingComponent } from '../../shared/components/heading/heading.component';
+import { AddressAutocompleteComponent } from '../../shared/components/address-autocomplete/address-autocomplete.component';
+import { DateInputComponent } from '../../shared/components/date-input/date-input.component';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
   selector: 'sman-add-student',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
@@ -28,17 +40,20 @@ import { ClassesService } from '../../school-classes/services/classes.service';
     AddNewFormLayoutComponent,
     InputComponent,
     MultiSelectorComponent,
+    MatDialogModule,
+    MatButtonModule,
+    HeadingComponent,
+    AddressAutocompleteComponent,
+    DateInputComponent,
   ],
   templateUrl: './student-add.component.html',
 })
-export class AddStudentComponent implements OnInit {
-  @Input() isEdit: boolean = false;
-  @Input() student!: Student;
-
-  @Output() cancelForm = new EventEmitter();
-
+export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
   classesList: LabelObj[] = [];
   parentsList: LabelObj[] = [];
+  isDirty: boolean = false;
+
+  readonly dialogRef = inject(MatDialogRef<AddStudentComponent>);
 
   constructor(
     private fb: FormBuilder,
@@ -46,14 +61,23 @@ export class AddStudentComponent implements OnInit {
     private studentService: StudentService,
     private classesService: ClassesService,
     private parentsService: ParentsService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
+
+  ngOnInit() {
+    this.getClassList();
+    this.addStudentForm.valueChanges.subscribe(() => {
+      this.isDirty = checkFormChange(this.addStudentForm);
+    });
+  }
+
+  ngAfterViewInit(): void {}
 
   addStudentForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     gender: ['', [Validators.required]],
-    classIds: [[] as string[], []],
+    classIds: [[] as string[], [Validators.required]],
     parentIds: [[] as string[], [Validators.required]],
     address: ['', [Validators.required]],
     dateOfBirth: ['', [Validators.required]],
@@ -100,25 +124,9 @@ export class AddStudentComponent implements OnInit {
     return this.addStudentForm.get('profileUrl') as FormControl;
   }
 
-  ngOnInit() {
-    this.getClassList();
-    if (this.isEdit) {
-      this.patchStudentInfo();
-    }
-  }
-
-  patchStudentInfo() {
-    const { id, parents, classes, ...values } = this.student;
-    this.addStudentForm.setValue(values as any);
-  }
-
   choosePhoto(photoUrl: string) {
     this.profileUrl.setValue(photoUrl);
   }
-
-  cancelAddForm = () => {
-    this.cancelForm.emit();
-  };
 
   getClassList() {
     this.classesService.getClasses().subscribe((data) => {
@@ -158,18 +166,11 @@ export class AddStudentComponent implements OnInit {
     this.studentService
       .addStudent(this.addStudentForm.value as Student)
       .subscribe(() => {
-        this.cancelAddForm();
+        this.isDirty = false;
+        this.dialogRef.close();
         this.notificationService.notify('Student added successfully!');
       });
   }
 
-  editStudent = (e: Event) => {
-    e.preventDefault();
-    this.studentService
-      .updateStudent(this.student.id!, this.addStudentForm.value as Student)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Student updated successfully!');
-      });
-  };
+  ngOnDestroy(): void {}
 }

@@ -1,39 +1,38 @@
 <sman-add-form-layout
-  [title]="isEdit ? 'Edit Parent' : 'Add New Parent'"
-  [layout]="isEdit ? 'edit' : 'add'"
+  title="Add New Parent"
+  layout="add"
   [formGroup]="addParentForm"
-  (submit)="isEdit ? editParent($event) : addParent($event)"
-  (cancel)="cancelAddForm()"
+  [isDirty]="isDirty"
+  [dialogRef]="dialogRef"
+  (submit)="addParent($event)"
 >
   <ng-container formInputs>
     <div class="flex gap-4 w-full">
       <!-- First Name -->
       <div class="w-1/2">
         <sman-input
-          [group]="addParentForm"
-          [control]="firstName"
+          formControlName="firstName"
           label="First Name:"
           name="firstName"
           type="text"
           placeholder="First Name"
+          [hasError]="formService.getCombinedErrors(firstName)"
           [errMsgs]="{
             required: 'Please enter your first name.',
-            minlength: 'Minimum character for first name doesn\'t met.',
           }"
         />
       </div>
       <!-- Last Name -->
       <div class="w-1/2">
         <sman-input
-          [group]="addParentForm"
-          [control]="lastName"
+          formControlName="lastName"
           label="Last Name:"
           name="lastName"
           type="text"
           placeholder="Last Name"
+          [hasError]="formService.getCombinedErrors(lastName)"
           [errMsgs]="{
             required: 'Please enter your last name.',
-            minlength: 'Minimum character for last name doesn\'t met.',
           }"
         />
       </div>
@@ -41,13 +40,12 @@
     <div class="flex gap-4">
       <!-- Address -->
       <div class="w-full">
-        <sman-input
-          [group]="addParentForm"
-          [control]="address"
+        <sman-address-autocomplete
+          formControlName="address"
           label="Address:"
           name="address"
-          type="text"
           placeholder="Address"
+          [hasError]="formService.getCombinedErrors(address)"
           [errMsgs]="{
             required: 'Please enter your address.',
           }"
@@ -58,13 +56,12 @@
       <!-- Phone -->
       <div class="w-1/2">
         <sman-input
-          [group]="addParentForm"
-          [control]="phone"
+          formControlName="phone"
           label="Phone:"
           name="phone"
           placeholder="Phone"
           type="tel"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          [hasError]="formService.getCombinedErrors(phone)"
           [errMsgs]="{
             required: 'Please enter your phone.',
           }"
@@ -73,12 +70,12 @@
       <!-- Email -->
       <div class="w-1/2">
         <sman-input
-          [group]="addParentForm"
-          [control]="email"
+          formControlName="email"
           label="Email:"
           name="email"
           type="text"
           placeholder="Email"
+          [hasError]="formService.getCombinedErrors(email)"
           [errMsgs]="{
             required: 'Please enter your email.',
           }"
@@ -88,7 +85,7 @@
   </ng-container>
   <sman-photo-uploader
     photoUploader
-    [inputUrl]="isEdit ? parent.profileUrl : ''"
+    [inputUrl]="''"
     (photoUploaded)="choosePhoto($event)"
   ></sman-photo-uploader>
 </sman-add-form-layout>

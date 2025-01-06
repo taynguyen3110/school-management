@@ -1,0 +1,41 @@
+<sman-add-form-layout
+  title="Edit Student Profile"
+  layout="edit"
+  [formGroup]="editParentProfileInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <!-- First Name -->
+    <sman-input
+      formControlName="firstName"
+      className="pb-2"
+      label="First Name:"
+      name="firstName"
+      placeholder="First Name"
+      [hasError]="formService.getCombinedErrors(firstName)"
+      [errMsgs]="{
+        required: 'Please enter your first name.',
+      }"
+    />
+    <!-- Last Name -->
+    <sman-input
+      formControlName="lastName"
+      className="pb-2"
+      label="Last Name:"
+      name="lastName"
+      placeholder="Last Name"
+      [hasError]="formService.getCombinedErrors(lastName)"
+      [errMsgs]="{
+        required: 'Please enter your last name.',
+      }"
+    />
+    <sman-photo-uploader
+      photoUploader
+      [inputUrl]="parent.profileUrl"
+      (photoUploaded)="choosePhoto($event)"
+    ></sman-photo-uploader>
+  </ng-container>
+</sman-add-form-layout>

@@ -1,3 +1,5 @@
+import { ScreenService } from './services/screen.service';
+
 export interface AuthState {
   access: {
     token: string;
@@ -84,3 +86,15 @@ export interface LabelObj {
   id: string;
   label: string;
 }
+
+export type route =
+  | ''
+  | 'students'
+  | 'teachers'
+  | 'parents'
+  | 'subjects'
+  | 'classes'
+  | 'user'
+  | 'search';
+
+export type ScreenSize = keyof typeof ScreenService.prototype.breakpoints;

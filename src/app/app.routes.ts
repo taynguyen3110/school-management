@@ -1,17 +1,6 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard-page.component';
-import { StudentsComponent } from './students/student-page/students-page.component';
-import { TeachersComponent } from './teachers/teachers-page.component';
-import { ParentsComponent } from './parents/parents-page.component';
-import { UserPageComponent } from './user-page/user-page.component';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
-import { StudentProfileComponent } from './students/student-profile/student-profile.component';
-import { ParentProfileComponent } from './parents/parent-profile/parent-profile.component';
-import { TeacherProfileComponent } from './teachers/teacher-profile/teacher-profile.component';
-import { SubjectsComponent } from './subjects/subject-page.component';
-import { SubjectDetailComponent } from './subjects/subject-detail/subject-detail.component';
-import { ClassesComponent } from './school-classes/classes-page.component';
-import { ClassDetailComponent } from './school-classes/classes-detail/classes-detail.component';
+// import { CanDeactivateGuard } from './shared/guards/can-deactivate.guard';
 
 export const routes: Routes = [
   {
@@ -20,65 +9,112 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'Dashboard',
-        component: DashboardComponent,
+        title: 'Dashboard - School Management',
+        loadComponent: () =>
+          import('./dashboard/dashboard-page.component').then(
+            (m) => m.DashboardComponent
+          ),
       },
       {
         path: 'students',
-        title: 'Students',
-        component: StudentsComponent,
+        title: 'Students - School Management',
+        loadComponent: () =>
+          import('./students/student-page/students-page.component').then(
+            (m) => m.StudentsComponent
+          ),
+        // canDeactivate: [CanDeactivateGuard],
       },
       {
         path: 'students/:id',
-        component: StudentProfileComponent,
+        loadComponent: () =>
+          import('./students/student-profile/student-profile.component').then(
+            (m) => m.StudentProfileComponent
+          ),
       },
       {
         path: 'teachers',
-        title: 'Teachers',
-        component: TeachersComponent,
+        title: 'Teachers - School Management',
+        loadComponent: () =>
+          import('./teachers/teachers-page.component').then(
+            (m) => m.TeachersComponent
+          ),
       },
       {
         path: 'teachers/:id',
-        component: TeacherProfileComponent,
+        loadComponent: () =>
+          import('./teachers/teacher-profile/teacher-profile.component').then(
+            (m) => m.TeacherProfileComponent
+          ),
       },
       {
         path: 'parents',
-        title: 'Parents',
-        component: ParentsComponent,
+        title: 'Parents - School Management',
+        loadComponent: () =>
+          import('./parents/parents-page.component').then(
+            (m) => m.ParentsComponent
+          ),
       },
       {
         path: 'parents/:id',
-        component: ParentProfileComponent,
+        loadComponent: () =>
+          import('./parents/parent-profile/parent-profile.component').then(
+            (m) => m.ParentProfileComponent
+          ),
       },
       {
         path: 'subjects',
-        title: 'Subjects',
-        component: SubjectsComponent,
+        title: 'Subjects - School Management',
+        loadComponent: () =>
+          import('./subjects/subject-page.component').then(
+            (m) => m.SubjectsComponent
+          ),
       },
       {
         path: 'subjects/:id',
-        component: SubjectDetailComponent,
+        loadComponent: () =>
+          import('./subjects/subject-detail/subject-detail.component').then(
+            (m) => m.SubjectDetailComponent
+          ),
       },
       {
         path: 'classes',
-        title: 'Classes',
-        component: ClassesComponent,
+        title: 'Classes - School Management',
+        loadComponent: () =>
+          import('./school-classes/classes-page.component').then(
+            (m) => m.ClassesComponent
+          ),
       },
       {
         path: 'classes/:id',
-        component: ClassDetailComponent,
+        loadComponent: () =>
+          import(
+            './school-classes/classes-detail/classes-detail.component'
+          ).then((m) => m.ClassDetailComponent),
       },
       {
         path: 'user',
-        title: 'User',
-        component: UserPageComponent,
+        title: 'User - School Management',
+        loadComponent: () =>
+          import('./user-page/user-page.component').then(
+            (m) => m.UserPageComponent
+          ),
+      },
+      {
+        path: 'search',
+        title: 'Search Result - School Management',
+        loadComponent: () =>
+          import('./global-search/global-search.component').then(
+            (m) => m.GlobalSearchComponent
+          ),
+      },
+      {
+        path: '**',
+        title: 'Dashboard - School Management',
+        loadComponent: () =>
+          import('./dashboard/dashboard-page.component').then(
+            (m) => m.DashboardComponent
+          ),
       },
     ],
   },
-
-  // {
-  //     path: '**',
-  //     title: 'Dashboard',
-  //     component: DashboardComponent
-  // }
 ];

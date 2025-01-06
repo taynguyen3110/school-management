@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  inject,
   Input,
   OnInit,
   Output,
@@ -25,25 +26,23 @@ import { toLabelObject } from '../../shared/components/multiselector/utils/toLab
 import { TeacherService } from '../../teachers/services/teacher.service';
 import { ClassesService } from '../../school-classes/services/classes.service';
 import { SchoolSubject, LabelObj } from '../../shared/types';
+import { MatDialogRef } from '@angular/material/dialog';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    AddNewFormLayoutComponent,
-    InputComponent,
-    MultiSelectorComponent,
-  ],
-  selector: 'sman-add-subject',
-  templateUrl: 'subject-add.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        AddNewFormLayoutComponent,
+        InputComponent,
+        MultiSelectorComponent,
+    ],
+    selector: 'sman-add-subject',
+    templateUrl: 'subject-add.component.html'
 })
 export class AddSubjectComponent implements OnInit {
-  @Input() isEdit: boolean = false;
   @Input() subject!: SchoolSubject;
-
-  @Output() cancelForm = new EventEmitter();
 
   classList: LabelObj[] = [];
   weekDays: LabelObj[] = [
@@ -55,13 +54,17 @@ export class AddSubjectComponent implements OnInit {
   ];
   teacherList: LabelObj[] = [];
 
+  isDirty: boolean = false;
+
+  readonly dialogRef = inject(MatDialogRef<AddSubjectComponent>);
+
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
     private subjectService: SubjectService,
     private teacherService: TeacherService,
     private classesService: ClassesService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   addSubjectForm = this.fb.group({
@@ -85,18 +88,9 @@ export class AddSubjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.patchSubjectInfo();
-    }
-  }
-
-  patchSubjectInfo() {
-    const { id, ...values } = this.subject;
-    this.addSubjectForm.setValue(values as any);
-  }
-
-  cancelAddForm() {
-    this.cancelForm.emit();
+    this.addSubjectForm.valueChanges.subscribe(() => {
+      this.isDirty = checkFormChange(this.addSubjectForm);
+    });
   }
 
   lookUpClassesByName(name: string) {
@@ -131,21 +125,9 @@ export class AddSubjectComponent implements OnInit {
     this.subjectService
       .addSubject(this.addSubjectForm.value as SchoolSubject)
       .subscribe(() => {
-        this.cancelAddForm();
+        this.isDirty = false;
+        this.dialogRef.close();
         this.notificationService.notify('Subject added successfully!');
       });
   }
-
-  editSubject = (e: Event) => {
-    e.preventDefault();
-    this.subjectService
-      .updateSubject(
-        this.subject.id!,
-        this.addSubjectForm.value as SchoolSubject,
-      )
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Subject updated successfully!');
-      });
-  };
 }

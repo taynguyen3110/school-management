@@ -1,0 +1,14 @@
+<div
+  class="mt-2 text-primary2"
+  [ngStyle]="{
+    'padding-top': spacing + 'px',
+    'padding-bottom': spacing + 'px'
+  }"
+  [class]="classname"
+  [ngClass]="{
+'font-semibold md:text-lg' : heading == 2,
+'text-2xl font-semibold text-center hidden md:block' : heading == 1,
+  }"
+>
+  {{ title }}
+</div>

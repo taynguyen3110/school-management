@@ -7,31 +7,32 @@ import { ChangePasswordComponent } from './change-password.component';
 import { EditProfileComponent } from './edit-profile.component';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
+import { ButtonComponent } from '../shared/components/button/button.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'sman-user-page',
-  standalone: true,
   imports: [
     CommonModule,
     JsonPipe,
     ReactiveFormsModule,
     ChangePasswordComponent,
     EditProfileComponent,
+    ButtonComponent,
   ],
   templateUrl: './user-page.component.html',
-  styleUrl: './user-page.component.scss',
 })
 export class UserPageComponent {
   user?: UserProfile;
-  isEdit: boolean = false;
-  isChangePassword: boolean = false;
   isLoading: boolean = false;
 
   unsubscribe$ = new Subject<void>();
 
+  readonly dialog = inject(MatDialog);
+
   constructor(
     private authApi: AuthApiService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -47,26 +48,34 @@ export class UserPageComponent {
     this.user = user;
   };
 
-  editMode() {
-    this.isEdit = true;
+  openEditProfileDialog() {
+    const dialogRef = this.dialog.open(EditProfileComponent, {
+      maxWidth: '500px',
+      width: '80vw',
+      disableClose: true,
+      data: {
+        ...this.user,
+      },
+    });
+    dialogRef.afterClosed().subscribe((user) => {
+      if (user) this.user = user;
+    });
   }
 
-  cancelEdit = () => {
-    this.isEdit = false;
-  };
-
-  changePasswordMode() {
-    this.isChangePassword = true;
+  openEditPasswordDialog() {
+    this.dialog.open(ChangePasswordComponent, {
+      maxWidth: '500px',
+      width: '80vw',
+      disableClose: true,
+      data: {
+        ...this.user,
+      },
+    });
   }
-
-  cancelChangePassword = () => {
-    this.isChangePassword = false;
-  };
 
   onChangePassword(password: string) {
     this.authApi.changePassword(password).subscribe(() => {
       this.notificationService.notify('Password changed successfully');
-      this.isChangePassword = false;
     });
   }
 

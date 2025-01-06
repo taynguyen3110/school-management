@@ -20,20 +20,65 @@ body {
 
 /* Set a consistent line-height and remove text decoration for links */
 body {
+  margin: 0;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-family: "Inter", sans-serif;
 }
-html,
-body {
-  height: 100%;
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
 
-/* styles.css or styles.scss */
-.success-notification {
+mat-form-field {
+  --mdc-filled-text-field-container-color: white;
+  height: 69px;
+  border-radius: 0.75rem;
+}
+mat-calendar {
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid rgb(235, 235, 235);
+  @apply shadow-xl
+}
+
+.mdc-line-ripple {
+  display: none;
+}
+
+.mdc-text-field--filled {
+  border-radius: 0.75rem !important;
+  border: 1px solid rgb(235, 235, 235);
+}
+
+.border-red .mdc-text-field--filled {
+  border: 1px solid rgb(220 38 38);
+}
+
+.mat-mdc-dialog-surface {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mat-mdc-dialog-surface::-webkit-scrollbar {
+  display: none;
+}
+
+.mat-mdc-form-field-hint {
+  color: #969696;
+}
+
+// address-autocomplete
+.pac-container {
+@apply rounded-lg p-2
+}
+
+.pac-item {
+  font-family: "Inter", sans-serif;
+  @apply py-1;
 }

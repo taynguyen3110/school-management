@@ -1,58 +1,72 @@
 <sman-add-form-layout
-  [title]="isEdit ? 'Edit Subject' : 'Add New Subject'"
-  [layout]="isEdit ? 'edit' : 'add'"
+  title="Add New Subject"
+  layout="add"
   [formGroup]="addSubjectForm"
-  (submit)="isEdit ? editSubject($event) : addSubject($event)"
-  (cancel)="cancelAddForm()"
+  [isDirty]="isDirty"
+  [dialogRef]="dialogRef"
+  (submit)="addSubject($event)"
 >
   <ng-container formInputs>
     <div class="flex gap-4 w-full">
       <!-- Name -->
       <div class="w-1/2">
         <sman-input
-          [group]="addSubjectForm"
-          [control]="name"
+          formControlName="name"
           label="Subject Name:"
           name="name"
           type="text"
           placeholder="Subject Name"
+          [hasError]="formService.getCombinedErrors(name)"
           [errMsgs]="{
             required: 'Please enter subject name.',
           }"
         />
       </div>
       <div class="flex flex-col w-1/2 relative z-50">
-        <label for="">Class:</label>
+        <label class="text-inputTitle mb-2 text-sm md:text-base">Class:</label>
         <sman-multiselector
           [items]="classList"
           placeholder="Class of this subject."
           [lookUp]="true"
-          [selected]="isEdit ? [subject.classId] : []"
           (inputTyped)="lookUpClassesByName($event)"
           (select)="handleSelectClass($event)"
+          [hasError]="formService.getCombinedErrors(classId)"
+          [errMsgs]="{
+            required: 'Please select subject\'s class.',
+          }"
         ></sman-multiselector>
       </div>
     </div>
     <div class="flex gap-4">
       <div class="flex flex-col w-1/2">
-        <label for="">Schedule:</label>
+        <label class="text-inputTitle mb-2 text-sm md:text-base"
+          >Schedule:</label
+        >
         <sman-multiselector
           [items]="weekDays"
           placeholder="Subject schedule."
           [supportMulti]="true"
-          [selected]="isEdit ? subject.daysOfWeek : []"
           (select)="handleSelectSchedule($event)"
+          [hasError]="formService.getCombinedErrors(daysOfWeek)"
+          [errMsgs]="{
+            required: 'Please select subject\'s schedule.',
+          }"
         ></sman-multiselector>
       </div>
       <div class="flex flex-col w-1/2">
-        <label for="">Teacher:</label>
+        <label class="text-inputTitle mb-2 text-sm md:text-base"
+          >Teacher:</label
+        >
         <sman-multiselector
           [items]="teacherList"
           placeholder="Teacher of this subject."
           [lookUp]="true"
-          [selected]="isEdit ? [subject.teacherId] : []"
           (inputTyped)="lookUpTeachersByName($event)"
           (select)="handleSelectTeacher($event)"
+          [hasError]="formService.getCombinedErrors(teacherId)"
+          [errMsgs]="{
+            required: 'Please select subject\'s teacher.',
+          }"
         ></sman-multiselector>
       </div>
     </div>

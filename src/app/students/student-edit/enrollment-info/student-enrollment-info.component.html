@@ -1,0 +1,63 @@
+<sman-add-form-layout
+  title="Edit Student Enrollment Information"
+  layout="edit"
+  [formGroup]="editStudentEnrollmentInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <sman-date-input
+      formControlName="admissionDate"
+      label="Admission Date:"
+      name="admissionDate"
+      [hasError]="formService.getCombinedErrors(admissionDate)"
+      [errMsgs]="{
+        required: 'Please enter your admission date.',
+      }"
+    />
+    <form>
+      <div class="md:flex md:gap-4 mb-5">
+        <div class="flex flex-col md:w-1/2 relative z-50">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Classes:</label
+          >
+          <sman-multiselector
+            [items]="classesList"
+            placeholder="Select class to enroll."
+            [lookUp]="true"
+            [supportMulti]="true"
+            [selected]="toLabelObject(student.classes!, 'id', ['name'])"
+            (inputTyped)="lookUpClassesByName($event)"
+            (select)="handleSelectClass($event)"
+            [hasError]="formService.getCombinedErrors(classIds)"
+            [errMsgs]="{
+        required: 'Please select class to enroll.',
+      }"
+          ></sman-multiselector>
+        </div>
+        <div class="flex flex-col md:w-1/2">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Parents:</label
+          >
+          <sman-multiselector
+            [items]="parentsList"
+            placeholder="Parents of this student."
+            [lookUp]="true"
+            [supportMulti]="true"
+            [selected]="
+              toLabelObject(student.parents!, 'id', ['firstName', 'lastName'])
+            "
+            (inputTyped)="lookUpParentsByName($event)"
+            (select)="handleSelectParents($event)"
+            [hasError]="formService.getCombinedErrors(parentIds)"
+            [errMsgs]="{
+        required: 'Please select parents of this student.',
+      }"
+          ></sman-multiselector>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</sman-add-form-layout>

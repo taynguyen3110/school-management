@@ -1,0 +1,55 @@
+<sman-add-form-layout
+  title="Edit Parent Personal Information"
+  layout="edit"
+  [formGroup]="editParentPersonalInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <div class="flex gap-4">
+      <!-- Address -->
+      <sman-input
+        formControlName="address"
+        class="w-full"
+        label="Address:"
+        name="address"
+        type="text"
+        placeholder="Address"
+        [hasError]="formService.getCombinedErrors(address)"
+        [errMsgs]="{
+          required: 'Please enter your address.',
+        }"
+      />
+    </div>
+    <div class="md:flex md:gap-4">
+      <!-- Phone -->
+      <sman-input
+        formControlName="phone"
+        class="w-1/2"
+        label="Phone:"
+        name="phone"
+        placeholder="Phone"
+        type="tel"
+        [hasError]="formService.getCombinedErrors(phone)"
+        [errMsgs]="{
+          required: 'Please enter your phone.',
+        }"
+      />
+      <!-- Email -->
+      <sman-input
+        formControlName="email"
+        class="w-1/2"
+        label="Email:"
+        name="email"
+        type="text"
+        placeholder="Email"
+        [hasError]="formService.getCombinedErrors(email)"
+        [errMsgs]="{
+          required: 'Please enter your email.',
+        }"
+      />
+    </div>
+  </ng-container>
+</sman-add-form-layout>

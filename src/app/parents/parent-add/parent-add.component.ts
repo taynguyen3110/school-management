@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,30 +13,33 @@ import { Parent } from '../../shared/types';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { NotificationService } from '../../shared/services/notification.service';
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    PhotoUploaderComponent,
-    InputComponent,
-    AddNewFormLayoutComponent,
-  ],
-  selector: 'sman-add-parent',
-  templateUrl: 'parent-add.component.html',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        PhotoUploaderComponent,
+        InputComponent,
+        AddNewFormLayoutComponent,
+        AddressAutocompleteComponent
+    ],
+    selector: 'sman-add-parent',
+    templateUrl: 'parent-add.component.html'
 })
 export class AddParentComponent implements OnInit {
-  @Input() isEdit: boolean = false;
   @Input() parent!: Parent;
 
-  @Output() cancel = new EventEmitter();
+  isDirty: boolean = false;
+
+  readonly dialogRef = inject(MatDialogRef<AddParentComponent>);
 
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
     private parentService: ParentsService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   addParentForm = this.fb.group({
@@ -71,41 +74,25 @@ export class AddParentComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.patchParentInfo();
-    }
-  }
-
-  patchParentInfo() {
-    const { id, ...values } = this.parent;
-    this.addParentForm.setValue(values as any);
+    this.addParentForm.valueChanges.subscribe(() => {
+      this.isDirty = this.addParentForm.dirty;
+    });
   }
 
   choosePhoto(photoUrl: string) {
     this.profileUrl.setValue(photoUrl);
   }
 
-  cancelAddForm = () => {
-    this.cancel.emit();
-  };
-
   addParent(e: Event) {
     e.preventDefault();
-    this.parentService
-      .addParent(this.addParentForm.value as Parent)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Parent added successfully!');
-      });
+    // this.parentService
+    //   .addParent(this.addParentForm.value as Parent)
+    //   .subscribe(() => {
+    //     this.isDirty = false;
+    //     this.dialogRef.close();
+    //     this.notificationService.notify('Parent added successfully!');
+    //   });
+    console.log(this.addParentForm.value);
+    
   }
-
-  editParent = (e: Event) => {
-    e.preventDefault();
-    this.parentService
-      .updateParent(this.parent.id!, this.addParentForm.value as Parent)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Parent updated successfully!');
-      });
-  };
 }

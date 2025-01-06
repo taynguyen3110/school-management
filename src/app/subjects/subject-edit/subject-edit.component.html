@@ -1,0 +1,68 @@
+<sman-add-form-layout
+  title="Edit Student Enrollment Information"
+  layout="edit"
+  [formGroup]="editSubjectInfoForm"
+  [dialogRef]="dialogRef"
+  [isDirty]="formChanged"
+  (submit)="edit()"
+  [disableSubmit]="!formChanged"
+>
+  <ng-container formInputs>
+    <form>
+      <div class=" mb-5">
+        <div class="flex flex-col relative z-50 mb-4">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Classes:</label
+          >
+          <sman-multiselector
+            [items]="classesList"
+            placeholder="Select class to enroll."
+            [lookUp]="true"
+            [selected]="toLabelObj([subject.class], 'id', ['name'])"
+            (inputTyped)="lookUpClassesByName($event)"
+            (select)="handleSelectClass($event)"
+            [hasError]="formService.getCombinedErrors(classId)"
+            [errMsgs]="{
+        required: 'Please select class to enroll.',
+      }"
+          ></sman-multiselector>
+        </div>
+        <div class="flex flex-col relative z-40 mb-4">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Schedule:</label
+          >
+          <sman-multiselector
+            [items]="weekDays"
+            placeholder="Subject schedule."
+            [supportMulti]="true"
+            [selected]="scheduleLabelObj"
+            (select)="handleSelectSchedule($event)"
+            [hasError]="formService.getCombinedErrors(daysOfWeek)"
+            [errMsgs]="{
+            required: 'Please select subject\'s schedule.',
+          }"
+          ></sman-multiselector>
+        </div>
+        <div class="flex flex-col mb-4">
+          <label class="text-inputTitle mb-2 text-sm md:text-base" for=""
+            >Teacher:</label
+          >
+          <sman-multiselector
+            [items]="teacherList"
+            placeholder="Teacher of this subject."
+            [lookUp]="true"
+            [selected]="
+              toLabelObj([subject.teacher], 'id', ['firstName', 'lastName'])
+            "
+            (inputTyped)="lookUpTeachersByName($event)"
+            (select)="handleSelectTeacher($event)"
+            [hasError]="formService.getCombinedErrors(teacherId)"
+            [errMsgs]="{
+        required: 'Please select parents of this student.',
+      }"
+          ></sman-multiselector>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</sman-add-form-layout>

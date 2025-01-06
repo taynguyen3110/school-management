@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { QueryService } from './query.service';
+import { route } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -41,11 +42,3 @@ export class NavigationService {
   }
 }
 
-export type route =
-  | ''
-  | 'students'
-  | 'teachers'
-  | 'parents'
-  | 'subjects'
-  | 'classes'
-  | 'user';

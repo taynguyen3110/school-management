@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Teacher } from '../shared/types';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,29 +9,33 @@ import { PaginationComponent } from '../shared/components/pagination/pagination.
 import { TeacherService } from './services/teacher.service';
 import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'sman-teachers',
-  standalone: true,
-  imports: [
-    ItemTableComponent,
-    PaginationComponent,
-    AddTeacherComponent,
-    PageLayoutComponent,
-    FilterComponent,
-  ],
-  templateUrl: './teachers-page.component.html',
+    selector: 'sman-teachers',
+    imports: [
+        ItemTableComponent,
+        PaginationComponent,
+        AddTeacherComponent,
+        PageLayoutComponent,
+        FilterComponent,
+    ],
+    templateUrl: './teachers-page.component.html'
 })
 export class TeachersComponent {
   teachersCount: number = 0;
   itemPerPage: number = 0;
   totalPage: number = 0;
   teachers: Teacher[] = [];
-  displayAddTeacher: boolean = false;
   currentPage: number = 1;
   filterParams: Params = {};
 
+  addFormIsDirty: boolean = false;
+
   unsubscribe$ = new Subject<void>();
+
+  readonly dialog = inject(MatDialog);
+
 
   constructor(
     private teacherService: TeacherService,
@@ -40,12 +44,10 @@ export class TeachersComponent {
   ) {}
 
   ngOnInit() {
-    this.displayAddTeacher =
-      this.route.snapshot.queryParamMap.get('addTeacher') === 'true';
+   
     this.route.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
-        this.displayAddTeacher = params['addTeacher'] === 'true';
         this.filterParams = params;
         if (!params['page']) {
           this.navigationService.toRoute(
@@ -63,6 +65,15 @@ export class TeachersComponent {
       });
   }
 
+  openDialog(): void {
+    this.dialog.open(AddTeacherComponent, {
+      panelClass: ['overflow-auto', 'hide-scrollbar'],
+      maxWidth: '700px',
+      width: '80vw',
+      disableClose: true,
+    });
+  }
+
   fetchTeachers(filter?: Params) {
     return this.teacherService.getTeachers(filter);
   }
@@ -78,14 +89,6 @@ export class TeachersComponent {
     this.totalPage = data.totalPages;
   }
 
-  showAddTeacherForm() {
-    this.displayAddTeacher = true;
-  }
-
-  hideAddTeacherForm = () => {
-    this.navigationService.toRoute('teachers', 'delete', ['addTeacher'], true);
-  };
-
   filterTeachers(filterParams: any) {
     let newParams: Params = {};
     if (filterParams.isNotSort) {
@@ -94,6 +97,10 @@ export class TeachersComponent {
       newParams = { ...filterParams, page: 1 };
       this.navigationService.toRoute('teachers', 'add', newParams, true);
     }
+  }
+
+  resetFilter() {
+    this.navigationService.toRoute('teachers', 'delete', ['name', 'classIds']);
   }
 
   ngOnDestroy() {

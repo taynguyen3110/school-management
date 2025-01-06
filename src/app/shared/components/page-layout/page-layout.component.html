@@ -1,15 +1,17 @@
-<div class="bg-background p-4 pt-7 h-screen">
-  <ng-content select="[addNewForm]" />
-  <div
-    class="container bg-white shadow-lg p-4 mt-4 rounded-lg h-[calc(88vh)] flex flex-col justify-between"
-  >
-    <div class="overflow-x-auto">
-      <h1 class="text-center my-3 text-xl font-semibold select-none">
-        All {{ title | titlecase }}
-      </h1>
-      <ng-content select="[filter]" />
-      <ng-content select="[table]"></ng-content>
-    </div>
-    <ng-content select="[pagination]"></ng-content>
+<ng-content></ng-content>
+<sman-heading [title]="title" [heading]="1" [spacing]="10" />
+<div class="flex justify-end w-full">
+  <sman-button text="Create New" (buttonClick)="createNew.emit()">
+    <i icon class="fa-solid fa-plus"></i>
+  </sman-button>
+</div>
+<div
+  class="container bg-white p-6 mt-4 rounded-lg flex flex-col justify-between"
+>
+  <ng-content select="[filter]"></ng-content>
+  <hr />
+  <div class="overflow-x-auto">
+    <ng-content select="[table]"></ng-content>
   </div>
+  <ng-content select="[pagination]"></ng-content>
 </div>

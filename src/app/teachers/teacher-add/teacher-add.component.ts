@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,30 +20,34 @@ import { Teacher } from '../../shared/types';
 import { NotificationService } from '../../shared/services/notification.service';
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '../../shared/components/input/input.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
+import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
+import checkFormChange from '@/app/shared/utils/checkFormChanged';
 
 @Component({
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
     PhotoUploaderComponent,
     AddNewFormLayoutComponent,
     InputComponent,
+    AddressAutocompleteComponent,
+    DateInputComponent,
   ],
   selector: 'sman-add-teacher',
   templateUrl: 'teacher-add.component.html',
 })
 export class AddTeacherComponent implements OnInit {
-  @Input() isEdit: boolean = false;
-  @Input() teacher!: Teacher;
+  isDirty: boolean = false;
 
-  @Output() cancelForm = new EventEmitter();
+  readonly dialogRef = inject(MatDialogRef<AddTeacherComponent>);
 
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
     private teacherService: TeacherService,
-    private notificationService: NotificationService,
+    private notificationService: NotificationService
   ) {}
 
   addTeacherForm = this.fb.group({
@@ -79,22 +90,13 @@ export class AddTeacherComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.patchTeacherInfo();
-    }
-  }
-
-  patchTeacherInfo() {
-    const { id, ...values } = this.teacher;
-    this.addTeacherForm.setValue(values as any);
+    this.addTeacherForm.valueChanges.subscribe(() => {
+      this.isDirty = checkFormChange(this.addTeacherForm);
+    });
   }
 
   choosePhoto(photoUrl: string) {
     this.profileUrl.setValue(photoUrl);
-  }
-
-  cancelAddForm() {
-    this.cancelForm.emit();
   }
 
   addTeacher(e: Event) {
@@ -102,18 +104,9 @@ export class AddTeacherComponent implements OnInit {
     this.teacherService
       .addTeacher(this.addTeacherForm.value as Teacher)
       .subscribe(() => {
-        this.cancelAddForm();
+        this.isDirty = false;
         this.notificationService.notify('Teacher added successfully!');
+        this.dialogRef.close();
       });
   }
-
-  editTeacher = (e: Event) => {
-    e.preventDefault();
-    this.teacherService
-      .updateTeacher(this.teacher.id!, this.addTeacherForm.value as Teacher)
-      .subscribe(() => {
-        this.cancelAddForm();
-        this.notificationService.notify('Teacher updated successfully!');
-      });
-  };
 }
