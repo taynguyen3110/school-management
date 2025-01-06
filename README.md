@@ -15,27 +15,36 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 ## Features
 
-- Token-based authentication.
+- Token-based authentication with interceptor.
 - Admin Dashboard with various statistics.
 - Charts for visualizing data.
 - Navigation between different sections (students, teachers, parents, classes, etc.)
 - CRUD operations on entities.
+- Form integrated with Google Place API.
+- Form change detection, stop navigation away when there are unsaved changes.
+- Material components (date picker, dialog, etc.).
+- Lazyloading.
+- Global search.
 
 ## Installation
 
-1. Clone the repository:
+1. Initialize the backend project:
    ```sh
    git clone https://github.com/taynguyen3110/school-management.git
    ```
-2. Navigate to the project directory:
+2. Clone the repository:
    ```sh
-   cd school-management-dashboard
+   git clone https://github.com/taynguyen3110/school-management.git
    ```
-3. Install the dependencies:
+3. Navigate to the project directory:
+   ```sh
+   cd school-management
+   ```
+4. Install the dependencies:
    ```sh
    npm install
    ```
-4. Start the development server:
+5. Start the development server:
    ```sh
    ng serve -o
    ```
@@ -116,7 +125,7 @@ All routes for the application are defined in src/app/app.routes.ts. Below are s
 
 Key Contributions
 
-![alt text](screenshots/v2.0/image.png)
+![alt text](screenshots/v2.0/image-0.png)
 
 **Dashboard Development**
 
@@ -131,6 +140,10 @@ Created dynamic charts for the gender ratio and enrollment statistics using Gend
 Built reusable form components like InputComponent and AddNewFormLayoutComponent.
 
 Added form validation and submission logic in components such as AddStudentComponent and AddTeacherComponent.
+
+Implement Google Places API
+
+![alt text](screenshots/v2.0/image-8.png)
 
 **Profile Management**
 
