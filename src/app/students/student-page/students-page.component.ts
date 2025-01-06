@@ -11,18 +11,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
 import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../../shared/components/filter/filter.component';
+import { Store } from '@ngrx/store';
+import {
+  loadStudents,
+  loadStudentsSuccess,
+} from '@/app/state/student/student.actions';
+import { selectAllStudents } from '@/app/state/student/student.selector';
 
 @Component({
-    selector: 'sman-students, students',
-    imports: [
+  selector: 'sman-students, students',
+  imports: [
     PaginationComponent,
     ReactiveFormsModule,
     ItemTableComponent,
     PageLayoutComponent,
-    FilterComponent
-],
-    templateUrl: './students-page.component.html',
-    styleUrl: './students-page.component.scss'
+    FilterComponent,
+  ],
+  templateUrl: './students-page.component.html',
+  styleUrl: './students-page.component.scss',
 })
 export class StudentsComponent {
   studentsCount: number = 0;
@@ -35,11 +41,13 @@ export class StudentsComponent {
   unsubscribe$ = new Subject<void>();
 
   readonly dialog = inject(MatDialog);
+  public testStudents$ = this.store.select(selectAllStudents);
 
   constructor(
     private route: ActivatedRoute,
     private navigationService: NavigationService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -56,11 +64,52 @@ export class StudentsComponent {
           );
         } else {
           this.currentPage = +params['page'];
-          this.fetchStudents(params).subscribe((data: any) => {
-            this.setPagination(data);
-          });
+          if (this.currentPage === 1) {
+            this.testStudents$
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((data) => {
+                if (data.status === 'loaded') {
+                  this.setPagination(data);
+                } else {
+                  this.fetchStudents(params).subscribe((data: any) => {
+                    this.setPagination(data);
+                    if (this.currentPage === 1) {
+                      this.saveStudentList(
+                        data.students,
+                        data.total,
+                        data.rowsPerPage,
+                        data.totalPages
+                      );
+                    }
+                  });
+                }
+              });
+          } else {
+            this.fetchStudents(params).subscribe((data: any) => {
+              this.setPagination(data);
+              if (this.currentPage === 1) {
+                this.saveStudentList(
+                  data.students,
+                  data.total,
+                  data.rowsPerPage,
+                  data.totalPages
+                );
+              }
+            });
+          }
         }
       });
+  }
+
+  saveStudentList(
+    students: Student[],
+    total: number,
+    rowsPerPage: number,
+    totalPages: number
+  ) {
+    this.store.dispatch(
+      loadStudentsSuccess({ students, total, rowsPerPage, totalPages })
+    );
   }
 
   openDialog(): void {

@@ -10,18 +10,20 @@ import { AddParentComponent } from './parent-add/parent-add.component';
 import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectAllStudents } from '../state/student/student.selector';
 
 @Component({
-    selector: 'sman-parents',
-    imports: [
-        ItemTableComponent,
-        PaginationComponent,
-        AddParentComponent,
-        PageLayoutComponent,
-        FilterComponent,
-    ],
-    templateUrl: './parents-page.component.html',
-    styleUrl: './parents-page.component.scss'
+  selector: 'sman-parents',
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    AddParentComponent,
+    PageLayoutComponent,
+    FilterComponent,
+  ],
+  templateUrl: './parents-page.component.html',
+  styleUrl: './parents-page.component.scss',
 })
 export class ParentsComponent {
   parentsCount: number = 0;
@@ -37,14 +39,16 @@ export class ParentsComponent {
 
   readonly dialog = inject(MatDialog);
 
+  private testStudents$ = this.store.select(selectAllStudents);
+
   constructor(
     private parentsService: ParentsService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
+    private store: Store
   ) {}
 
   ngOnInit() {
-    
     this.route.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
@@ -54,7 +58,7 @@ export class ParentsComponent {
             'parents',
             'add',
             { page: this.currentPage },
-            true,
+            true
           );
         } else {
           this.currentPage = +params['page'];
@@ -63,6 +67,10 @@ export class ParentsComponent {
           });
         }
       });
+
+    this.testStudents$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => console.log(data));
   }
 
   openDialog(): void {
@@ -92,7 +100,7 @@ export class ParentsComponent {
       this.navigationService.toRoute('parents', 'add', newParams, true);
     }
   }
-  
+
   resetFilter() {
     this.navigationService.toRoute('parents', 'delete', ['name', 'classIds']);
   }

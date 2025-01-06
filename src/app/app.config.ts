@@ -15,6 +15,8 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { provideStore } from '@ngrx/store';
+import { studentsReducer } from './state/student/student.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,13 +27,10 @@ export const appConfig: ApplicationConfig = {
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     provideAnimationsAsync(),
-    importProvidersFrom([
-      // BrowserModule,
-      // CommonModule
-    ]),
     { provide: MAT_DATE_LOCALE, useValue: 'en-au' },
-
-    // MatSnackBarModule,
-    // { provide: ErrorHandler, useClass: CustomErrorHandler }
+    // { provide: ErrorHandler, useClass: CustomErrorHandler },
+    provideStore({
+      students: studentsReducer,
+    }),
   ],
 };
