@@ -59,8 +59,6 @@ password: password01
 
 ![alt text](screenshots/v2.0/image-3.png)
 
-**Other Components**
-
 StudentsComponent: Manages student-related data and actions.
 
 TeachersComponent: Manages teacher-related data and actions.
@@ -133,17 +131,27 @@ Implement Google Places API
 
 ![alt text](screenshots/v2.0/image-8.png)
 
+Form change detection, stop navigation away when there are unsaved changes.
+
+![alt text](screenshots/v2.0/image-9.png)
+
 **Profile Management**
 
 Developed profile components for students, teachers, and parents, including StudentProfileComponent, TeacherProfileComponent, and ParentProfileComponent.
 
 Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
-![alt text](screenshots/v2.0/image-4.png)
+![alt text](screenshots/v2.0/image-10.png)
+
+Custom multi-selector component used in form.
+
+![alt text](screenshots/v2.0/image-11.png)
 
 **Authentication**
 
 Implemented authentication using AuthService and AuthApiService.
+
+![alt text](screenshots/v2.0/image-4.png)
 
 Interceptor
 
