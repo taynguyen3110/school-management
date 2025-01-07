@@ -28,11 +28,11 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 ## Installation
 
-1. Initialize the backend project:
+1. Initialize and start the backend project:
    ```sh
-   git clone https://github.com/taynguyen3110/school-management.git
+   https://github.com/taynguyen3110/school-mgmt-api
    ```
-2. Clone the repository:
+2. Clone the school-management repository:
    ```sh
    git clone https://github.com/taynguyen3110/school-management.git
    ```
