@@ -115,9 +115,7 @@ Key Contributions
 
 **Dashboard Development**
 
-Implemented the main dashboard layout and components, including DashboardComponent, StatsWrapperComponent, and StatsCellComponent.
-
-Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
+Created dynamic charts using Google Charts for visualizing data.
 
 ![alt text](screenshots/v2.0/image-6.png)
 
