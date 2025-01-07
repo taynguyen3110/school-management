@@ -185,6 +185,3 @@ State Management: Utilized Angular services and RxJS for efficient state managem
 
 API Integration: Integrated RESTful APIs for data operations and updates.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
