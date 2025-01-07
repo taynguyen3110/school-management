@@ -151,7 +151,7 @@ Implemented authentication using AuthService and AuthApiService.
 
 ![alt text](screenshots/v2.0/image-4.png)
 
-Interceptor
+Token-based authentication with Angular Interceptor
 
 Created a secure login page with validation and error handling.
 
