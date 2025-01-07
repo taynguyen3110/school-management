@@ -57,8 +57,6 @@ password: password01
 
 ## Components
 
-![alt text](screenshots/v2.0/image-2.png)
-
 ![alt text](screenshots/v2.0/image-3.png)
 
 **Other Components**
