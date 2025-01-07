@@ -49,6 +49,10 @@ This project is a comprehensive School Management Dashboard built with Angular. 
    ng serve -o
    ```
 
+Mock login information:
+username: u1@example.com
+password: password01
+
 ## Project Structure
 
 ## Components
