@@ -59,20 +59,6 @@ password: password01
 
 ![alt text](screenshots/v2.0/image-2.png)
 
-**Dashboard Components**
-
-DashboardComponent: Main component for the dashboard overview.
-
-GenderRatioComponent: Displays the gender ratio chart.
-
-EnrollmentStatsComponent: Displays enrollment statistics.
-
-StatsWrapperComponent: Container for multiple statistics components.
-
-StatsCellComponent: Individual statistic display component.
-
-NoticeNewsComponent: Shows announcements and news updates.
-
 ![alt text](screenshots/v2.0/image-3.png)
 
 **Other Components**
