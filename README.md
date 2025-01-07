@@ -159,6 +159,8 @@ Created a secure login page with validation and error handling.
 
 **Notification**
 
+Notification with mat snack bar to inform user with messages.
+
 **Technical Skills Demonstrated**
 
 Angular: Built a complex Angular application with reusable components, services, and modules.
@@ -167,9 +169,7 @@ TypeScript: Used TypeScript for type safety and maintainability.
 
 Reactive Forms: Implemented reactive forms with dynamic controls and validation.
 
-![alt text](screenshots/v2.0/image-7.png)
-
-Reusability:
+Reusability: Reusable components are custom built and used extensively.
 
 State Management: Utilized Angular services and RxJS for efficient state management.
 
