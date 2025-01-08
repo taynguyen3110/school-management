@@ -43,8 +43,8 @@
           />
         </div>
       </form>
-      <hr class="w-full md:w-1/2"/>
-      <div class="flex justify-center items-center gap-5 w-96 mt-10 mb-12">
+      <hr class="w-full md:w-1/2" />
+      <div class="flex justify-center items-center gap-5 w-500px mt-10 mb-12">
         <sman-button
           text="Edit Profile"
           btnType="primary"
@@ -54,6 +54,11 @@
           text="Edit Password"
           btnType="primary"
           (buttonClick)="openEditPasswordDialog()"
+        ></sman-button>
+        <sman-button
+          text="Log Out"
+          btnType="primary"
+          (buttonClick)="onLogOut()"
         ></sman-button>
       </div>
     </div>

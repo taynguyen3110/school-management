@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'sman-user-page',
@@ -32,6 +33,7 @@ export class UserPageComponent {
 
   constructor(
     private authApi: AuthApiService,
+    private authService: AuthService,
     private notificationService: NotificationService
   ) {}
 
@@ -77,6 +79,10 @@ export class UserPageComponent {
     this.authApi.changePassword(password).subscribe(() => {
       this.notificationService.notify('Password changed successfully');
     });
+  }
+
+  onLogOut() {
+    this.authService.logOut();
   }
 
   ngOnDestroy() {

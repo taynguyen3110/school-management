@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Params } from '@angular/router';
+import { environment } from '@/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:3001/api';
+  baseUrl = `${environment.apiUrl}/api`;
 
   post<T>(endpoint: string, data: any) {
     return this.http.post<T>(this.baseUrl + endpoint, data);
