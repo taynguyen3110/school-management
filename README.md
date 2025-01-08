@@ -28,11 +28,11 @@ This project is a comprehensive School Management Dashboard built with Angular. 
 
 ## Installation
 
-1. Initialize the backend project:
+1. Initialize and start the backend project:
    ```sh
-   git clone https://github.com/taynguyen3110/school-management.git
+   https://github.com/taynguyen3110/school-mgmt-api
    ```
-2. Clone the repository:
+2. Clone the school-management repository:
    ```sh
    git clone https://github.com/taynguyen3110/school-management.git
    ```
@@ -49,29 +49,15 @@ This project is a comprehensive School Management Dashboard built with Angular. 
    ng serve -o
    ```
 
+Mock login information:
+username: u1@example.com
+password: password01
+
 ## Project Structure
 
 ## Components
 
-![alt text](screenshots/v2.0/image-2.png)
-
-**Dashboard Components**
-
-DashboardComponent: Main component for the dashboard overview.
-
-GenderRatioComponent: Displays the gender ratio chart.
-
-EnrollmentStatsComponent: Displays enrollment statistics.
-
-StatsWrapperComponent: Container for multiple statistics components.
-
-StatsCellComponent: Individual statistic display component.
-
-NoticeNewsComponent: Shows announcements and news updates.
-
 ![alt text](screenshots/v2.0/image-3.png)
-
-**Other Components**
 
 StudentsComponent: Manages student-related data and actions.
 
@@ -129,9 +115,7 @@ Key Contributions
 
 **Dashboard Development**
 
-Implemented the main dashboard layout and components, including DashboardComponent, StatsWrapperComponent, and StatsCellComponent.
-
-Created dynamic charts for the gender ratio and enrollment statistics using GenderRatioComponent and EnrollmentStatsComponent.
+Created dynamic charts using Google Charts for visualizing data.
 
 ![alt text](screenshots/v2.0/image-6.png)
 
@@ -145,25 +129,37 @@ Implement Google Places API
 
 ![alt text](screenshots/v2.0/image-8.png)
 
+Form change detection, stop navigation away when there are unsaved changes.
+
+![alt text](screenshots/v2.0/image-9.png)
+
 **Profile Management**
 
 Developed profile components for students, teachers, and parents, including StudentProfileComponent, TeacherProfileComponent, and ParentProfileComponent.
 
 Enabled profile photo and info display with ProfilePhotoComponent and ProfileInfoComponent.
 
-![alt text](screenshots/v2.0/image-4.png)
+![alt text](screenshots/v2.0/image-10.png)
+
+Custom multi-selector component used in form.
+
+![alt text](screenshots/v2.0/image-11.png)
 
 **Authentication**
 
 Implemented authentication using AuthService and AuthApiService.
 
-Interceptor
+![alt text](screenshots/v2.0/image-4.png)
+
+Token-based authentication with Angular Interceptor
 
 Created a secure login page with validation and error handling.
 
 ![alt text](screenshots/v2.0/image-5.png)
 
 **Notification**
+
+Notification with mat snack bar to inform user with messages.
 
 **Technical Skills Demonstrated**
 
@@ -173,14 +169,9 @@ TypeScript: Used TypeScript for type safety and maintainability.
 
 Reactive Forms: Implemented reactive forms with dynamic controls and validation.
 
-![alt text](screenshots/v2.0/image-7.png)
-
-Reusability:
+Reusability: Reusable components are custom built and used extensively.
 
 State Management: Utilized Angular services and RxJS for efficient state management.
 
 API Integration: Integrated RESTful APIs for data operations and updates.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
