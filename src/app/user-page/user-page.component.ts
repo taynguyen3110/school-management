@@ -17,8 +17,6 @@ import { AuthService } from '../shared/services/auth.service';
     CommonModule,
     JsonPipe,
     ReactiveFormsModule,
-    ChangePasswordComponent,
-    EditProfileComponent,
     ButtonComponent,
   ],
   templateUrl: './user-page.component.html',
