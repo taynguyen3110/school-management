@@ -1,13 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
   inject,
   Input,
   OnInit,
-  Output,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,7 +11,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { PhotoUploaderComponent } from '../../shared/components/photouploader/photo-uploader.component';
 import { FormService } from '../../shared/services/form.service';
 import { SubjectService } from '../services/subject.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -33,7 +28,6 @@ import checkFormChange from '@/app/shared/utils/checkFormChanged';
     imports: [
         ReactiveFormsModule,
         CommonModule,
-        PhotoUploaderComponent,
         AddNewFormLayoutComponent,
         InputComponent,
         MultiSelectorComponent,

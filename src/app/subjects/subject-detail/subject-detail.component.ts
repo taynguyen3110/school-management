@@ -1,16 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SchoolSubject } from '../../shared/types';
-import { DatePipe, Location, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { SubjectService } from '../services/subject.service';
-import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
-import { StudentService } from '../../students/service/student.service';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { NotificationService } from '../../shared/services/notification.service';
-import { AddStudentComponent } from '../../students/student-add/student-add.component';
-import { AddSubjectComponent } from '../subject-add/subject-add.component';
 import { ProfileLayoutComponent } from '../../shared/components/profile-layout/profile-layout.component';
-import { ProfilePhotoComponent } from '../../shared/components/profile-photo/profile-photo.component';
 import { ProfileInfoComponent } from '../../shared/components/profile-info/profile-info.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationService } from '@/app/shared/services/confirmation.service';
@@ -22,14 +17,9 @@ import { SubjectEditComponent } from '../subject-edit/subject-edit.component';
 @Component({
   standalone: true,
   imports: [
-    ItemTableComponent,
-    AddStudentComponent,
-    AddSubjectComponent,
     ProfileLayoutComponent,
-    ProfilePhotoComponent,
     ProfileInfoComponent,
     TitleCasePipe,
-    DatePipe,
     RouterLink,
     InformationWrapperComponent,
   ],

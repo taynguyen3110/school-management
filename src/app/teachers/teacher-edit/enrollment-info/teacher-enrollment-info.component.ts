@@ -1,9 +1,6 @@
 import { ParentsService } from '@/app/parents/services/parents.service';
 import { ClassesService } from '@/app/school-classes/services/classes.service';
 import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-layout/addnew-form-layout.component';
-import { CustomInputComponent } from '@/app/shared/components/custom-input/custom-input.component';
-import { InputComponent } from '@/app/shared/components/input/input.component';
-import { MultiSelectorComponent } from '@/app/shared/components/multiselector/multiselector.component';
 import { toLabelObject } from '@/app/shared/components/multiselector/utils/toLabelObject';
 import { FormService } from '@/app/shared/services/form.service';
 import { LabelObj, Teacher } from '@/app/shared/types';
@@ -24,10 +21,7 @@ import { TeacherService } from '../../services/teacher.service';
 @Component({
   imports: [
     CommonModule,
-    InputComponent,
     AddNewFormLayoutComponent,
-    MultiSelectorComponent,
-    CustomInputComponent,
     ReactiveFormsModule,
     DateInputComponent,
   ],

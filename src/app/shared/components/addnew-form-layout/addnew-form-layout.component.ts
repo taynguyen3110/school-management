@@ -15,7 +15,7 @@ import { ConfirmationService } from '../../services/confirmation.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  imports: [ReactiveFormsModule, TitleCasePipe, CommonModule, ButtonComponent],
+  imports: [ReactiveFormsModule, CommonModule, ButtonComponent],
   selector: 'sman-add-form-layout',
   templateUrl: 'addnew-form-layout.component.html',
 })

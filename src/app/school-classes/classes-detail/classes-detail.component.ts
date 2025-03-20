@@ -1,17 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Classes, Teacher } from '../../shared/types';
-import { DatePipe, Location, TitleCasePipe } from '@angular/common';
-import { ItemTableComponent } from '../../shared/components/item-table/item-table.component';
+import { Classes } from '../../shared/types';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { NotificationService } from '../../shared/services/notification.service';
 import { ProfileLayoutComponent } from '../../shared/components/profile-layout/profile-layout.component';
-import { ProfilePhotoComponent } from '../../shared/components/profile-photo/profile-photo.component';
 import { ProfileInfoComponent } from '../../shared/components/profile-info/profile-info.component';
 import { ClassesService } from '../services/classes.service';
-import { StudentService } from '../../students/service/student.service';
-import { AddClassComponent } from '../classes-add/classes-add.component';
-import { ParentProfileInfoComponent } from '@/app/parents/parent-edit/profile-info/parent-profile-info.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ScreenService } from '@/app/shared/services/screen.service';
 import { ClassEditComponent } from '../class-edit/class-edit.component';
@@ -21,13 +15,8 @@ import { InformationWrapperComponent } from '@/app/shared/components/information
 @Component({
   standalone: true,
   imports: [
-    ItemTableComponent,
-    AddClassComponent,
     ProfileLayoutComponent,
-    ProfilePhotoComponent,
     ProfileInfoComponent,
-    TitleCasePipe,
-    DatePipe,
     RouterLink,
     InformationWrapperComponent,
   ],
@@ -44,7 +33,6 @@ export class ClassDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private classesService: ClassesService,
-    private studentService: StudentService,
     private navigationService: NavigationService,
     private confirmationService: ConfirmationService,
     private screenService: ScreenService,

@@ -11,8 +11,6 @@ import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notification.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { HeadingComponent } from '../shared/components/heading/heading.component';
-import { ButtonComponent } from '../shared/components/button/button.component';
 import { InputComponent } from '../shared/components/input/input.component';
 import { FormService } from '../shared/services/form.service';
 import checkFormChange from '../shared/utils/checkFormChanged';
@@ -22,8 +20,6 @@ import { AddNewFormLayoutComponent } from '../shared/components/addnew-form-layo
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    HeadingComponent,
-    ButtonComponent,
     InputComponent,
     AddNewFormLayoutComponent,
   ],

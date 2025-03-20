@@ -108,6 +108,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'components',
+        title: 'Component Library - School Management',
+        loadComponent: () =>
+          import('./shared/components-showcase/components-showcase.component').then(
+            (m) => m.ComponentsShowcaseComponent
+          ),
+      },
+      {
         path: '**',
         title: 'Dashboard - School Management',
         loadComponent: () =>

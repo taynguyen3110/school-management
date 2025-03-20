@@ -74,9 +74,6 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     const inputValue = (event.target as HTMLInputElement).value;
     this.value = inputValue;
     this.onChange(this.value);
-    console.log(this.hasError);
-    console.log(this.errorKeys);
-    console.log(this.errMsgs);
   }
 
   onBlur(): void {

@@ -1,11 +1,11 @@
 .base-button {
-  @apply px-4 py-2 rounded-full text-sm font-medium lg:text-base;
+  @apply px-4 py-2 rounded-full text-sm font-medium lg:text-base hover:opacity-90;
 }
 .btn-primary {
-  @apply bg-primary3 border-primary3 text-white;
+  @apply bg-primary3 border-primary3 text-white hover:opacity-90;
 }
 .btn-secondary {
-  @apply border-primary3 text-primary3;
+  @apply border-primary3 text-primary3 hover:opacity-90;
 }
 
 .btn-secondary-disabled {
@@ -13,14 +13,14 @@
 }
 
 .btn-edit {
-  @apply text-inputTitle px-3 py-[6px] text-xs mr-0;
+  @apply text-inputTitle px-3 py-[6px] text-xs mr-0 hover:opacity-90;
 }
 .btn-cancel {
-  @apply bg-gray-200  border-gray-200;
+  @apply bg-gray-200  border-gray-200 hover:opacity-90;
 }
 
 .btn-delete {
-  @apply border-red-600 text-red-600;
+  @apply border-red-600 text-red-600 hover:opacity-90;
 }
 
 .btn-primary-disabled {

@@ -2,27 +2,21 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
-import { ClickOutsideDirective } from '../../directives/clickOutside.directive';
 import { CommonModule } from '@angular/common';
-import { IdToLabelPipe } from '../../pipes/idToLabel';
 import { FormsModule, ValidationErrors } from '@angular/forms';
 import { ItemsPanelComponent } from './items-panel/items-panel.component';
 import { LabelObj } from '../../types';
 
 @Component({
   imports: [
-    ClickOutsideDirective,
     CommonModule,
-    IdToLabelPipe,
     FormsModule,
     ItemsPanelComponent,
   ],

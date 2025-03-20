@@ -51,7 +51,7 @@
     } @empty {
     <tr>
       <td
-        [colSpan]="tableCollumns.length"
+        [colSpan]="tableCollumns ? tableCollumns.length : 0"
         class="text-center text-gray-400 select-none"
       >
         @if(fromDashboard) { There are no {{ listOf }} today! } @else { There
@@ -62,7 +62,7 @@
     track $index) {
     <tr class="cursor-default">
       <td
-        [colSpan]="tableCollumns.length"
+        [colSpan]="tableCollumns ? tableCollumns.length : 0"
         class="text-center text-gray-400 select-none"
       >
         &nbsp;

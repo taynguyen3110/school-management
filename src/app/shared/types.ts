@@ -95,6 +95,7 @@ export type route =
   | 'subjects'
   | 'classes'
   | 'user'
-  | 'search';
+  | 'search'
+  | 'components';
 
 export type ScreenSize = keyof typeof ScreenService.prototype.breakpoints;

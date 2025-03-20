@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   inject,
   Input,
   OnInit,
-  Output,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -13,12 +11,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { PhotoUploaderComponent } from '../../shared/components/photouploader/photo-uploader.component';
 import { FormService } from '../../shared/services/form.service';
 import { ClassesService } from '../services/classes.service';
-import { Classes, LabelObj, Student, Teacher } from '../../shared/types';
+import { Classes, LabelObj } from '../../shared/types';
 import { NotificationService } from '../../shared/services/notification.service';
-import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { MultiSelectorComponent } from '../../shared/components/multiselector/multiselector.component';
@@ -30,7 +26,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    PhotoUploaderComponent,
     AddNewFormLayoutComponent,
     InputComponent,
     MultiSelectorComponent,

@@ -16,7 +16,6 @@ import { MatDialog } from '@angular/material/dialog';
     imports: [
         ItemTableComponent,
         PaginationComponent,
-        AddTeacherComponent,
         PageLayoutComponent,
         FilterComponent,
     ],

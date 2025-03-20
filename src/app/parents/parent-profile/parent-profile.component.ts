@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Parent, Student } from '../../shared/types';
-import { AddParentComponent } from '../parent-add/parent-add.component';
 import { ParentsService } from '../services/parents.service';
 import { StudentService } from '../../students/service/student.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -20,7 +19,6 @@ import { ParentProfileInfoComponent } from '../parent-edit/profile-info/parent-p
 
 @Component({
   imports: [
-    AddParentComponent,
     ProfileLayoutComponent,
     ProfilePhotoComponent,
     ProfileInfoComponent,

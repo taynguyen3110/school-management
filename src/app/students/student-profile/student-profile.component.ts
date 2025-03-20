@@ -2,17 +2,14 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Student } from '../../shared/types';
 import { StudentService } from '../service/student.service';
-import { DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { ProfilePhotoComponent } from '../../shared/components/profile-photo/profile-photo.component';
 import { ProfileInfoComponent } from '../../shared/components/profile-info/profile-info.component';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { RouterLink } from '@angular/router';
 import { NotificationService } from '../../shared/services/notification.service';
-import { AddStudentComponent } from '../student-add/student-add.component';
 import { ProfileLayoutComponent } from '../../shared/components/profile-layout/profile-layout.component';
-import { ButtonComponent } from '@/app/shared/components/button/button.component';
 import { InformationWrapperComponent } from '../../shared/components/information-wrapper/information-wrapper.component';
-import { HeadingComponent } from '../../shared/components/heading/heading.component';
 import { ScreenService } from '@/app/shared/services/screen.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StudentPersonalInfoComponent } from '../student-edit/personal-info/student-personal-info.component';
@@ -23,17 +20,13 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
     imports: [
-        JsonPipe,
         TitleCasePipe,
         DatePipe,
         RouterLink,
         ProfilePhotoComponent,
         ProfileInfoComponent,
-        AddStudentComponent,
         ProfileLayoutComponent,
-        ButtonComponent,
         InformationWrapperComponent,
-        HeadingComponent,
     ],
     selector: 'sman-student-profile',
     templateUrl: 'student-profile.component.html'

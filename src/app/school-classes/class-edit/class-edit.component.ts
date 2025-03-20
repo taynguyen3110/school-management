@@ -1,12 +1,9 @@
-import { ParentsService } from '@/app/parents/services/parents.service';
 import { ClassesService } from '@/app/school-classes/services/classes.service';
 import { AddNewFormLayoutComponent } from '@/app/shared/components/addnew-form-layout/addnew-form-layout.component';
-import { CustomInputComponent } from '@/app/shared/components/custom-input/custom-input.component';
-import { InputComponent } from '@/app/shared/components/input/input.component';
 import { MultiSelectorComponent } from '@/app/shared/components/multiselector/multiselector.component';
 import { toLabelObject } from '@/app/shared/components/multiselector/utils/toLabelObject';
 import { FormService } from '@/app/shared/services/form.service';
-import { Classes, LabelObj, SchoolSubject, Student } from '@/app/shared/types';
+import { Classes, LabelObj } from '@/app/shared/types';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
@@ -17,19 +14,15 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '@/app/shared/services/notification.service';
-import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 import checkFormChange from '@/app/shared/utils/checkFormChanged';
 import { StudentService } from '@/app/students/service/student.service';
 
 @Component({
   imports: [
     CommonModule,
-    InputComponent,
     AddNewFormLayoutComponent,
     MultiSelectorComponent,
-    CustomInputComponent,
     ReactiveFormsModule,
-    DateInputComponent,
   ],
   selector: 'sman-class-edit',
   templateUrl: 'class-edit.component.html',

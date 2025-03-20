@@ -1,0 +1,317 @@
+<div class="showcase-container">
+  <header class="showcase-header">
+    <h1>Component Library</h1>
+    <p>A collection of reusable components for the School Management System</p>
+  </header>
+
+  <mat-tab-group class="showcase-tabs" [(selectedIndex)]="selectedTabIndex">
+    @for (category of categories; track category) {
+    <mat-tab [label]="category">
+      <div class="components-grid">
+        @for (component of getComponentsByCategory(category); track
+        component.name) {
+        <div class="component-section">
+          <div class="component-header">
+            <h2>{{ component.name }}</h2>
+            <span class="component-category">{{ component.category }}</span>
+          </div>
+
+          <div class="component-content">
+            <div class="component-description">
+              <p>{{ component.description }}</p>
+            </div>
+
+            <div class="component-demo">
+              <h3>Demo</h3>
+              <div class="demo-container">
+                @switch (component.name) { @case ('Button') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Primary Buttons</h4>
+                    <sman-button text="Default"></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Secondary Buttons</h4>
+                    <sman-button
+                      text="Default"
+                      btnType="secondary"
+                    ></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      btnType="secondary"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Edit Buttons</h4>
+                    <sman-button text="Edit" btnType="edit"></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      btnType="edit"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Cancel Buttons</h4>
+                    <sman-button text="Cancel" btnType="cancel"></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      btnType="cancel"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Delete Buttons</h4>
+                    <sman-button text="Delete" btnType="delete"></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      btnType="delete"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Back Buttons</h4>
+                    <sman-button text="Back" btnType="back"></sman-button>
+                    <sman-button
+                      text="Disabled"
+                      btnType="back"
+                      [isDisabled]="true"
+                    ></sman-button>
+                  </div>
+                  <div class="demo-group">
+                    <h4>With Icons</h4>
+                    <sman-button text="Add New">
+                      <i class="fa-solid fa-plus" icon></i>
+                    </sman-button>
+                    <sman-button text="Save" btnType="secondary">
+                      <i class="fa-solid fa-save" icon></i>
+                    </sman-button>
+                  </div>
+                </div>
+                } @case ('Input') {
+                <div class="demo-section mr-auto">
+                  <div class="demo-group">
+                    <div class="space-y-4">
+                      <form [formGroup]="form">
+                        <sman-input
+                          type="text"
+                          name="username"
+                          label="Username"
+                          placeholder="Please enter username"
+                          [hasError]="formService.getCombinedErrors(username)"
+                          [errMsgs]="{
+                            required: 'Username is required',
+                            minlength: 'Username must be at least 3 characters'
+                          }"
+                          formControlName="username"
+                        >
+                        </sman-input>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                } @case ('Loading Spinner') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Small Spinner</h4>
+                    <sman-loading-spinner
+                      [isLoading]="true"
+                    ></sman-loading-spinner>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Medium Spinner</h4>
+                    <sman-loading-spinner
+                      size="medium"
+                      [isLoading]="true"
+                    ></sman-loading-spinner>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Large Spinner</h4>
+                    <sman-loading-spinner
+                      size="large"
+                      [isLoading]="true"
+                    ></sman-loading-spinner>
+                  </div>
+                </div>
+                } @case ('Profile Photo') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Custom Sizes</h4>
+                    <div
+                      class="!flex justify-between items-center flex-wrap lg:w-1/2 mx-auto"
+                    >
+                      <sman-profile-photo
+                        [photoSrc]="'assets/images/portrait.jpg'"
+                        [size]="40"
+                      ></sman-profile-photo>
+                      <sman-profile-photo
+                        [photoSrc]="'assets/images/portrait.jpg'"
+                        [size]="60"
+                      ></sman-profile-photo>
+                      <sman-profile-photo
+                        [photoSrc]="'assets/images/portrait.jpg'"
+                        [size]="80"
+                      ></sman-profile-photo>
+                    </div>
+                  </div>
+                </div>
+                } @case ('Page Layout') {
+                <div class="demo-full">
+                  <sman-page-layout>
+                    <div class="demo-content">
+                      <h2>Page Title</h2>
+                      <p>
+                        This is a sample page content that demonstrates how the
+                        layout wraps content.
+                      </p>
+                      <div class="demo-grid">
+                        @for (i of [1,2,3,4]; track i) {
+                        <div class="demo-card">
+                          <h3>Card {{ i }}</h3>
+                          <p>Sample content for card {{ i }}</p>
+                        </div>
+                        }
+                      </div>
+                    </div>
+                  </sman-page-layout>
+                </div>
+                } @case ('Item Table') {
+                <div class="demo-full">
+                  <sman-item-table
+                    [items]="tableItems"
+                    listOf="students"
+                    [enableSorting]="true"
+                  >
+                  </sman-item-table>
+                </div>
+                } @case ('Date Input') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Basic Date Input</h4>
+                    <sman-date-input label="Select Date"></sman-date-input>
+                  </div>
+                  <div class="demo-group">
+                    <h4>With Validation</h4>
+                    <form [formGroup]="form">
+                      <sman-date-input
+                        label="Birth Date"
+                        name="birthDate"
+                        [hasError]="formService.getCombinedErrors(birthDate)"
+                        [errMsgs]="{ required: 'Please select a valid date' }"
+                        formControlName="birthDate">
+                      </sman-date-input>
+                    </form>
+                  </div>
+                </div>
+                } @case ('Multiselector') {
+                <div class="demo-full">
+                  <form [formGroup]="form">
+                    <sman-multiselector
+                      [items]="multiselectorItems"
+                      [selected]="[]"
+                      placeholder="Choose subjects..."
+                      [supportMulti]="true"
+                      [validation]="true"
+                      [hasError]="formService.getCombinedErrors(subjects)"
+                      [errMsgs]="{ required: 'Please select at least one subject' }"
+                      formControlName="subjects">
+                    </sman-multiselector>
+                  </form>
+                </div>
+                } @case ('Address Input') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Basic Address Input</h4>
+                    <sman-address-autocomplete
+                      label="Address"
+                      placeholder="Enter your address">
+                    </sman-address-autocomplete>
+                  </div>
+                  <div class="demo-group">
+                    <h4>With Validation</h4>
+                    <form [formGroup]="form">
+                      <sman-address-autocomplete
+                        label="Address"
+                        name="address"
+                        placeholder="Enter your address"
+                        [hasError]="formService.getCombinedErrors(address)"
+                        [errMsgs]="{ required: 'Please enter a valid address' }"
+                        formControlName="address">
+                      </sman-address-autocomplete>
+                    </form>
+                  </div>
+                </div>
+                } @case ('Information Wrapper') {
+                <div class="demo-full">
+                  <sman-info-wrapper>
+                    <div class="demo-info-content">
+                      <h3>Student Information</h3>
+                      <div class="info-grid">
+                        <div class="info-item">
+                          <label>Name:</label>
+                          <span>John Doe</span>
+                        </div>
+                        <div class="info-item">
+                          <label>ID:</label>
+                          <span>STU001</span>
+                        </div>
+                        <div class="info-item">
+                          <label>Grade:</label>
+                          <span>10th</span>
+                        </div>
+                        <div class="info-item">
+                          <label>Section:</label>
+                          <span>A</span>
+                        </div>
+                      </div>
+                    </div>
+                  </sman-info-wrapper>
+                </div>
+                } }
+              </div>
+            </div>
+
+            <div class="component-documentation">
+              <div class="usage-section">
+                <h3>Usage</h3>
+                <pre><code>{{ component.usage }}</code></pre>
+              </div>
+
+              @if (component.props) {
+              <div class="props-section">
+                <h3>Properties</h3>
+                <table class="props-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (prop of component.props; track prop.name) {
+                    <tr>
+                      <td>{{ prop.name }}</td>
+                      <td>
+                        <code>{{ prop.type }}</code>
+                      </td>
+                      <td>{{ prop.description }}</td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+</div>

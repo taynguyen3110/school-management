@@ -18,7 +18,6 @@ import { selectAllStudents } from '../state/student/student.selector';
   imports: [
     ItemTableComponent,
     PaginationComponent,
-    AddParentComponent,
     PageLayoutComponent,
     FilterComponent,
   ],

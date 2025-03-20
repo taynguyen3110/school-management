@@ -13,7 +13,6 @@ export class GoogleMapsLoaderService {
         resolve();
         return;
       }
-
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
       script.async = true;

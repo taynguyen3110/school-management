@@ -59,5 +59,13 @@
     >
       <i class="fa-solid fa-people-roof"></i>
     </sman-sidebar-item>
+
+    <sman-sidebar-item
+      title="components"
+      [isActive]="selectedMenu === 'components'"
+      (selected)="onSelectMenu('components')"
+    >
+      <i class="fa-solid fa-object-ungroup"></i>
+    </sman-sidebar-item>
   </div>
 </div>

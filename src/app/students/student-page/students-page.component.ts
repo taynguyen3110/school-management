@@ -13,7 +13,6 @@ import { PageLayoutComponent } from '../../shared/components/page-layout/page-la
 import { FilterComponent } from '../../shared/components/filter/filter.component';
 import { Store } from '@ngrx/store';
 import {
-  loadStudents,
   loadStudentsSuccess,
 } from '@/app/state/student/student.actions';
 import { selectAllStudents } from '@/app/state/student/student.selector';

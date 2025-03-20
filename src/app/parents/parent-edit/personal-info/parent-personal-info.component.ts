@@ -11,7 +11,6 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '@/app/shared/services/notification.service';
-import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 import { ParentsService } from '../../services/parents.service';
 import { Parent } from '@/app/shared/types';
 import checkFormChange from '@/app/shared/utils/checkFormChanged';
@@ -23,7 +22,6 @@ import checkFormChange from '@/app/shared/utils/checkFormChanged';
     InputComponent,
     AddNewFormLayoutComponent,
     ReactiveFormsModule,
-    DateInputComponent,
   ],
   selector: 'sman-parent-personal-info',
   templateUrl: 'parent-personal-info.component.html',

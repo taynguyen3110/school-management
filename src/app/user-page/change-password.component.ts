@@ -15,8 +15,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { passwordValidator } from '../shared/validators/passwordValidator';
 import { passwordMismatchValidator } from '../shared/validators/passwordMismatchValidator';
-import { HeadingComponent } from '../shared/components/heading/heading.component';
-import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../shared/components/input/input.component';
 import { FormService } from '../shared/services/form.service';
@@ -29,8 +27,6 @@ import { NotificationService } from '../shared/services/notification.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HeadingComponent,
-    ButtonComponent,
     InputComponent,
     AddNewFormLayoutComponent,
   ],
