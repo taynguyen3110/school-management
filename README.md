@@ -2,6 +2,8 @@
 
 This project is a comprehensive School Management Dashboard built with Angular. It provides an intuitive interface for managing various aspects of a school, including students, teachers, parents, classes, and more. The dashboard includes various charts and statistics to help visualize data effectively.
 
+![alt text](screenshots/v2.0/image-4.png)
+
 ## Table of Contents
 
 - [Features](#features)
