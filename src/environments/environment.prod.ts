@@ -1,5 +1,3 @@
-import type { Environment } from './environment';
-
 export const environment = {
   production: true,
   apiUrl: (window as any).env?.API_URL || 'https://school-mgmt-api-gkqr.onrender.com',

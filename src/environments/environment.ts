@@ -5,7 +5,6 @@ export const environment = {
   googleMapsApiKey: (window as any).env?.GOOGLE_MAPS_API_KEY || 'AIzaSyALrnz4qQpv0DC1tMwSAwq7Jd12dc2e9vE',
   env: 'development' as 'development' | 'production'
 } as const;
-
 // Define the environment interface
 export interface Environment {
   production: boolean;
@@ -13,3 +12,4 @@ export interface Environment {
   googleMapsApiKey: string;
   env: 'development' | 'production';
 }
+
