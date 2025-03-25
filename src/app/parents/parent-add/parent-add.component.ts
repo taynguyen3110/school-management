@@ -15,6 +15,7 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { AddNewFormLayoutComponent } from '../../shared/components/addnew-form-layout/addnew-form-layout.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
+import { environment } from '@/environments/environment';
 
 @Component({
     imports: [
@@ -34,7 +35,7 @@ export class AddParentComponent implements OnInit {
   isDirty: boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<AddParentComponent>);
-
+  private readonly apiUrl = environment.apiUrl;
   constructor(
     private fb: FormBuilder,
     public formService: FormService,
@@ -49,7 +50,7 @@ export class AddParentComponent implements OnInit {
     phone: ['', [Validators.required]],
     email: ['', [Validators.required]],
     profileUrl: [
-      'http://localhost:3001/photos/profile-picture.jpg',
+      `${this.apiUrl}/photos/profile-picture.jpg`,
       [Validators.required],
     ],
   });

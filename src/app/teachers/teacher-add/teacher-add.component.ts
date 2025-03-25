@@ -24,6 +24,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
 import checkFormChange from '@/app/shared/utils/checkFormChanged';
+import { environment } from '@/environments/environment';
 
 @Component({
   imports: [
@@ -42,6 +43,7 @@ export class AddTeacherComponent implements OnInit {
   isDirty: boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<AddTeacherComponent>);
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +60,7 @@ export class AddTeacherComponent implements OnInit {
     phone: ['', [Validators.required]],
     email: ['', [Validators.required]],
     profileUrl: [
-      'http://localhost:3001/photos/profile-picture.jpg',
+      `${this.apiUrl}/photos/profile-picture.jpg`,
       [Validators.required],
     ],
     admissionDate: ['', [Validators.required]],

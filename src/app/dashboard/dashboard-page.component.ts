@@ -17,6 +17,7 @@ import { HeadingComponent } from '../shared/components/heading/heading.component
 import { route, SchoolSubject } from '../shared/types';
 import { SubjectService } from '../subjects/services/subject.service';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
+import { environment } from '@/environments/environment';
 
 @Component({
     selector: 'sman-dashboard',
@@ -42,41 +43,43 @@ export class DashboardComponent implements OnInit {
   enrollmentsPerYear: any[] = [];
   todaySubjects: SchoolSubject[] = [];
 
+  private readonly apiUrl = environment.apiUrl;
+
   notices: Notice[] = [
     {
       title: 'School annual sports day celebration 2024',
       date: '2024-01-07',
-      image: 'http://localhost:3001/photos/student(3).jpg',
+      image: `${this.apiUrl}/photos/student(3).jpg`,
       views: 105,
     },
     {
       title: 'Annual function celebration 2024',
       date: '2024-08-04',
-      image: 'http://localhost:3001/photos/student(4).jpg',
+      image: `${this.apiUrl}/photos/student(4).jpg`,
       views: 289,
     },
     {
       title: 'Mid term exam routine published',
       date: '2024-06-30',
-      image: 'http://localhost:3001/photos/student(5).jpg',
+      image: `${this.apiUrl}/photos/student(5).jpg`,
       views: 531,
     },
     {
       title: 'Annual painting competition 2024',
       date: '2024-01-01',
-      image: 'http://localhost:3001/photos/student(6).jpg',
+      image: `${this.apiUrl}/photos/student(6).jpg`,
       views: 89,
     },
     {
       title: 'Culture day celebration',
       date: '2024-10-15',
-      image: 'http://localhost:3001/photos/student(7).jpg',
+      image: `${this.apiUrl}/photos/student(7).jpg`,
       views: 25,
     },
     {
       title: 'Sports day celebration 2023',
       date: '2023-10-24',
-      image: 'http://localhost:3001/photos/student(3).jpg',
+      image: `${this.apiUrl}/photos/student(3).jpg`,
       views: 151,
     },
   ];
@@ -89,6 +92,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getStats();
+    console.log(environment.apiUrl);
+    console.log(environment.googleMapsApiKey);
+    console.log(environment.env);
   }
 
   getStats() {

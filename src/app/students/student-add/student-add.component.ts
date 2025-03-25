@@ -30,6 +30,7 @@ import { HeadingComponent } from '../../shared/components/heading/heading.compon
 import { AddressAutocompleteComponent } from '../../shared/components/address-autocomplete/address-autocomplete.component';
 import { DateInputComponent } from '../../shared/components/date-input/date-input.component';
 import checkFormChange from '@/app/shared/utils/checkFormChanged';
+import { environment } from '@/environments/environment';
 
 @Component({
   selector: 'sman-add-student',
@@ -54,6 +55,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
   isDirty: boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<AddStudentComponent>);
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder,
@@ -85,7 +87,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit, OnDestroy {
     email: ['', [Validators.required]],
     admissionDate: ['', [Validators.required]],
     profileUrl: [
-      'http://localhost:3001/photos/profile-picture.jpg',
+      `${this.apiUrl}/photos/profile-picture.jpg`,
       [Validators.required],
     ],
   });

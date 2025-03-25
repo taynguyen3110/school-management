@@ -13,6 +13,7 @@ import { PhotoUploaderService } from './services/photo-uploader.service';
 import { ProfilePhotoComponent } from '../profile-photo/profile-photo.component';
 import { ScreenService } from '../../services/screen.service';
 import { ScreenSize } from '../../types';
+import { environment } from '@/environments/environment';
 
 @Component({
     imports: [CommonModule, ProfilePhotoComponent],
@@ -24,8 +25,10 @@ export class PhotoUploaderComponent implements OnInit {
   @Output() photoUploaded = new EventEmitter<string>();
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
+  private readonly apiUrl = environment.apiUrl;
+
   readonly defaultPhoto: string =
-    'http://localhost:3001/photos/profile-picture.jpg';
+    `${this.apiUrl}/photos/profile-picture.jpg`;
 
   isDragOver = signal<boolean>(false);
   imagePreview = signal<string>(this.defaultPhoto);
