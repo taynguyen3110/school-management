@@ -17,6 +17,10 @@ import { HttpErrorInterceptor } from './shared/interceptors/http-error.intercept
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { provideStore } from '@ngrx/store';
 import { studentsReducer } from './state/student/student.reducer';
+import { parentsReducer } from './state/parent/parent.reducer';
+import { teachersReducer } from './state/teacher/teacher.reducer';
+import { subjectsReducer } from './state/subject/subject.reducer';
+import { classesReducer } from './state/class/class.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +35,10 @@ export const appConfig: ApplicationConfig = {
     // { provide: ErrorHandler, useClass: CustomErrorHandler },
     provideStore({
       students: studentsReducer,
+      parents: parentsReducer,
+      teachers: teachersReducer,
+      subjects: subjectsReducer,
+      classes: classesReducer,
     }),
   ],
 };

@@ -10,16 +10,21 @@ import { TeacherService } from './services/teacher.service';
 import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectAllTeachers } from '../state/teacher/teacher.selector';
+import { loadTeachersSuccess } from '../state/teacher/teacher.actions';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'sman-teachers',
-    imports: [
-        ItemTableComponent,
-        PaginationComponent,
-        PageLayoutComponent,
-        FilterComponent,
-    ],
-    templateUrl: './teachers-page.component.html'
+  selector: 'sman-teachers',
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    PageLayoutComponent,
+    FilterComponent,
+    MatProgressSpinnerModule,
+  ],
+  templateUrl: './teachers-page.component.html',
 })
 export class TeachersComponent {
   teachersCount: number = 0;
@@ -28,6 +33,8 @@ export class TeachersComponent {
   teachers: Teacher[] = [];
   currentPage: number = 1;
   filterParams: Params = {};
+  isLoading: boolean = false;
+  isFiltering: boolean = false;
 
   addFormIsDirty: boolean = false;
 
@@ -35,15 +42,16 @@ export class TeachersComponent {
 
   readonly dialog = inject(MatDialog);
 
+  public teacherState$ = this.store.select(selectAllTeachers);
 
   constructor(
     private teacherService: TeacherService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
+    private store: Store
   ) {}
 
   ngOnInit() {
-   
     this.route.queryParams
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((params) => {
@@ -53,15 +61,80 @@ export class TeachersComponent {
             'teachers',
             'add',
             { page: this.currentPage },
-            true,
+            true
           );
         } else {
+          this.checkFiltering();
           this.currentPage = +params['page'];
-          this.fetchTeachers(params).subscribe((data: any) => {
-            this.setPagination(data);
-          });
+          if (this.currentPage === 1) {
+            this.teacherState$
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((state) => {
+                if (state.status === 'loaded' && !this.isFiltering) {
+                  this.setPagination(state);
+                  this.isLoading = false;
+                } else {
+                  this.isLoading = true;
+                  this.fetchTeachers(params).subscribe({
+                    next: (data: any) => {
+                      this.setPagination(data);
+                      if (this.currentPage === 1 && !this.isFiltering) {
+                        this.saveTeacherList(
+                          data.teachers,
+                          data.total,
+                          data.rowsPerPage,
+                          data.totalPages
+                        );
+                      }
+                      this.isLoading = false;
+                    },
+                    error: () => {
+                      this.isLoading = false;
+                    }
+                  });
+                }
+              });
+          } else {
+            this.isLoading = true;
+            this.fetchTeachers(params).subscribe({
+              next: (data: any) => {
+                this.setPagination(data);
+                if (this.currentPage === 1) {
+                  this.saveTeacherList(
+                    data.teachers,
+                    data.total,
+                    data.rowsPerPage,
+                    data.totalPages
+                  );
+                }
+                this.isLoading = false;
+              },
+              error: () => {
+                this.isLoading = false;
+              }
+            });
+          }
         }
       });
+  }
+
+  checkFiltering() {
+    if (this.filterParams['name'] || this.filterParams['classIds']) {
+      this.isFiltering = true;
+    } else {
+      this.isFiltering = false;
+    }
+  }
+
+  saveTeacherList(
+    teachers: Teacher[],
+    total: number,
+    rowsPerPage: number,
+    totalPages: number
+  ) {
+    this.store.dispatch(
+      loadTeachersSuccess({ teachers, total, rowsPerPage, totalPages })
+    );
   }
 
   openDialog(): void {
@@ -99,7 +172,7 @@ export class TeachersComponent {
   }
 
   resetFilter() {
-    this.navigationService.toRoute('teachers', 'delete', ['name', 'classIds']);
+    this.navigationService.toRoute('teachers', 'delete', ['name']);
   }
 
   ngOnDestroy() {

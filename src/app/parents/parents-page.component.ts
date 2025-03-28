@@ -11,7 +11,9 @@ import { PageLayoutComponent } from '../shared/components/page-layout/page-layou
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { selectAllStudents } from '../state/student/student.selector';
+import { loadParentsSuccess } from '../state/parent/parent.actions';
+import { selectAllParents } from '../state/parent/parent.selector';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'sman-parents',
@@ -20,6 +22,7 @@ import { selectAllStudents } from '../state/student/student.selector';
     PaginationComponent,
     PageLayoutComponent,
     FilterComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './parents-page.component.html',
   styleUrl: './parents-page.component.scss',
@@ -31,14 +34,13 @@ export class ParentsComponent {
   parents: Parent[] = [];
   currentPage: number = 1;
   filterParams: Params = {};
-
-  addFormIsDirty: boolean = false;
+  isLoading: boolean = false;
+  isFiltering: boolean = false;
 
   unsubscribe$ = new Subject<void>();
 
   readonly dialog = inject(MatDialog);
-
-  private testStudents$ = this.store.select(selectAllStudents);
+  public parentState$ = this.store.select(selectAllParents);
 
   constructor(
     private parentsService: ParentsService,
@@ -60,20 +62,80 @@ export class ParentsComponent {
             true
           );
         } else {
+          this.checkFiltering();
           this.currentPage = +params['page'];
-          this.fetchParents(params).subscribe((data: any) => {
-            this.setPagination(data);
-          });
+          if (this.currentPage === 1) {
+            this.parentState$
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((state) => {
+                if (state.status === 'loaded' && !this.isFiltering) {
+                  this.setPagination(state);
+                  this.isLoading = false;
+                } else {
+                  this.isLoading = true;
+                  this.fetchParents(params).subscribe({
+                    next: (data: any) => {
+                      this.setPagination(data);
+                      if (this.currentPage === 1 && !this.isFiltering) {
+                        this.saveParentList(
+                          data.parents,
+                          data.total,
+                          data.rowsPerPage,
+                          data.totalPages
+                        );
+                      }
+                      this.isLoading = false;
+                    },
+                    error: () => {
+                      this.isLoading = false;
+                    }
+                  });
+                }
+              });
+          } else {
+            this.isLoading = true;
+            this.fetchParents(params).subscribe({
+              next: (data: any) => {
+                this.setPagination(data);
+                if (this.currentPage === 1) {
+                  this.saveParentList(
+                    data.parents,
+                    data.total,
+                    data.rowsPerPage,
+                    data.totalPages
+                  );
+                }
+                this.isLoading = false;
+              },
+              error: () => {
+                this.isLoading = false;
+              }
+            });
+          }
         }
       });
+  }
 
-    this.testStudents$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => console.log(data));
+  checkFiltering() {
+    if (this.filterParams['name'] || this.filterParams['classIds']) {
+      this.isFiltering = true;
+    } else {
+      this.isFiltering = false;
+    }
+  }
+
+  saveParentList(
+    parents: Parent[],
+    total: number,
+    rowsPerPage: number,
+    totalPages: number
+  ) {
+    this.store.dispatch(
+      loadParentsSuccess({ parents, total, rowsPerPage, totalPages })
+    );
   }
 
   openDialog(): void {
-    this.addFormIsDirty = true;
     this.dialog.open(AddParentComponent, {
       panelClass: ['overflow-auto', 'hide-scrollbar'],
       maxWidth: '700px',
@@ -101,7 +163,7 @@ export class ParentsComponent {
   }
 
   resetFilter() {
-    this.navigationService.toRoute('parents', 'delete', ['name', 'classIds']);
+    this.navigationService.toRoute('parents', 'delete', ['name']);
   }
 
   setPagination(data: any) {

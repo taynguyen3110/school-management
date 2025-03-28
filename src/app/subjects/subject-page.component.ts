@@ -10,6 +10,10 @@ import { SubjectService } from './services/subject.service';
 import { PageLayoutComponent } from '../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../shared/components/filter/filter.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { selectAllSubjects } from '../state/subject/subject.selector';
+import { loadSubjectsSuccess } from '../state/subject/subject.actions';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'sman-subjects',
@@ -18,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
         PaginationComponent,
         PageLayoutComponent,
         FilterComponent,
+        MatProgressSpinnerModule,
     ],
     templateUrl: './subject-page.component.html'
 })
@@ -28,15 +33,19 @@ export class SubjectsComponent {
   subjects: SchoolSubject[] = [];
   currentPage: number = 1;
   filterParams: Params = {};
+  isLoading: boolean = false;
+  isFiltering: boolean = false;
 
   unsubscribe$ = new Subject<void>();
 
   readonly dialog = inject(MatDialog);
+  public subjectState$ = this.store.select(selectAllSubjects);
 
   constructor(
     private subjectService: SubjectService,
     private navigationService: NavigationService,
     private route: ActivatedRoute,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -52,12 +61,77 @@ export class SubjectsComponent {
             true,
           );
         } else {
+          this.checkFiltering();
           this.currentPage = +params['page'];
-          this.fetchSubjects(params).subscribe((data: any) => {
-            this.setPagination(data);
-          });
+          if (this.currentPage === 1) {
+            this.subjectState$
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe((state) => {
+                if (state.status === 'loaded' && !this.isFiltering) {
+                  this.setPagination(state);
+                  this.isLoading = false;
+                } else {
+                  this.isLoading = true;
+                  this.fetchSubjects(params).subscribe({
+                    next: (data: any) => {
+                      this.setPagination(data);
+                      if (this.currentPage === 1 && !this.isFiltering) {
+                        this.saveSubjectList(
+                          data.subjects,
+                          data.total,
+                          data.rowsPerPage,
+                          data.totalPages
+                        );
+                      }
+                      this.isLoading = false;
+                    },
+                    error: () => {
+                      this.isLoading = false;
+                    }
+                  });
+                }
+              });
+          } else {
+            this.isLoading = true;
+            this.fetchSubjects(params).subscribe({
+              next: (data: any) => {
+                this.setPagination(data);
+                if (this.currentPage === 1) {
+                  this.saveSubjectList(
+                    data.subjects,
+                    data.total,
+                    data.rowsPerPage,
+                    data.totalPages
+                  );
+                }
+                this.isLoading = false;
+              },
+              error: () => {
+                this.isLoading = false;
+              }
+            });
+          }
         }
       });
+  }
+
+  checkFiltering() {
+    if (this.filterParams['name'] || this.filterParams['classIds']) {
+      this.isFiltering = true;
+    } else {
+      this.isFiltering = false;
+    }
+  }
+
+  saveSubjectList(
+    subjects: SchoolSubject[],
+    total: number,
+    rowsPerPage: number,
+    totalPages: number
+  ) {
+    this.store.dispatch(
+      loadSubjectsSuccess({ subjects, total, rowsPerPage, totalPages })
+    );
   }
 
   openDialog(): void {
@@ -95,7 +169,7 @@ export class SubjectsComponent {
   }
 
   resetFilter() {
-    this.navigationService.toRoute('subjects', 'delete', ['name', 'classIds']);
+    this.navigationService.toRoute('subjects', 'delete', ['name']);
   }
 
   ngOnDestroy() {

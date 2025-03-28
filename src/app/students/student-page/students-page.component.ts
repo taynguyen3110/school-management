@@ -16,15 +16,17 @@ import {
   loadStudentsSuccess,
 } from '@/app/state/student/student.actions';
 import { selectAllStudents } from '@/app/state/student/student.selector';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'sman-students, students',
+  selector: 'sman-students',
   imports: [
     PaginationComponent,
     ReactiveFormsModule,
     ItemTableComponent,
     PageLayoutComponent,
     FilterComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './students-page.component.html',
   styleUrl: './students-page.component.scss',
@@ -36,11 +38,13 @@ export class StudentsComponent {
   students: Student[] = [];
   currentPage: number = 1;
   filterParams: Params = {};
+  isLoading: boolean = false;
+  isFiltering: boolean = false;
 
   unsubscribe$ = new Subject<void>();
 
   readonly dialog = inject(MatDialog);
-  public testStudents$ = this.store.select(selectAllStudents);
+  public studentState$ = this.store.select(selectAllStudents);
 
   constructor(
     private route: ActivatedRoute,
@@ -62,42 +66,66 @@ export class StudentsComponent {
             true
           );
         } else {
+          this.checkFiltering();
           this.currentPage = +params['page'];
           if (this.currentPage === 1) {
-            this.testStudents$
+            this.studentState$
               .pipe(takeUntil(this.unsubscribe$))
-              .subscribe((data) => {
-                if (data.status === 'loaded') {
-                  this.setPagination(data);
+              .subscribe((state) => {
+                if (state.status === 'loaded' && !this.isFiltering) {
+                  this.setPagination(state);
+                  this.isLoading = false;
                 } else {
-                  this.fetchStudents(params).subscribe((data: any) => {
-                    this.setPagination(data);
-                    if (this.currentPage === 1) {
-                      this.saveStudentList(
-                        data.students,
-                        data.total,
-                        data.rowsPerPage,
-                        data.totalPages
-                      );
+                  this.isLoading = true;
+                  this.fetchStudents(params).subscribe({
+                    next: (data: any) => {
+                      this.setPagination(data);
+                      if (this.currentPage === 1 && !this.isFiltering) {
+                        this.saveStudentList(
+                          data.students,
+                          data.total,
+                          data.rowsPerPage,
+                          data.totalPages
+                        );
+                      }
+                      this.isLoading = false;
+                    },
+                    error: () => {
+                      this.isLoading = false;
                     }
                   });
                 }
               });
           } else {
-            this.fetchStudents(params).subscribe((data: any) => {
-              this.setPagination(data);
-              if (this.currentPage === 1) {
-                this.saveStudentList(
-                  data.students,
-                  data.total,
-                  data.rowsPerPage,
-                  data.totalPages
-                );
+            this.isLoading = true;
+            this.fetchStudents(params).subscribe({
+              next: (data: any) => {
+                this.setPagination(data);
+                if (this.currentPage === 1) {
+                  this.saveStudentList(
+                    data.students,
+                    data.total,
+                    data.rowsPerPage,
+                    data.totalPages
+                  );
+                }
+                this.isLoading = false;
+              },
+              error: () => {
+                this.isLoading = false;
               }
             });
           }
         }
       });
+  }
+
+  checkFiltering() {
+    if (this.filterParams['name'] || this.filterParams['classIds']) {
+      this.isFiltering = true;
+    } else {
+      this.isFiltering = false;
+    }
   }
 
   saveStudentList(

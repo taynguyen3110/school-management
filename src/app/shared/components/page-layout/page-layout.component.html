@@ -1,6 +1,6 @@
 <ng-content></ng-content>
 <sman-heading [title]="title" [heading]="1" [spacing]="10" />
-<div class="flex justify-end w-full">
+<div class="container flex justify-end w-full">
   <sman-button text="Create New" (buttonClick)="createNew.emit()">
     <i icon class="fa-solid fa-plus"></i>
   </sman-button>
@@ -10,8 +10,15 @@
 >
   <ng-content select="[filter]"></ng-content>
   <hr />
-  <div class="overflow-x-auto">
+  <div class="overflow-x-auto relative">
     <ng-content select="[table]"></ng-content>
+    @if (isLoading) {
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-white z-50"
+    >
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    }
   </div>
   <ng-content select="[pagination]"></ng-content>
 </div>

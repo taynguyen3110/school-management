@@ -6,6 +6,11 @@
         class="cursor-pointer"
         (click)="handleClick('students')"
       >
+        @if (isLoadingStats) {
+        <div class="flex items-center justify-center h-full">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        } @else {
         <sman-stats-cell
           chart
           color="blue"
@@ -14,6 +19,7 @@
         >
           <i icon class="fa-solid fa-user-graduate"></i>
         </sman-stats-cell>
+        }
       </sman-stats-wrapper>
     </div>
     <div class="w-1/2">
@@ -21,6 +27,11 @@
         class="cursor-pointer"
         (click)="handleClick('parents')"
       >
+        @if (isLoadingStats) {
+        <div class="flex items-center justify-center h-full">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        } @else {
         <sman-stats-cell
           chart
           color="purple"
@@ -29,6 +40,7 @@
         >
           <i icon class="fa-solid fa-person-breastfeeding"></i>
         </sman-stats-cell>
+        }
       </sman-stats-wrapper>
     </div>
   </div>
@@ -38,6 +50,11 @@
         class="cursor-pointer"
         (click)="handleClick('teachers')"
       >
+        @if (isLoadingStats) {
+        <div class="flex items-center justify-center h-full">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        } @else {
         <sman-stats-cell
           chart
           color="green"
@@ -46,6 +63,7 @@
         >
           <i icon class="fa-solid fa-chalkboard-user"></i>
         </sman-stats-cell>
+        }
       </sman-stats-wrapper>
     </div>
     <div class="w-1/2">
@@ -53,9 +71,15 @@
         class="cursor-pointer"
         (click)="handleClick('classes')"
       >
+        @if (isLoadingStats) {
+        <div class="flex items-center justify-center h-full">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+        } @else {
         <sman-stats-cell chart color="red" label="Classes" [stats]="classCount">
           <i icon class="fa-solid fa-people-roof"></i>
         </sman-stats-cell>
+        }
       </sman-stats-wrapper>
     </div>
   </div>
@@ -64,6 +88,11 @@
   <div class="lg:w-1/3">
     <sman-heading title="Student gender ratio" />
     <sman-stats-wrapper [isChart]="true">
+      @if (isLoadingStats) {
+      <div class="flex items-center justify-center h-[250px]">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      } @else {
       <sman-gender-ratio-chart
         chart
         [width]="300"
@@ -71,33 +100,49 @@
         [maleCount]="maleCount"
         [femaleCount]="femaleCount"
       ></sman-gender-ratio-chart>
+      }
     </sman-stats-wrapper>
   </div>
   <div class="lg:w-2/3">
     <sman-heading title="Enrollments Per Year" />
     <sman-stats-wrapper [isChart]="true">
+      @if (isLoadingStats) {
+      <div class="flex items-center justify-center h-[250px]">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      } @else {
       <sman-enrollment-stats-chart
         chart
         [enrollmentStats]="enrollmentsPerYear"
       ></sman-enrollment-stats-chart>
+      }
     </sman-stats-wrapper>
   </div>
 </div>
 <div>
   <sman-heading title="Today's Class Schedule" />
   <div class="bg-white p-3 rounded-2xl">
+    @if (isLoadingSchedule) {
+    <div class="flex items-center justify-center h-[200px]">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    } @else {
     <sman-item-table
       [enableSorting]="false"
       [fromDashboard]="true"
       [items]="todaySubjects"
       listOf="subjects"
     />
+    }
   </div>
 </div>
 <div>
   <sman-heading title="Notice Board" />
   <sman-stats-wrapper>
-    <div chart class=" lg:grid lg:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] lg:gap-x-10 lg:w-full">
+    <div
+      chart
+      class="lg:grid lg:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] lg:gap-x-10 lg:w-full"
+    >
       @for (notice of notices; track $index) {
       <sman-notice-news chart [notice]="notice"></sman-notice-news>
       }

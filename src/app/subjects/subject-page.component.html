@@ -1,4 +1,8 @@
-<sman-page-layout title="Subjects" (createNew)="openDialog()">
+<sman-page-layout
+  title="Subjects"
+  (createNew)="openDialog()"
+  [isLoading]="isLoading"
+>
   <sman-filter
     filter
     (filter)="filterSubjects($event)"

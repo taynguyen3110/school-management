@@ -12,12 +12,14 @@ import {
   distinctUntilChanged,
   Subject,
   takeUntil,
+  forkJoin,
 } from 'rxjs';
 import { HeadingComponent } from '../shared/components/heading/heading.component';
 import { route, SchoolSubject } from '../shared/types';
 import { SubjectService } from '../subjects/services/subject.service';
 import { ItemTableComponent } from '../shared/components/item-table/item-table.component';
 import { environment } from '@/environments/environment';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'sman-dashboard',
@@ -29,11 +31,12 @@ import { environment } from '@/environments/environment';
         NoticeNewsComponent,
         HeadingComponent,
         ItemTableComponent,
+        MatProgressSpinnerModule,
     ],
     templateUrl: './dashboard-page.component.html',
     styleUrl: './dashboard-page.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   studentCount: number = 0;
   maleCount: number = 0;
   femaleCount: number = 0;
@@ -42,6 +45,10 @@ export class DashboardComponent implements OnInit {
   classCount: number = 0;
   enrollmentsPerYear: any[] = [];
   todaySubjects: SchoolSubject[] = [];
+
+  isLoading: boolean = true;
+  isLoadingStats: boolean = true;
+  isLoadingSchedule: boolean = true;
 
   private readonly apiUrl = environment.apiUrl;
 
@@ -84,6 +91,8 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
     private navigationService: NavigationService,
     private dashboardService: DashboardService,
@@ -91,27 +100,40 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getStats();
-    console.log(environment.apiUrl);
-    console.log(environment.googleMapsApiKey);
-    console.log(environment.env);
+    this.loadDashboardData();
   }
 
-  getStats() {
-    this.dashboardService.getStatistic().subscribe((data) => {
-      this.studentCount = data.studentCount;
-      this.maleCount = data.maleCount;
-      this.femaleCount = data.femaleCount;
-      this.parentCount = data.parentCount;
-      this.teacherCount = data.teacherCount;
-      this.classCount = data.classCount;
-      this.enrollmentsPerYear = data.enrollmentsPerYear;
+  loadDashboardData() {
+    this.isLoading = true;
+    
+    // Load statistics and today's schedule in parallel
+    forkJoin({
+      stats: this.dashboardService.getStatistic(),
+      schedule: this.subjectService.getSubjects({ schedule: this.getDayOfWeek() })
+    })
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe({
+      next: ({ stats, schedule }) => {
+        this.studentCount = stats.studentCount;
+        this.maleCount = stats.maleCount;
+        this.femaleCount = stats.femaleCount;
+        this.parentCount = stats.parentCount;
+        this.teacherCount = stats.teacherCount;
+        this.classCount = stats.classCount;
+        this.enrollmentsPerYear = stats.enrollmentsPerYear;
+        this.todaySubjects = schedule.subjects;
+        
+        this.isLoadingStats = false;
+        this.isLoadingSchedule = false;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading dashboard data:', error);
+        this.isLoading = false;
+        this.isLoadingStats = false;
+        this.isLoadingSchedule = false;
+      }
     });
-    this.subjectService
-      .getSubjects({ schedule: this.getDayOfWeek() })
-      .subscribe((data) => {
-        this.todaySubjects = data.subjects;
-      });
   }
 
   getDayOfWeek(): string {
@@ -149,6 +171,11 @@ export class DashboardComponent implements OnInit {
     const simplifiedTeachers = this.teacherCount / divisor;
 
     return `${simplifiedStudents}:${simplifiedTeachers}`;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
 

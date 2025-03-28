@@ -1,4 +1,9 @@
-<sman-page-layout title="Teachers" (createNew)="openDialog()">
+<sman-page-layout
+  class="relative"
+  title="Teachers"
+  (createNew)="openDialog()"
+  [isLoading]="isLoading"
+>
   <sman-filter
     filter
     (filter)="filterTeachers($event)"
