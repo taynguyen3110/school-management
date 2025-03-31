@@ -43,7 +43,9 @@
       <!-- Gender -->
       <div class="flex flex-col md:w-1/2 mb-5">
         <div class="flex flex-col w-full">
-          <label class="text-inputTitle mb-[10px] text-sm md:text-base" for="gender"
+          <label
+            class="text-inputTitle mb-[10px] text-sm md:text-base"
+            for="gender"
             >Gender:</label
           >
           <div class="relative">
@@ -153,10 +155,8 @@
     />
     <div class="md:flex md:gap-4 mb-5">
       <div class="flex flex-col md:w-1/2 relative z-50">
-        <label class="text-inputTitle mb-2 text-sm md:text-base"
-          >Classes:</label
-        >
         <sman-multiselector
+          label="Classes:"
           [items]="classesList"
           placeholder="Select class to enroll."
           [lookUp]="true"
@@ -170,10 +170,8 @@
         ></sman-multiselector>
       </div>
       <div class="flex flex-col md:w-1/2">
-        <label class="text-inputTitle mb-2 text-sm md:text-base"
-          >Parents:</label
-        >
         <sman-multiselector
+          label="Parents:"
           [items]="parentsList"
           placeholder="Parents of this student."
           [lookUp]="true"

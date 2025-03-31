@@ -44,7 +44,7 @@ mat-calendar {
   background-color: white;
   border-radius: 15px;
   border: 1px solid rgb(235, 235, 235);
-  @apply shadow-xl
+  @apply shadow-xl;
 }
 
 .mdc-line-ripple {
@@ -75,10 +75,14 @@ mat-calendar {
 
 // address-autocomplete
 .pac-container {
-@apply rounded-lg p-2
+  @apply rounded-lg p-2;
 }
 
 .pac-item {
   font-family: "Inter", sans-serif;
   @apply py-1;
+}
+
+.mat-mdc-progress-spinner circle {
+  stroke: #949494 !important;
 }

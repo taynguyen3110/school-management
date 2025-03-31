@@ -3,7 +3,7 @@ export interface ComponentDoc {
   description: string;
   usage: string;
   props?: { name: string; type: string; description: string }[];
-  category: 'Core' | 'Form' | 'Layout' | 'Data Display' | 'Utility';
+  category: 'Core' | 'Form' | 'Layout' | 'Data Display';
 }
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
@@ -48,19 +48,21 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: 'icon',
         type: 'Content Projection',
-        description: 'Icon element to be displayed before the button text. Use with [icon] attribute.',
-      }
+        description:
+          'Icon element to be displayed before the button text. Use with [icon] attribute.',
+      },
     ],
   },
   {
     name: 'Input',
     category: 'Form',
-    description: 'A versatile input component that implements ControlValueAccessor for seamless integration with Angular forms. Features include validation states, error messages, and customizable styling.',
+    description:
+      'A versatile input component that implements ControlValueAccessor for seamless integration with Angular forms. Features include validation states, error messages, and customizable styling.',
     usage: `<sman-input
   type="text"
   name="username"
   label="Username"
-  placeholder="Enter username"
+  placeholder="Please enter username"
   [hasError]="form.get('username')?.errors"
   [errMsgs]="{
     required: 'Username is required',
@@ -98,22 +100,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: 'errMsgs',
         type: '{ [key: string]: string }',
         description: 'Object mapping error keys to error messages',
-      }
-    ],
-  },
-  {
-    name: 'Loading Spinner',
-    category: 'Utility',
-    description: 'A loading spinner that can be controlled via input or loading service.',
-    usage: `<sman-loading-spinner
-  [isLoading]="true">
-</sman-loading-spinner>`,
-    props: [
-      {
-        name: 'isLoading',
-        type: 'boolean',
-        description: 'Control spinner visibility directly',
-      }
+      },
     ],
   },
   {
@@ -134,27 +121,80 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: 'size',
         type: 'number',
         description: 'Size of the photo in pixels (default: 40)',
-      }
+      },
     ],
   },
   {
-    name: 'Page Layout',
+    name: 'Layout',
     category: 'Layout',
-    description: 'Standard page layout with header and optional sidebar.',
-    usage: `<sman-page-layout>
-  <div content>
-    Page content goes here
-  </div>
+    description: 'A comprehensive layout system that provides structure for pages, including header, content area, and optional components like filters, tables, and pagination.',
+    usage: `<sman-page-layout
+  title="Students"
+  (createNew)="openDialog()"
+  [isLoading]="isLoading"
+>
+  <sman-filter
+    filter
+    (filter)="filterStudents($event)"
+    (reset)="resetFilter()"
+    [queryParams]="filterParams"
+  ></sman-filter>
+  <sman-item-table
+    table
+    listOf="students"
+    [items]="students"
+    (sort)="filterStudents($event)"
+  ></sman-item-table>
+  @if (studentsCount) {
+  <sman-pagination
+    pagination
+    [pageSize]="itemPerPage"
+    [totalCount]="studentsCount"
+    [currentPage]="currentPage"
+    (pageChange)="handlePageChange($event)"
+  />
+  }
 </sman-page-layout>`,
-    props: [],
+    props: [
+      {
+        name: 'title',
+        type: 'string',
+        description: 'The title displayed in the page header',
+      },
+      {
+        name: 'isLoading',
+        type: 'boolean',
+        description: 'Controls the loading state of the page',
+      },
+      {
+        name: 'createNew',
+        type: 'EventEmitter<void>',
+        description: 'Event emitted when the create button is clicked',
+      },
+      {
+        name: 'filter',
+        type: 'Content Projection',
+        description: 'Slot for filter component',
+      },
+      {
+        name: 'table',
+        type: 'Content Projection',
+        description: 'Slot for table component',
+      },
+      {
+        name: 'pagination',
+        type: 'Content Projection',
+        description: 'Slot for pagination component',
+      },
+    ],
   },
   {
     name: 'Item Table',
     category: 'Data Display',
-    description: 'Dynamic table component with sorting and list type configuration.',
+    description: 'A dynamic table component that supports sorting, responsive columns, and different data types (students, teachers, parents, subjects, classes). Features include column sorting, responsive layout, and dashboard view mode.',
     usage: `<sman-item-table
-  [items]="items"
-  [listOf]="'students'"
+  [items]="students"
+  listOf="students"
   [enableSorting]="true"
   [fromDashboard]="false"
   (sort)="handleSort($event)">
@@ -163,40 +203,44 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: 'items',
         type: 'any[]',
-        description: 'Table data array',
+        description: 'Array of data to display in the table. Structure should match the selected listOf type.',
       },
       {
         name: 'listOf',
         type: "'students' | 'parents' | 'teachers' | 'subjects' | 'classes'",
-        description: 'Type of list to display, determines columns',
+        description: 'Determines the type of data being displayed and configures columns accordingly.',
       },
       {
         name: 'enableSorting',
         type: 'boolean',
-        description: 'Enable column sorting (default: true)',
+        description: 'Enables column sorting functionality (default: true)',
       },
       {
         name: 'fromDashboard',
         type: 'boolean',
-        description: 'Changes empty state message (default: false)',
+        description: 'Changes table appearance for dashboard view (default: false)',
       },
       {
         name: 'sort',
-        type: 'EventEmitter<Params>',
-        description: 'Event emitted when sorting changes',
-      }
+        type: 'EventEmitter<{ sortBy: string; order: "asc" | "desc" } | { isNotSort: true }>',
+        description: 'Event emitted when sorting changes. Returns sort field and direction, or isNotSort flag when sorting is cleared.',
+      },
     ],
   },
   {
     name: 'Date Input',
     category: 'Form',
-    description: 'Date input with calendar picker, validation, and error messages.',
+    description:
+      'Date input with calendar picker, validation, and error messages.',
     usage: `<sman-date-input
-  [label]="'Birth Date'"
-  [name]="'dateOfBirth'"
-  [hasError]="{ fieldInvalid: true, required: true }"
-  [errMsgs]="{ required: 'Please select a date', fieldInvalid: 'Invalid date format' }"
-  [(ngModel)]="birthDate">
+  label="Birth Date"
+  name="dateOfBirth"
+  [hasError]="form.get('dateOfBirth')?.errors"
+  [errMsgs]="{ 
+    required: 'Please select a date', 
+    fieldInvalid: 'Invalid date format' 
+  }"
+  formControlName="dateOfBirth">
 </sman-date-input>`,
     props: [
       {
@@ -223,14 +267,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: 'errMsgs',
         type: '{ [key: string]: string }',
         description: 'Error messages for different validation states',
-      }
+      },
     ],
   },
   {
     name: 'Multiselector',
     category: 'Form',
-    description: 'Multiple selection component with search, tags, and validation support.',
+    description:
+      'Multiple selection component with search, tags, and validation support.',
     usage: `<sman-multiselector
+  label="Subjects"
   [items]="subjects"
   [selected]="[]"
   [placeholder]="'Choose subjects...'"
@@ -291,44 +337,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: 'inputTyped',
         type: 'EventEmitter<string>',
         description: 'Event emitted when search input changes',
-      }
-    ],
-  },
-  {
-    name: 'Information Wrapper',
-    category: 'Layout',
-    description: 'Container for displaying information with optional edit button.',
-    usage: `<sman-info-wrapper
-  [profilePic]="false"
-  [editable]="true"
-  (edit)="handleEdit()">
-  <div title>Section Title</div>
-  <div content>Content goes here</div>
-</sman-info-wrapper>`,
-    props: [
-      {
-        name: 'profilePic',
-        type: 'boolean',
-        description: 'Enable profile picture mode (default: false)',
       },
-      {
-        name: 'editable',
-        type: 'boolean',
-        description: 'Show edit button (default: true)',
-      },
-      {
-        name: 'edit',
-        type: 'EventEmitter<void>',
-        description: 'Event emitted when edit button is clicked',
-      }
     ],
   },
   {
     name: 'Address Input',
     category: 'Form',
-    description: 'An address input component with Google Places Autocomplete integration. Provides address suggestions as you type and implements ControlValueAccessor for seamless form integration.',
+    description:
+      'An address input component with Google Places Autocomplete integration. Provides address suggestions as you type and implements ControlValueAccessor for seamless form integration.',
     usage: `<sman-address-autocomplete
-  label="Address"
+  label="Address Autocomplete"
   placeholder="Enter your address"
   [hasError]="form.get('address')?.errors"
   [errMsgs]="{ required: 'Please enter a valid address' }"
@@ -359,7 +377,27 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: 'errMsgs',
         type: '{ [key: string]: string }',
         description: 'Object mapping error keys to error messages',
-      }
+      },
+    ],
+  },
+  {
+    name: 'Photo Uploader',
+    category: 'Form',
+    description: 'A component for uploading and previewing profile photos with drag-and-drop support, image validation, and automatic resizing.',
+    usage: `<sman-photo-uploader
+  (photoUploaded)="handlePhotoUpload($event)">
+</sman-photo-uploader>`,
+    props: [
+      {
+        name: 'inputUrl',
+        type: 'string',
+        description: 'Initial photo URL to display',
+      },
+      {
+        name: 'photoUploaded',
+        type: 'EventEmitter<string>',
+        description: 'Event emitted when a photo is successfully uploaded, containing the new photo URL',
+      },
     ],
   },
 ];

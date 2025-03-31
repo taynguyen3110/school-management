@@ -64,7 +64,7 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.dateControl.valueChanges.subscribe((value) => {
-      this.onChange(value); // Notify parent form of value changes
+      this.onChange(value);
     });
   }
 
@@ -86,6 +86,6 @@ export class DateInputComponent implements OnInit, ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {}
 
   onBlur(): void {
-    this.onTouched(); // Notify Angular the control is touched
+    this.onTouched();
   }
 }

@@ -15,11 +15,7 @@ import { ItemsPanelComponent } from './items-panel/items-panel.component';
 import { LabelObj } from '../../types';
 
 @Component({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ItemsPanelComponent,
-  ],
+  imports: [CommonModule, FormsModule, ItemsPanelComponent],
   selector: 'sman-multiselector',
   templateUrl: 'multiselector.component.html',
   styleUrl: 'multiselector.component.scss',
@@ -33,6 +29,7 @@ export class MultiSelectorComponent
   @Input() items: { id: string; label: string }[] = [];
   @Input() selected: { id: string; label: string }[] = [];
   @Input() placeholder: string = '';
+  @Input() label: string = '';
   @Input() supportMulti: boolean = false;
   @Input() hasError: ValidationErrors = {};
   @Input() errMsgs: { [key: string]: string } = {};
@@ -101,15 +98,15 @@ export class MultiSelectorComponent
       } else {
         this.selectedItem = this.selectedItem.filter((i) => i.id !== item.id);
       }
-    this.select.emit(this.selectedItem.map((i) => i.id) as string[]);
-
+      this.select.emit(this.selectedItem.map((i) => i.id) as string[]);
     } else {
       if (this.selectedItem[0] === item) {
         this.selectedItem = [];
+        this.select.emit('' as string);
       } else {
         this.selectedItem = [item];
+        this.select.emit(item.id as string);
       }
-      this.select.emit(this.selectedItem[0].id as string);
     }
     this.checkFieldValid();
   }

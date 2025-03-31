@@ -23,8 +23,8 @@
         />
       </div>
       <div class="flex flex-col w-1/2 relative z-50">
-        <label class="text-inputTitle mb-2 text-sm md:text-base">Class:</label>
         <sman-multiselector
+          label="Classes:"
           [items]="classList"
           placeholder="Class of this subject."
           [lookUp]="true"
@@ -39,10 +39,8 @@
     </div>
     <div class="flex gap-4">
       <div class="flex flex-col w-1/2">
-        <label class="text-inputTitle mb-2 text-sm md:text-base"
-          >Schedule:</label
-        >
         <sman-multiselector
+          label="Schedule:"
           [items]="weekDays"
           placeholder="Subject schedule."
           [supportMulti]="true"
@@ -54,10 +52,8 @@
         ></sman-multiselector>
       </div>
       <div class="flex flex-col w-1/2">
-        <label class="text-inputTitle mb-2 text-sm md:text-base"
-          >Teacher:</label
-        >
         <sman-multiselector
+          label="Teacher:"
           [items]="teacherList"
           placeholder="Teacher of this subject."
           [lookUp]="true"

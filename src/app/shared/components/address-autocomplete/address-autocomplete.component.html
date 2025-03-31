@@ -1,4 +1,4 @@
-<div [ngClass]="className">
+<div [ngClass]="className" class="relative">
   <label [for]="name" class="text-inputTitle text-sm md:text-base">{{
     label
   }}</label>
@@ -13,6 +13,11 @@
       (blur)="onBlur()"
       #addresstext
     />
+    @if (isLoading) {
+    <div class="absolute right-4 flex items-center justify-center top-1/2 mt-[6px] -translate-y-1/2">
+      <mat-spinner diameter="20" class="!text-gray-600 !fill-gray-600"></mat-spinner>
+    </div>
+    }
   </ng-container>
   <div class="text-red-600 text-sm">
     @if (hasError['fieldInvalid']) { @for (err of errorKeys; track $index) { @if

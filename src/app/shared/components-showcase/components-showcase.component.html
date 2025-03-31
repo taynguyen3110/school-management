@@ -159,88 +159,146 @@
                     </div>
                   </div>
                 </div>
-                } @case ('Page Layout') {
+                } @case ('Layout') {
                 <div class="demo-full">
-                  <sman-page-layout>
-                    <div class="demo-content">
-                      <h2>Page Title</h2>
-                      <p>
-                        This is a sample page content that demonstrates how the
-                        layout wraps content.
-                      </p>
-                      <div class="demo-grid">
-                        @for (i of [1,2,3,4]; track i) {
-                        <div class="demo-card">
-                          <h3>Card {{ i }}</h3>
-                          <p>Sample content for card {{ i }}</p>
-                        </div>
-                        }
-                      </div>
+                  <div class="demo-content">
+                    <h3>Page Layout</h3>
+                    <div class="layout-demo">
+                      <img
+                        src="assets/images/student-page.png"
+                        alt="Students Page Layout"
+                        class="layout-image"
+                      />
                     </div>
-                  </sman-page-layout>
+                  </div>
                 </div>
                 } @case ('Item Table') {
-                <div class="demo-full">
-                  <sman-item-table
-                    [items]="tableItems"
-                    listOf="students"
-                    [enableSorting]="true"
-                  >
-                  </sman-item-table>
-                </div>
-                } @case ('Date Input') {
-                <div class="demo-variants">
-                  <div class="demo-group">
-                    <h4>Basic Date Input</h4>
-                    <sman-date-input label="Select Date"></sman-date-input>
+                <!-- <div *ngSwitchCase="'Item Table'" class="space-y-4"> -->
+                  <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Student List with Sorting</h3>
+                    <p class="text-gray-600 mb-4">This table demonstrates sorting functionality on various columns including text, dates, and numbers.</p>
+                    
+                    <sman-item-table
+                      [items]="filteredStudents"
+                      listOf="students"
+                      [enableSorting]="true"
+                      (sort)="onTableSort($event)">
+                    </sman-item-table>
+
+                    <div class="mt-4 text-sm text-gray-500">
+                      <p>Current sort: {{ currentSortField ? currentSortField + ' (' + currentSortDirection + ')' : 'None' }}</p>
+                      <p>Click on column headers to sort. Click again to reverse sort order.</p>
+                    </div>
                   </div>
+                <!-- </div> -->
+                } @case ('Date Input') {
+                <div class="demo-section mr-auto">
                   <div class="demo-group">
-                    <h4>With Validation</h4>
-                    <form [formGroup]="form">
-                      <sman-date-input
-                        label="Birth Date"
-                        name="birthDate"
-                        [hasError]="formService.getCombinedErrors(birthDate)"
-                        [errMsgs]="{ required: 'Please select a valid date' }"
-                        formControlName="birthDate">
-                      </sman-date-input>
-                    </form>
+                    <div class="space-y-4">
+                      <form [formGroup]="form">
+                        <sman-date-input
+                          label="Birth Date"
+                          name="birthDate"
+                          [hasError]="formService.getCombinedErrors(birthDate)"
+                          [errMsgs]="{ required: 'Please select a valid date' }"
+                          formControlName="birthDate"
+                        >
+                        </sman-date-input>
+                      </form>
+                    </div>
                   </div>
                 </div>
                 } @case ('Multiselector') {
-                <div class="demo-full">
-                  <form [formGroup]="form">
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Multiple Selection</h4>
                     <sman-multiselector
+                      label="Required Subjects"
                       [items]="multiselectorItems"
-                      [selected]="[]"
+                      [selected]="selectedSubjects"
+                      placeholder="Choose at least one subject..."
+                      [supportMulti]="true"
+                      [validation]="true"
+                      [hasError]="
+                        formService.getCombinedErrors(multipleSubjects)
+                      "
+                      [errMsgs]="{
+                        required: 'Please select at least one subject'
+                      }"
+                      (select)="onSubjectsSelect($event)"
+                    >
+                    </sman-multiselector>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Single Selection</h4>
+                    <sman-multiselector
+                      label="Primary Subject"
+                      [items]="multiselectorItems"
+                      [selected]="selectedPrimarySubject"
+                      placeholder="Select primary subject..."
+                      [supportMulti]="false"
+                      [validation]="true"
+                      [hasError]="formService.getCombinedErrors(primarySubject)"
+                      [errMsgs]="{
+                        required: 'Please select a primary subject'
+                      }"
+                      (select)="onPrimarySubjectSelect($event)"
+                    >
+                    </sman-multiselector>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Searchable Selection</h4>
+                    <sman-multiselector
+                      label="Searchable Subjects"
+                      [items]="filteredItems"
+                      [selected]="selectedSearchableSubjects"
+                      placeholder="Search and select subjects..."
+                      [supportMulti]="true"
+                      [lookUp]="true"
+                      [validation]="true"
+                      [hasError]="
+                        formService.getCombinedErrors(searchableSubjects)
+                      "
+                      [errMsgs]="{
+                        required: 'Please select at least one subject'
+                      }"
+                      (inputTyped)="onSubjectSearch($event)"
+                      (select)="onSearchableSubjectsSelect($event)"
+                    >
+                    </sman-multiselector>
+                  </div>
+                  <div class="demo-group">
+                    <h4>Pre-selected Values</h4>
+                    <sman-multiselector
+                      label="Pre-selected Subjects"
+                      [items]="multiselectorItems"
+                      [selected]="selectedPreSelectedSubjects"
                       placeholder="Choose subjects..."
                       [supportMulti]="true"
                       [validation]="true"
-                      [hasError]="formService.getCombinedErrors(subjects)"
-                      [errMsgs]="{ required: 'Please select at least one subject' }"
-                      formControlName="subjects">
+                      [hasError]="
+                        formService.getCombinedErrors(preSelectedSubjects)
+                      "
+                      [errMsgs]="{
+                        required: 'Please select at least one subject'
+                      }"
+                      (select)="onPreSelectedSubjectsSelect($event)"
+                    >
                     </sman-multiselector>
-                  </form>
+                  </div>
                 </div>
                 } @case ('Address Input') {
                 <div class="demo-variants">
                   <div class="demo-group">
-                    <h4>Basic Address Input</h4>
-                    <sman-address-autocomplete
-                      label="Address"
-                      placeholder="Enter your address">
-                    </sman-address-autocomplete>
-                  </div>
-                  <div class="demo-group">
-                    <h4>With Validation</h4>
                     <form [formGroup]="form">
                       <sman-address-autocomplete
-                        label="Address"
+                        label="Address Autocomplete"
                         name="address"
                         placeholder="Enter your address"
                         [hasError]="formService.getCombinedErrors(address)"
                         [errMsgs]="{ required: 'Please enter a valid address' }"
-                        formControlName="address">
+                        formControlName="address"
+                      >
                       </sman-address-autocomplete>
                     </form>
                   </div>
@@ -270,6 +328,23 @@
                       </div>
                     </div>
                   </sman-info-wrapper>
+                </div>
+                } @case ('Photo Uploader') {
+                <div class="demo-variants">
+                  <div class="demo-group">
+                    <h4>Default Photo Uploader</h4>
+                    <sman-photo-uploader
+                      (photoUploaded)="onPhotoUploaded($event)"
+                    ></sman-photo-uploader>
+                  </div>
+                  <div class="demo-group">
+                    <h4>With Initial Photo</h4>
+                    <sman-photo-uploader
+                      [inputUrl]="'assets/images/portrait.jpg'"
+                      (photoUploaded)="onPhotoUploaded($event)"
+                    >
+                    </sman-photo-uploader>
+                  </div>
                 </div>
                 } }
               </div>
