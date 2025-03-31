@@ -44,7 +44,9 @@ interface Student {
   status: string;
 }
 
-type SortEvent = { sortBy: string; order: 'asc' | 'desc' } | { isNotSort: true };
+type SortEvent =
+  | { sortBy: string; order: 'asc' | 'desc' }
+  | { isNotSort: true };
 
 @Component({
   selector: 'app-components-showcase',
@@ -82,7 +84,7 @@ type SortEvent = { sortBy: string; order: 'asc' | 'desc' } | { isNotSort: true }
 })
 export class ComponentsShowcaseComponent implements OnInit {
   components = COMPONENT_DOCS;
-  categories = ['Core', 'Form', 'Layout', 'Data Display'];
+  categories = ['Core', 'Form', 'Data Display', 'Layout'];
   selectedTabIndex = 0;
   form: FormGroup;
 
@@ -96,7 +98,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       gender: 'male',
       grade: '10',
       admissionDate: new Date('2023-01-15'),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 2,
@@ -106,7 +108,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       gender: 'female',
       grade: '11',
       admissionDate: new Date('2023-02-20'),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 3,
@@ -116,7 +118,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       gender: 'male',
       grade: '9',
       admissionDate: new Date('2023-03-10'),
-      status: 'inactive'
+      status: 'inactive',
     },
     {
       id: 4,
@@ -126,7 +128,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       gender: 'female',
       grade: '12',
       admissionDate: new Date('2023-04-05'),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 5,
@@ -136,8 +138,8 @@ export class ComponentsShowcaseComponent implements OnInit {
       gender: 'male',
       grade: '10',
       admissionDate: new Date('2023-05-01'),
-      status: 'active'
-    }
+      status: 'active',
+    },
   ];
 
   readonly teachersData = [
@@ -148,7 +150,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       email: 'robert@example.com',
       subject: 'Mathematics',
       joiningDate: new Date('2022-08-15'),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 2,
@@ -157,7 +159,7 @@ export class ComponentsShowcaseComponent implements OnInit {
       email: 'emily@example.com',
       subject: 'Physics',
       joiningDate: new Date('2022-09-01'),
-      status: 'active'
+      status: 'active',
     },
     {
       id: 3,
@@ -166,8 +168,8 @@ export class ComponentsShowcaseComponent implements OnInit {
       email: 'michael@example.com',
       subject: 'Chemistry',
       joiningDate: new Date('2022-10-10'),
-      status: 'inactive'
-    }
+      status: 'inactive',
+    },
   ];
 
   // Table state
