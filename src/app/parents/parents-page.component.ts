@@ -88,7 +88,7 @@ export class ParentsComponent {
                     },
                     error: () => {
                       this.isLoading = false;
-                    }
+                    },
                   });
                 }
               });
@@ -109,7 +109,7 @@ export class ParentsComponent {
               },
               error: () => {
                 this.isLoading = false;
-              }
+              },
             });
           }
         }
@@ -117,7 +117,11 @@ export class ParentsComponent {
   }
 
   checkFiltering() {
-    if (this.filterParams['name'] || this.filterParams['classIds']) {
+    if (
+      this.filterParams['name'] ||
+      this.filterParams['classIds'] ||
+      this.filterParams['sortBy']
+    ) {
       this.isFiltering = true;
     } else {
       this.isFiltering = false;

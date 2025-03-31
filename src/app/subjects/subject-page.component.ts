@@ -16,15 +16,15 @@ import { loadSubjectsSuccess } from '../state/subject/subject.actions';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'sman-subjects',
-    imports: [
-        ItemTableComponent,
-        PaginationComponent,
-        PageLayoutComponent,
-        FilterComponent,
-        MatProgressSpinnerModule,
-    ],
-    templateUrl: './subject-page.component.html'
+  selector: 'sman-subjects',
+  imports: [
+    ItemTableComponent,
+    PaginationComponent,
+    PageLayoutComponent,
+    FilterComponent,
+    MatProgressSpinnerModule,
+  ],
+  templateUrl: './subject-page.component.html',
 })
 export class SubjectsComponent {
   subjectsCount: number = 0;
@@ -58,7 +58,7 @@ export class SubjectsComponent {
             'subjects',
             'add',
             { page: this.currentPage },
-            true,
+            true
           );
         } else {
           this.checkFiltering();
@@ -87,7 +87,7 @@ export class SubjectsComponent {
                     },
                     error: () => {
                       this.isLoading = false;
-                    }
+                    },
                   });
                 }
               });
@@ -108,7 +108,7 @@ export class SubjectsComponent {
               },
               error: () => {
                 this.isLoading = false;
-              }
+              },
             });
           }
         }
@@ -116,7 +116,11 @@ export class SubjectsComponent {
   }
 
   checkFiltering() {
-    if (this.filterParams['name'] || this.filterParams['classIds']) {
+    if (
+      this.filterParams['name'] ||
+      this.filterParams['classIds'] ||
+      this.filterParams['sortBy']
+    ) {
       this.isFiltering = true;
     } else {
       this.isFiltering = false;

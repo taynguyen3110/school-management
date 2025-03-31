@@ -12,9 +12,7 @@ import { ItemTableComponent } from '../../shared/components/item-table/item-tabl
 import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 import { FilterComponent } from '../../shared/components/filter/filter.component';
 import { Store } from '@ngrx/store';
-import {
-  loadStudentsSuccess,
-} from '@/app/state/student/student.actions';
+import { loadStudentsSuccess } from '@/app/state/student/student.actions';
 import { selectAllStudents } from '@/app/state/student/student.selector';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -92,7 +90,7 @@ export class StudentsComponent {
                     },
                     error: () => {
                       this.isLoading = false;
-                    }
+                    },
                   });
                 }
               });
@@ -113,7 +111,7 @@ export class StudentsComponent {
               },
               error: () => {
                 this.isLoading = false;
-              }
+              },
             });
           }
         }
@@ -121,7 +119,11 @@ export class StudentsComponent {
   }
 
   checkFiltering() {
-    if (this.filterParams['name'] || this.filterParams['classIds']) {
+    if (
+      this.filterParams['name'] ||
+      this.filterParams['classIds'] ||
+      this.filterParams['sortBy']
+    ) {
       this.isFiltering = true;
     } else {
       this.isFiltering = false;
