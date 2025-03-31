@@ -14,6 +14,7 @@ import { NotificationService } from '@/app/shared/services/notification.service'
 import { ParentsService } from '../../services/parents.service';
 import { Parent } from '@/app/shared/types';
 import checkFormChange from '@/app/shared/utils/checkFormChanged';
+import { AddressAutocompleteComponent } from "../../../shared/components/address-autocomplete/address-autocomplete.component";
 
 @Component({
   standalone: true,
@@ -22,7 +23,8 @@ import checkFormChange from '@/app/shared/utils/checkFormChanged';
     InputComponent,
     AddNewFormLayoutComponent,
     ReactiveFormsModule,
-  ],
+    AddressAutocompleteComponent
+],
   selector: 'sman-parent-personal-info',
   templateUrl: 'parent-personal-info.component.html',
 })

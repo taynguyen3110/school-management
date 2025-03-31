@@ -72,12 +72,11 @@
     </div>
     <div class="flex gap-4">
       <!-- Address -->
-      <sman-input
+      <sman-address-autocomplete
         formControlName="address"
         class="w-full"
         label="Address:"
         name="address"
-        type="text"
         placeholder="Address"
         [hasError]="formService.getCombinedErrors(address)"
         [errMsgs]="{

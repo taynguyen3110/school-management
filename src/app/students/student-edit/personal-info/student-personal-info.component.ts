@@ -14,6 +14,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StudentService } from '../../service/student.service';
 import { NotificationService } from '@/app/shared/services/notification.service';
 import { DateInputComponent } from '@/app/shared/components/date-input/date-input.component';
+import { AddressAutocompleteComponent } from '@/app/shared/components/address-autocomplete/address-autocomplete.component';
 
 @Component({
   imports: [
@@ -22,6 +23,7 @@ import { DateInputComponent } from '@/app/shared/components/date-input/date-inpu
     AddNewFormLayoutComponent,
     ReactiveFormsModule,
     DateInputComponent,
+    AddressAutocompleteComponent
   ],
   selector: 'sman-student-personal-info',
   templateUrl: 'student-personal-info.component.html',
@@ -87,6 +89,7 @@ export class StudentPersonalInfoComponent implements OnInit {
       } as Student)
       .subscribe(() => {
         this.notificationService.notify('Student info updated successfully!');
+        this.dialogRef.close();
       });
   }
 }
