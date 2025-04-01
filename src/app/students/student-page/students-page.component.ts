@@ -77,6 +77,8 @@ export class StudentsComponent {
                   this.isLoading = true;
                   this.fetchStudents(params).subscribe({
                     next: (data: any) => {
+                      console.log(data);
+
                       this.setPagination(data);
                       if (this.currentPage === 1 && !this.isFiltering) {
                         this.saveStudentList(
@@ -98,6 +100,8 @@ export class StudentsComponent {
             this.isLoading = true;
             this.fetchStudents(params).subscribe({
               next: (data: any) => {
+                console.log(data);
+
                 this.setPagination(data);
                 if (this.currentPage === 1) {
                   this.saveStudentList(
