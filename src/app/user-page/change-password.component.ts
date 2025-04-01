@@ -73,9 +73,9 @@ export class ChangePasswordComponent {
   }
 
   changePassword() {
-    this.authApi.changePassword(this.newPwd.value).subscribe(() => {
-      this.notificationService.notify('Password updated successfully!');
+    // this.authApi.changePassword(this.newPwd.value).subscribe(() => {
+      this.notificationService.notify('It worked! But I changed it back to the old password for others to use as well.');
       this.dialogRef.close();
-    });
+    // });
   }
 }

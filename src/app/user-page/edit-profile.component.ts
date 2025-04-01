@@ -80,15 +80,16 @@ export class EditProfileComponent {
         ...this.user,
         firstName: this.firstName.value,
         lastName: this.lastName.value,
-        email: this.email.value,
+        // email: this.email.value,
+        email: this.user.email,
       };
-      this.authApi
-        .updateAccount(newUser)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((newU) => {
-          this.notificationService.notify('Profile updated successfully');
+      // this.authApi
+      //   .updateAccount(newUser)
+      //   .pipe(takeUntil(this.unsubscribe$))
+      //   .subscribe((newU) => {
+          this.notificationService.notify('It worked! But I changed it back so that others can use to login as well.');
           this.dialogRef.close({...newUser});
-        });
+        // });
     }
   }
 }
