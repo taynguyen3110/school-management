@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthApiService } from '../shared/services/authApi.service';
 import { UserProfile } from '../shared/types';
-import { JsonPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password.component';
 import { EditProfileComponent } from './edit-profile.component';
@@ -10,20 +10,21 @@ import { NotificationService } from '../shared/services/notification.service';
 import { ButtonComponent } from '../shared/components/button/button.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../shared/services/auth.service';
+import { LoadingSpinnerComponent } from '../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'sman-user-page',
   imports: [
     CommonModule,
-    JsonPipe,
     ReactiveFormsModule,
     ButtonComponent,
+    LoadingSpinnerComponent
   ],
   templateUrl: './user-page.component.html',
 })
 export class UserPageComponent {
   user?: UserProfile;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   unsubscribe$ = new Subject<void>();
 
@@ -36,11 +37,19 @@ export class UserPageComponent {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.authApi
       .getAccount()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((userInfo) => {
-        this.setUser(userInfo);
+      .subscribe({
+        next: (userInfo) => {
+          this.setUser(userInfo);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.notificationService.notify('Error getting account information!');
+          this.isLoading = false;
+        }
       });
   }
 

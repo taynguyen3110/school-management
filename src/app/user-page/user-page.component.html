@@ -1,69 +1,75 @@
 <div class="bg-background h-screen pt-7 p-4">
   <h1 class="text-2xl font-semibold text-center my-3">Account Setting</h1>
   <div class="container bg-white rounded-lg">
-    <div class="w-full flex justify-center">
-      <div class="rounded-full h-44 w-44 overflow-hidden my-10">
-        <img class="object-none h-44" [src]="user?.profileUrl" alt="" />
+    @if (isLoading) {
+      <div class="flex items-center justify-center h-[400px]">
+        <sman-loading-spinner></sman-loading-spinner>
       </div>
-    </div>
-    @if (user) {
-    <div class="flex flex-col justify-center items-center">
-      <form class="w-full md:w-[700px] flex flex-col items-center gap-2 mb-4">
-        <div class="w-2/3 flex justify-between items-center">
-          <label for="firstName">First Name:</label>
-          <input
-            class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
-            type="text"
-            name="firstName"
-            id="firstName"
-            [value]="user.firstName"
-            readonly
-          />
+    } @else if (user) {
+      <div class="w-full flex justify-center">
+        <div class="rounded-full h-44 w-44 overflow-hidden my-10">
+          <img class="object-none h-44" [src]="user.profileUrl" alt="" />
         </div>
-        <div class="w-2/3 flex justify-between items-center">
-          <label for="lastName">Last Name:</label>
-          <input
-            class="focus:outline-none border-white border cursor-default rounded-md py-3 px-2 text-sm"
-            type="text"
-            name="lastName"
-            id="lastName"
-            [value]="user.lastName"
-            readonly
-          />
-        </div>
-        <div class="w-2/3 flex justify-between items-center">
-          <label for="email">Email:</label>
-          <input
-            class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
-            type="text"
-            name="email"
-            id="email"
-            [value]="user.email"
-            readonly
-          />
-        </div>
-      </form>
-      <hr class="w-full md:w-1/2" />
-      <div class="flex justify-center items-center gap-5 w-500px mt-10 mb-12">
-        <sman-button
-          text="Edit Profile"
-          btnType="primary"
-          (buttonClick)="openEditProfileDialog()"
-        ></sman-button>
-        <sman-button
-          text="Edit Password"
-          btnType="primary"
-          (buttonClick)="openEditPasswordDialog()"
-        ></sman-button>
-        <sman-button
-          text="Log Out"
-          btnType="primary"
-          (buttonClick)="onLogOut()"
-        ></sman-button>
       </div>
-    </div>
-    } @else { Error getting account information!
-    {{ user | json }}
+      <div class="flex flex-col justify-center items-center">
+        <form class="w-full md:w-[700px] flex flex-col items-center gap-2 mb-4">
+          <div class="w-2/3 flex justify-between items-center">
+            <label for="firstName">First Name:</label>
+            <input
+              class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+              type="text"
+              name="firstName"
+              id="firstName"
+              [value]="user.firstName"
+              readonly
+            />
+          </div>
+          <div class="w-2/3 flex justify-between items-center">
+            <label for="lastName">Last Name:</label>
+            <input
+              class="focus:outline-none border-white border cursor-default rounded-md py-3 px-2 text-sm"
+              type="text"
+              name="lastName"
+              id="lastName"
+              [value]="user.lastName"
+              readonly
+            />
+          </div>
+          <div class="w-2/3 flex justify-between items-center">
+            <label for="email">Email:</label>
+            <input
+              class="rounded-md py-3 px-2 text-sm focus:outline-none border-white border cursor-default"
+              type="text"
+              name="email"
+              id="email"
+              [value]="user.email"
+              readonly
+            />
+          </div>
+        </form>
+        <hr class="w-full md:w-1/2" />
+        <div class="flex justify-center items-center gap-5 w-500px mt-10 mb-12">
+          <sman-button
+            text="Edit Profile"
+            btnType="primary"
+            (buttonClick)="openEditProfileDialog()"
+          ></sman-button>
+          <sman-button
+            text="Edit Password"
+            btnType="primary"
+            (buttonClick)="openEditPasswordDialog()"
+          ></sman-button>
+          <sman-button
+            text="Log Out"
+            btnType="primary"
+            (buttonClick)="onLogOut()"
+          ></sman-button>
+        </div>
+      </div>
+    } @else {
+      <div class="flex items-center justify-center h-[400px] text-red-500">
+        Error getting account information!
+      </div>
     }
   </div>
 </div>

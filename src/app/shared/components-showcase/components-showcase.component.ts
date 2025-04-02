@@ -83,7 +83,6 @@ type SortEvent =
     InformationWrapperComponent,
     AddressAutocompleteComponent,
     PhotoUploaderComponent,
-    DialogDemoComponent,
     EnrollmentStatsComponent,
     GenderRatioComponent,
     GoogleChartsModule,
