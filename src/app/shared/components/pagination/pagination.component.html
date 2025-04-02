@@ -1,39 +1,33 @@
-<div class="flex justify-between gap-5 mt-6">
-  <button
-    (click)="handlePrevious()"
-    [ngClass]="{ 'bg-gray-300': currentPage === 1 }"
-    class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg select-none"
-    [disabled]="currentPage === 1"
-  >
-    Previous
-  </button>
+<div class="flex justify-between items-center gap-5 mt-6">
+  <sman-button
+    text="Previous"
+    className="!py-[2px] !px-2"
+    (buttonClick)="handlePrevious()"
+    [isDisabled]="currentPage === 1"
+  />
   <div class="flex gap-3 text-sm md:text-base">
-    @for (i of arr; track $index) {
-      @if (i === currentPage) {
-        <p
-          class="font-semibold flex items-center cursor-default select-none bg-blue-200 rounded-md px-2"
-          (click)="handleJumpToPage(i)"
-        >
-          {{ i }}
-        </p>
-      } @else if (i === DOTS) {
-        <p class="cursor-default select-none flex items-center">{{ i }}</p>
-      } @else {
-        <p
-          class="px-2 cursor-pointer select-none flex items-center"
-          (click)="handleJumpToPage(i)"
-        >
-          {{ i }}
-        </p>
-      }
-    }
+    @for (i of arr; track $index) { @if (i === currentPage) {
+    <p
+      class="font-semibold flex items-center cursor-default select-none bg-blue-100 rounded-md px-2 my-1"
+      (click)="handleJumpToPage(i)"
+    >
+      {{ i }}
+    </p>
+    } @else if (i === DOTS) {
+    <p class="cursor-default select-none flex items-center">{{ i }}</p>
+    } @else {
+    <p
+      class="px-2 cursor-pointer select-none flex items-center"
+      (click)="handleJumpToPage(i)"
+    >
+      {{ i }}
+    </p>
+    } }
   </div>
-  <button
-    (click)="handleNext()"
-    [ngClass]="{ 'bg-gray-300': currentPage === lastPage }"
-    class="bg-primary-300 text-white text-sm px-2 py-1 rounded-lg select-none"
-    [disabled]="currentPage === lastPage"
-  >
-    Next
-  </button>
+  <sman-button
+    text="Next"
+    className="!py-[2px] !px-2"
+    (buttonClick)="handleNext()"
+    [isDisabled]="currentPage === lastPage"
+  />
 </div>

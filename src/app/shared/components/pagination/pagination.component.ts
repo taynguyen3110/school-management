@@ -6,10 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
     selector: 'sman-pagination',
-    imports: [CommonModule],
+    imports: [CommonModule, ButtonComponent],
     templateUrl: './pagination.component.html',
     styleUrl: './pagination.component.scss'
 })

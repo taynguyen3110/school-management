@@ -28,10 +28,14 @@ import { MultiSelectorComponent } from '../components/multiselector/multiselecto
 import { InformationWrapperComponent } from '../components/information-wrapper/information-wrapper.component';
 import { AddressAutocompleteComponent } from '../components/address-autocomplete/address-autocomplete.component';
 import { PhotoUploaderComponent } from '../components/photouploader/photo-uploader.component';
-
-// Import component documentation
-import { ComponentDoc, COMPONENT_DOCS } from './component-docs';
+import { DialogDemoComponent } from './dialog-demo/dialog-demo.component';
 import { FormService } from '../services/form.service';
+import { EnrollmentStatsComponent } from '../../dashboard/enrollment-stats/enrollment-stats.component';
+import { GenderRatioComponent } from '../../dashboard/gender-ratio/gender-ratio.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { ScreenService } from '../services/screen.service';
+import { StatsWrapperComponent } from '../../dashboard/stats-wrapper/stats-wrapper.component';
+import { ComponentDoc, COMPONENT_DOCS } from './component-docs';
 
 interface Student {
   id: number;
@@ -79,6 +83,11 @@ type SortEvent =
     InformationWrapperComponent,
     AddressAutocompleteComponent,
     PhotoUploaderComponent,
+    DialogDemoComponent,
+    EnrollmentStatsComponent,
+    GenderRatioComponent,
+    GoogleChartsModule,
+    StatsWrapperComponent
   ],
   standalone: true,
 })
@@ -198,10 +207,54 @@ export class ComponentsShowcaseComponent implements OnInit {
     { id: '2', label: 'Physics' },
   ];
 
+  // Chart data
+  enrollmentData: any[] = [
+    ['2020', 150],
+    ['2021', 180],
+    ['2022', 220],
+    ['2023', 250],
+    ['2024', 280]
+  ];
+
+  genderData: any[] = [
+    ['Male', 120],
+    ['Female', 160]
+  ];
+
+  lineChartOptions = {
+    backgroundColor: 'transparent',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    animation: {
+      startup: true,
+      duration: 600,
+      easing: 'out'
+    }
+  };
+
+  pieChartOptions = {
+    backgroundColor: 'transparent',
+    pieHole: 0.7,
+    pieSliceTextStyle: {
+      color: ''
+    },
+    slices: {
+      0: { color: '#4C78FF' },
+      1: { color: '#FFBB38' }
+    },
+    legend: 'none',
+    animation: {
+      startup: true,
+      duration: 1000,
+      easing: 'out'
+    }
+  };
+
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
-    public formService: FormService
+    public formService: FormService,
+    private screenService: ScreenService
   ) {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -351,5 +404,24 @@ export class ComponentsShowcaseComponent implements OnInit {
     });
 
     this.filteredStudents = sortedData;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogDemoComponent, {
+      data: {
+        title: 'Confirm Action',
+        message: 'Are you sure you want to proceed with this action?'
+      },
+      width: '400px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('User confirmed the action');
+      } else {
+        console.log('User cancelled the action');
+      }
+    });
   }
 }

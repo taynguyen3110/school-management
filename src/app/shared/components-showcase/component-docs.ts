@@ -3,7 +3,7 @@ export interface ComponentDoc {
   description: string;
   usage: string;
   props?: { name: string; type: string; description: string }[];
-  category: 'Core' | 'Form' | 'Layout' | 'Data Display';
+  category: 'Core' | 'Form' | 'Layout' | 'Data Display' | 'Feedback';
 }
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
@@ -127,7 +127,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   {
     name: 'Layout',
     category: 'Layout',
-    description: 'A comprehensive layout system that provides structure for pages, including header, content area, and optional components like filters, tables, and pagination.',
+    description:
+      'A comprehensive layout system that provides structure for pages, including header, content area, and optional components like filters, tables, and pagination.',
     usage: `<sman-page-layout
   title="Students"
   (createNew)="openDialog()"
@@ -191,7 +192,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   {
     name: 'Item Table',
     category: 'Data Display',
-    description: 'A dynamic table component that supports sorting, responsive columns, and different data types (students, teachers, parents, subjects, classes). Features include column sorting, responsive layout, and dashboard view mode.',
+    description:
+      'A dynamic table component that supports sorting, responsive columns, and different data types (students, teachers, parents, subjects, classes). Features include column sorting, responsive layout, and dashboard view mode.',
     usage: `<sman-item-table
   [items]="students"
   listOf="students"
@@ -203,12 +205,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: 'items',
         type: 'any[]',
-        description: 'Array of data to display in the table. Structure should match the selected listOf type.',
+        description:
+          'Array of data to display in the table. Structure should match the selected listOf type.',
       },
       {
         name: 'listOf',
         type: "'students' | 'parents' | 'teachers' | 'subjects' | 'classes'",
-        description: 'Determines the type of data being displayed and configures columns accordingly.',
+        description:
+          'Determines the type of data being displayed and configures columns accordingly.',
       },
       {
         name: 'enableSorting',
@@ -218,12 +222,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: 'fromDashboard',
         type: 'boolean',
-        description: 'Changes table appearance for dashboard view (default: false)',
+        description:
+          'Changes table appearance for dashboard view (default: false)',
       },
       {
         name: 'sort',
         type: 'EventEmitter<{ sortBy: string; order: "asc" | "desc" } | { isNotSort: true }>',
-        description: 'Event emitted when sorting changes. Returns sort field and direction, or isNotSort flag when sorting is cleared.',
+        description:
+          'Event emitted when sorting changes. Returns sort field and direction, or isNotSort flag when sorting is cleared.',
       },
     ],
   },
@@ -383,7 +389,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   {
     name: 'Photo Uploader',
     category: 'Form',
-    description: 'A component for uploading and previewing profile photos with drag-and-drop support, image validation, and automatic resizing.',
+    description:
+      'A component for uploading and previewing profile photos with drag-and-drop support, image validation, and automatic resizing.',
     usage: `<sman-photo-uploader
   (photoUploaded)="handlePhotoUpload($event)">
 </sman-photo-uploader>`,
@@ -396,7 +403,129 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: 'photoUploaded',
         type: 'EventEmitter<string>',
-        description: 'Event emitted when a photo is successfully uploaded, containing the new photo URL',
+        description:
+          'Event emitted when a photo is successfully uploaded, containing the new photo URL',
+      },
+    ],
+  },
+  {
+    name: 'Dialog',
+    category: 'Layout',
+    description:
+      'A modal dialog component that provides a layout container for displaying content in an overlay window. Useful for confirmations, forms, and other content that needs to be displayed above the current page.',
+    usage: `
+      <sman-button
+        text="Open Dialog"
+        btnType="primary"
+        (buttonClick)="openDialog()">
+      </sman-button>
+
+      // In your component:
+      openDialog(): void {
+        const dialogRef = this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Confirm Action',
+            message: 'Are you sure you want to proceed?'
+          },
+          width: '400px',
+          disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            // User confirmed
+          } else {
+            // User cancelled
+          }
+        });
+      }
+    `,
+    props: [
+      {
+        name: 'data',
+        type: 'any',
+        description: 'Data to be passed to the dialog component',
+      },
+      {
+        name: 'width',
+        type: 'string',
+        description: 'Width of the dialog',
+      },
+      {
+        name: 'disableClose',
+        type: 'boolean',
+        description:
+          'Whether the dialog can be closed by clicking outside or pressing ESC',
+      },
+    ],
+  },
+  {
+    name: 'Line Chart',
+    category: 'Data Display',
+    description:
+      'A responsive line chart component built with Google Charts. Features include smooth curves, animations, and automatic resizing based on screen size.',
+    usage: `<sman-stats-wrapper [isChart]="true">
+  <sman-enrollment-stats-chart
+    chart
+    [enrollmentStats]="enrollmentData">
+  </sman-enrollment-stats-chart>
+</sman-stats-wrapper>`,
+    props: [
+      {
+        name: 'enrollmentStats',
+        type: 'any[]',
+        description:
+          'Array of enrollment data points. Each point should be an array with [year, count] values.',
+      },
+      {
+        name: 'chart',
+        type: 'attribute',
+        description:
+          'Required attribute to identify the chart component within the stats wrapper.',
+      },
+    ],
+  },
+  {
+    name: 'Pie Chart',
+    category: 'Data Display',
+    description:
+      'A donut chart component built with Google Charts. Features include custom colors, animations, and a transparent background.',
+    usage: `<sman-stats-wrapper [isChart]="true">
+  <sman-gender-ratio-chart
+    chart
+    [width]="300"
+    [height]="250"
+    [maleCount]="120"
+    [femaleCount]="160">
+  </sman-gender-ratio-chart>
+</sman-stats-wrapper>
+`,
+    props: [
+      {
+        name: 'width',
+        type: 'number',
+        description: 'Width of the chart in pixels.',
+      },
+      {
+        name: 'height',
+        type: 'number',
+        description: 'Height of the chart in pixels.',
+      },
+      {
+        name: 'maleCount',
+        type: 'number',
+        description: 'Number of male students.',
+      },
+      {
+        name: 'femaleCount',
+        type: 'number',
+        description: 'Number of female students.',
+      },
+      {
+        name: 'chart',
+        type: 'attribute',
+        description:
+          'Required attribute to identify the chart component within the stats wrapper.',
       },
     ],
   },

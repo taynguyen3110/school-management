@@ -173,7 +173,6 @@
                   </div>
                 </div>
                 } @case ('Item Table') {
-                <!-- <div *ngSwitchCase="'Item Table'" class="space-y-4"> -->
                   <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold mb-4">Student List with Sorting</h3>
                     <p class="text-gray-600 mb-4">This table demonstrates sorting functionality on various columns including text, dates, and numbers.</p>
@@ -190,7 +189,53 @@
                       <p>Click on column headers to sort. Click again to reverse sort order.</p>
                     </div>
                   </div>
-                <!-- </div> -->
+                } @case ('Line Chart') {
+                  <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Enrollment Statistics</h3>
+                    <p class="text-gray-600 mb-4">A responsive line chart showing enrollment trends over time with smooth animations.</p>
+                    
+                    <sman-stats-wrapper [isChart]="true">
+                      <sman-enrollment-stats-chart
+                        chart
+                        [enrollmentStats]="enrollmentData">
+                      </sman-enrollment-stats-chart>
+                    </sman-stats-wrapper>
+
+                    <div class="mt-4 text-sm text-gray-500">
+                      <p>This chart demonstrates:</p>
+                      <ul class="list-disc list-inside mt-2">
+                        <li>Responsive sizing</li>
+                        <li>Smooth curve interpolation</li>
+                        <li>Animated transitions</li>
+                        <li>Custom styling options</li>
+                      </ul>
+                    </div>
+                  </div>
+                } @case ('Pie Chart') {
+                  <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Gender Distribution</h3>
+                    <p class="text-gray-600 mb-4">A donut chart showing the distribution of male and female students.</p>
+                    
+                    <sman-stats-wrapper [isChart]="true">
+                      <sman-gender-ratio-chart
+                        chart
+                        [width]="300"
+                        [height]="250"
+                        [maleCount]="120"
+                        [femaleCount]="160">
+                      </sman-gender-ratio-chart>
+                    </sman-stats-wrapper>
+
+                    <div class="mt-4 text-sm text-gray-500">
+                      <p>This chart demonstrates:</p>
+                      <ul class="list-disc list-inside mt-2">
+                        <li>Donut chart style</li>
+                        <li>Custom colors</li>
+                        <li>Animated transitions</li>
+                        <li>Transparent background</li>
+                      </ul>
+                    </div>
+                  </div>
                 } @case ('Date Input') {
                 <div class="demo-section mr-auto">
                   <div class="demo-group">
@@ -344,6 +389,29 @@
                       (photoUploaded)="onPhotoUploaded($event)"
                     >
                     </sman-photo-uploader>
+                  </div>
+                </div>
+                } @case ('Dialog') {
+                <div class="space-y-4">
+                  <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-4">Dialog Demo</h3>
+                    <p class="text-gray-600 mb-4">This dialog demonstrates a confirmation dialog with action and cancel buttons.</p>
+                    
+                    <sman-button
+                      text="Open Dialog"
+                      btnType="primary"
+                      (buttonClick)="openDialog()">
+                    </sman-button>
+
+                    <div class="mt-4 text-sm text-gray-500">
+                      <p>Click the button above to open a dialog with:</p>
+                      <ul class="list-disc list-inside mt-2">
+                        <li>Title and message</li>
+                        <li>Cancel button</li>
+                        <li>Confirm button</li>
+                        <li>Result handling</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
                 } }
