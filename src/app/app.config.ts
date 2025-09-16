@@ -21,6 +21,7 @@ import { parentsReducer } from './state/parent/parent.reducer';
 import { teachersReducer } from './state/teacher/teacher.reducer';
 import { subjectsReducer } from './state/subject/subject.reducer';
 import { classesReducer } from './state/class/class.reducer';
+import { NgrokHeaderInterceptor } from './shared/interceptors/ngrok-header.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: NgrokHeaderInterceptor, multi: true },
     provideAnimationsAsync(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-au' },
     // { provide: ErrorHandler, useClass: CustomErrorHandler },
